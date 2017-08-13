@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>The Writers Landing Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+</head>
+<body>
+    <!-- Landing page navigation-->
+    <div class="container-fluid">
+        <div class="masthead">
+            <div class="landingNav">
+                <ul class="nav pull-left">
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">Competition</a></li>
+                </ul>
+                <ul class="nav pull-center">
+
+                    <li class="writersTitle">The Writers</li>
+
+                </ul>
+                <ul class="nav pull-right">
+                    <li><a href="#">Featured</a></li>
+                    <li><a href="#">About</a></li>
+                </ul>
+            </div>
+        </div>
+      <div class="mainHeading">
+          <h1>Showcase your talents on the writers</h1>
+      </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="listPosition">
+                    <ul>
+                        <li>Enter competitions and win money</li>
+                        <li>Post your poems, short stories and other works</li>
+                        <li>Comment on and critique featured works</li>
+                        <li>Cast your vote and choose a winner</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </div>
+    </div>
+
+</body>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js">
+</script>
+</html>
