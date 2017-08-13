@@ -32,3 +32,6 @@ def register(request):
 
 def profile(request):
     return render(request, 'base.html')
+
+def landing(request):
+    return render(request, "landing.html")
