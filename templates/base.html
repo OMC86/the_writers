@@ -23,7 +23,7 @@
                 <div class="col-md-12">
                     <div class="borders">
                         <ul class="nav nav-pills pull-right">
-                            <li><a href="/">Home</a></li>
+                            <li><a href="home">Home</a></li>
                             <li><a href="#">Shop</a></li>
                             <li><a href="#">FAQ</a></li>
                             <li><a href="#">Contact</a></li>
@@ -36,6 +36,11 @@
                 <div class="col-md-3">
                     <div id="profile" class="borders">
                         <p>{{ user.username }}</p>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <a href="{%  url 'logout' %}"><button class="btn btn-primary">Log Out</button></a>
+                        </div>
                     </div>
                 </div>
             </div>

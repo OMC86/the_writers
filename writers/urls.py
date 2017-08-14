@@ -19,8 +19,11 @@ from accounts import views as accounts_views
 
 
 urlpatterns = [
+    # accounts
     url(r'^admin/', admin.site.urls),
     url(r'^$', accounts_views.landing),
     url(r'^register/$', accounts_views.register, name='register'),
     url(r'^home/$', accounts_views.profile, name='home'),
+    url(r'^login/$', accounts_views.login, name='login'),
+    url(r'^logout/$', accounts_views.logout, name='logout'),
 ]
