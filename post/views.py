@@ -10,4 +10,4 @@ from .models import Post
 def post_list(request):
     posts = Post.objects.filter(date_published__lte=timezone.now()
                                 ).order_by('-date_published')
-    return render(request, 'postlist.html', {'posts': posts})
+    return render(request, 'posts/postlist.html', {'posts': posts})
