@@ -5,16 +5,15 @@ from django.template.context_processors import csrf
 from accounts.forms import UserRegistrationForm, UserLoginForm
 from django.contrib.auth.decorators import login_required
 
-
+# This view renders the landing page
 def landing(request):
     return render(request, "landing.html")
 
-
-@login_required(login_url='/login/')
+# This view renders the base template after login which is the profile home page
 def profile(request):
     return render(request, 'base.html')
 
-
+# This renders the registration form and registers users
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -39,7 +38,7 @@ def register(request):
 
     return render(request, 'register.html', args)
 
-
+# Renders the login form and authenticates user
 def login(request):
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
@@ -65,4 +64,4 @@ def login(request):
 def logout(request):
     auth.logout(request)
     messages.success(request, 'You have successfully logged out')
-    return redirect(reverse('home'))
+    return redirect(reverse('login'))
