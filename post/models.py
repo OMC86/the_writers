@@ -70,6 +70,7 @@ class Post(models.Model):
     is_entry = models.BooleanField(default=False)
     vote_count = models.IntegerField(default=0)
     views = models.IntegerField(default=0)
+    image = models.ImageField(upload_to="images", blank=True, null=True)
 
     def publish(self):
         self.published_date = timezone.now()

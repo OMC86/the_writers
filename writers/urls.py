@@ -16,6 +16,8 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from accounts import views as accounts_views
+from django.views.static import serve
+from .settings import MEDIA_ROOT
 
 
 urlpatterns = [
@@ -28,5 +30,8 @@ urlpatterns = [
     url(r'^logout/$', accounts_views.logout, name='logout'),
 
     # post
-    url(r'', include('post.urls'))
+    url(r'', include('post.urls')),
+
+    # images
+    url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
 ]

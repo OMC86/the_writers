@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'disqus',
     'django_forms_bootstrap',
     'accounts',
     'post',
@@ -134,3 +136,9 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'accounts.backends.EmailAuth',
 )
+
+DISQUS_WEBSITE_SHORTNAME = 'comments_on_posts'
+SITE_ID = 1
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
