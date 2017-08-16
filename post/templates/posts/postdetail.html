@@ -1,4 +1,7 @@
 {% extends "base.html" %}
+{% load disqus_tags %}
+{% set_disqus_title post.title %}
+{% disqus_show_comments %}
 {% block content %}
     <div class="row">
         <div class="col-md-9">
@@ -9,6 +12,9 @@
                 <h3>{{ post.title }}</h3>
                 <div class="row">
                     <div class="col-xs-9">
+                        {% if post.image %}
+                            <img src="/media/{{ post.image }}">
+                        {% endif %}
                         <p>{{ post.body }}</p>
                         <p><button class="btn btn-default" onclick="location.href='/posts'">Back to Posts</button></p>
                     </div>
