@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_forms_bootstrap',
     'django.contrib.sites',
     'disqus',
-    'django_forms_bootstrap',
     'accounts',
     'post',
 
@@ -137,8 +137,15 @@ AUTHENTICATION_BACKENDS = (
     'accounts.backends.EmailAuth',
 )
 
-DISQUS_WEBSITE_SHORTNAME = 'comments_on_posts'
-SITE_ID = 1
+# Disqus comments
+DISQUS_WEBSITE_SHORTNAME = 'the_writers'
+SITE_ID = 2
 
+# house images
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+
+# Stripe environment test variables
+STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', 'pk_test_mNb1dKaAFoLSHyj2BAcDMl99')
+STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'sk_test_blRbu4P14RH0LjZMT2jDpwxy')

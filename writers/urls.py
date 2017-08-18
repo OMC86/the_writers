@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^home/$', accounts_views.profile, name='home'),
     url(r'^login/$', accounts_views.login, name='login'),
     url(r'^logout/$', accounts_views.logout, name='logout'),
+    url(r'^subscribe/$', accounts_views.subscribe, name='subscribe'),
 
     # post
     url(r'', include('post.urls')),
