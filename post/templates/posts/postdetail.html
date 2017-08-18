@@ -1,7 +1,4 @@
 {% extends "base.html" %}
-{% load disqus_tags %}
-{% set_disqus_title post.title %}
-{% disqus_show_comments %}
 {% block content %}
     <div class="row">
         <div class="col-md-9">
@@ -15,11 +12,18 @@
                         {% if post.image %}
                             <img src="/media/{{ post.image }}">
                         {% endif %}
-                        <p>{{ post.body }}</p>
+                        <p>{{ post.content }}</p>
                         <p><button class="btn btn-default" onclick="location.href='/posts'">Back to Posts</button></p>
+                        {% if user.id == post.author.id %}
+                        <p><button class="btn btn-default" onclick="location.href='{% url 'edit' post.id %}'">Edit</button></p>
+                        {% endif %}
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    {% load disqus_tags %}
+    {% disqus_dev %}
+    {% set_disqus_title post.title %}
+    {% disqus_show_comments %}
 {% endblock %}

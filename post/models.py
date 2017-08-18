@@ -63,7 +63,7 @@ class Post(models.Model):
     category = models.CharField(max_length=2, choices=TYPE, default="")
     genre = models.CharField(max_length=2, choices=GENRE, default="")
     title = models.CharField(max_length=100)
-    body = models.CharField(max_length=3000)
+    content = models.TextField(max_length=3000)
     date_created = models.DateTimeField(auto_now_add=True)
     date_published = models.DateTimeField(blank=True, null=True)
     is_featured = models.BooleanField(default=False)
