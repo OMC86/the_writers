@@ -9,6 +9,9 @@
     <meta name="author" content="">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css">
     <link rel="stylesheet" type="'text/css" href="{% static 'css/posts.css' %}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    {% block head_js %}{% endblock %}
 </head>
 <body>
     <!-- Landing page navigation-->
@@ -25,7 +28,7 @@
                 <div class="col-md-12">
                     <div class="borders">
                         <ul class="nav nav-pills pull-right">
-                            <li><a href="home">Home</a></li>
+                            <li><a href="/home">Home</a></li>
                             <li><a href="#">Shop</a></li>
                             <li><a href="#">FAQ</a></li>
                             <li><a href="#">Contact</a></li>
@@ -47,8 +50,8 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <p>Create</p>
-                                <p>Write something new</p>
-                                <p>View your work</p>
+                                <a href="{% url 'new_post' %}"><p>Write something new</p></a>
+                                <a href="{% url 'post_list' %}"><p>View your work</p></a>
                             </div>
                         </div>
                         <div class="row">
@@ -61,7 +64,12 @@
                         <div class="row">
                             <div class="col-md-3">
                                 <p>Account</p>
-                                <p>Upgrade account</p>
+
+                                {% if user.strip_id %}
+                                    <a href="{% url 'cancel' %}"><p>Cancel Subscription</p></a>
+                                {% else %}
+                                    <a href="{% url 'subscribe' %}"><p>Upgrade account</p></a>
+                                {% endif %}
                             </div>
                         </div>
 
@@ -82,7 +90,4 @@
 
 </body>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js">
-</script>
 </html>
