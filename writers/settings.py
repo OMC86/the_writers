@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'disqus',
     'accounts',
     'post',
+    'publicPost'
 
 ]
 
