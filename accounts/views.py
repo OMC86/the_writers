@@ -3,7 +3,6 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.template.context_processors import csrf
 from accounts.forms import UserRegistrationForm, UserLoginForm, UserSubscriptionForm
-from accounts.models import User
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
 import datetime
@@ -12,11 +11,12 @@ import arrow
 
 stripe.api_key = settings.STRIPE_SECRET
 
+
 # This view renders the landing page
 def landing(request):
     return render(request, "landing.html")
 
-# This view renders the base template after login which is the profile home page
+
 def profile(request):
     return render(request, 'base.html')
 
