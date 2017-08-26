@@ -15,7 +15,6 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
-from accounts import views as accounts_views
 from django.views.static import serve
 from .settings import MEDIA_ROOT
 
@@ -23,12 +22,10 @@ from .settings import MEDIA_ROOT
 urlpatterns = [
     # accounts
     url(r'^admin/', admin.site.urls),
-    url(r'^$', accounts_views.landing),
-    url(r'^register/$', accounts_views.register, name='register'),
-    url(r'^home/$', accounts_views.profile, name='home'),
-    url(r'^login/$', accounts_views.login, name='login'),
-    url(r'^logout/$', accounts_views.logout, name='logout'),
-    url(r'^subscribe/$', accounts_views.subscribe, name='subscribe'),
+    url(r'', include('accounts.urls')),
+    
+    # pages
+    url(r'', include('pages.urls')),
 
     # post
     url(r'', include('post.urls')),
