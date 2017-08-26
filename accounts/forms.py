@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from accounts.models import User
 from django.core.exceptions import ValidationError
-
+from django.contrib import auth
 
 class UserRegistrationForm(UserCreationForm):
     password1 = forms.CharField(
@@ -35,7 +35,7 @@ class UserLoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
-class UserSubscriptionForm(UserCreationForm):
+class UserSubscriptionForm(forms.Form):
     MONTHS = [
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
         'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'
@@ -48,16 +48,8 @@ class UserSubscriptionForm(UserCreationForm):
     expiry_month = forms.ChoiceField(label='Exp Month', choices=CHOOSE_MONTH)
     expiry_year = forms.ChoiceField(label='Exp Year', choices=CHOOSE_YEAR)
     stripe_id = forms.CharField(widget=forms.HiddenInput)
-    password1 = forms.CharField(
-        label='Password',
-        widget=forms.PasswordInput
-    )
-    password2 = forms.CharField(
-        label='Confirm Password',
-        widget=forms.PasswordInput
-    )
 
     class Meta:
-        model = User
-        fields = ['email', 'password1', 'password2', 'stripe_id']
+
+        fields = ['stripe_id']
         exclude = ['username']

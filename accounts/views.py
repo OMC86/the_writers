@@ -3,16 +3,21 @@ from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.template.context_processors import csrf
 from accounts.forms import UserRegistrationForm, UserLoginForm, UserSubscriptionForm
+from models import User
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
+from django.http import HttpResponse
 from django.conf import settings
 import datetime
 import stripe
 import arrow
+import json
+
 
 stripe.api_key = settings.STRIPE_SECRET
 
 
-# This view renders the landing page
+# renders the landing page
 def landing(request):
     return render(request, "landing.html")
 
@@ -20,7 +25,8 @@ def landing(request):
 def profile(request):
     return render(request, 'base.html')
 
-# This renders the registration form and registers users
+
+# renders the registration form and registers users
 def register(request):
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
@@ -31,6 +37,7 @@ def register(request):
                                      password=request.POST.get('password1'))
 
             if user:
+                auth.login(request, user)
                 messages.success(request, "You have successfully registered")
                 return redirect(reverse('home'))
 
@@ -47,32 +54,24 @@ def register(request):
 
 
 # This renders the registration form and registers users
-
+@login_required
 def subscribe(request):
     if request.method == 'POST':
         form = UserSubscriptionForm(request.POST)
         if form.is_valid():
             try:
                 customer = stripe.Customer.create(
-                    email=form.cleaned_data['email'],
                     card=form.cleaned_data['stripe_id'],
                     plan='WRITERS_MONTHLY',
                 )
 
                 if customer:
-                    user = form.save()
+                    user = request.user
                     user.stripe_id = customer.id
                     user.subscription_end = arrow.now().replace(weeks=+4).datetime
                     user.save()
-
-                    user = auth.authenticate(email=request.POST.get('email'),
-                                             password=request.POST.get('password1'))
-
-                    if user is not None:
-                        messages.success(request, "You have successfully subscribed")
-                        return redirect(reverse('home'))
-                    else:
-                        messages.error(request, "We were unable to take a payment with that card!")
+                    messages.success(request, "You have successfully subscribed")
+                    return redirect(reverse('home'))
 
             except stripe.error.CardError, e:
                 messages.error(request, "Your card was declined!")
@@ -93,6 +92,7 @@ def cancel_subscription(request):
     except Exception, e:
         messages.error(request, e)
     return redirect('home')
+
 
 
 # Renders the login form and authenticates user
@@ -122,3 +122,5 @@ def logout(request):
     auth.logout(request)
     messages.success(request, 'You have successfully logged out')
     return redirect(reverse('login'))
+
+
