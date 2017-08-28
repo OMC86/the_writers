@@ -62,8 +62,24 @@ def edit_post(request, id):
             post = form.save(commit=False)
             post.author = request.user
             post.date_published = timezone.now()
-            post.save()
-            return redirect(post_detail, post.pk)
+
+            if post.is_entry:
+                user = request.user
+                end = user.subscription_end
+                now = arrow.now()
+                if now < end:
+                    activate()
+                    a = Competition.objects.get(is_active=True)
+                    post.comp = a
+                    post.save()
+
+                    return redirect(post_detail, post.pk)
+                else:
+                    messages.error(request, "Please subscribe to enter competition")
+                    return redirect(new_post)
+            else:
+                post.save()
+                return redirect(post_detail, post.pk)
     else:
         form = PostForm(instance=post)
     return render(request, 'posts/postform.html', {'form': form})
