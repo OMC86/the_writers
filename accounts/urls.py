@@ -8,4 +8,7 @@ urlpatterns = [
     url(r'^accounts/login/$', views.login, name='login'),
     url(r'^accounts/logout/$', views.logout, name='logout'),
     url(r'^accounts/subscribe/$', views.subscribe, name='subscribe'),
+
+    # Webhooks
+    url(r'^subscriptions_webhook/$', views.subscriptions_webhook, name='subscriptions_webhook'),
     ]
