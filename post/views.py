@@ -74,6 +74,17 @@ def edit_post(request, id):
     return render(request, 'posts/postform.html', {'form': form})
 
 
+def show_competition(request):
+    competition = Competition.objects.all()
+    for x in competition:
+        x._is_active()
+
+    comp = Competition.objects.filter(is_active=True)
+    return render(request, 'competition/comp.html', {'comp': comp})
+
+
+
+
 
 
 

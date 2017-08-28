@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-9">
+        {% for x in comp %}
+            <div>
+                <h1>{{ x.title }}</h1>
+            </div>
+            <div class="col-md-9">
+                <h3>{{ x.brief }}</h3>
+                <div class="row">
+                    <div class="col-md-9">
+                        <p>This competition is open for entries between</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">
+                        <p>{{ x.entry_period_start }} and
+                            {{ x.entry_period_fin }}
+                        </p>
+                    </div>
+                </div>
+                 <div class="row">
+                     <div class="col-md-9">
+                         <p>You can vote between</p>
+                     </div>
+                 </div>
+                <div class="row">
+                    <div class="col-md-9">
+                         <p>{{ x.vote_period_start }} -
+                            {{ x.vote_period_end }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+                <div>
+                    {% if user.stripe_id %}
+                        <p><button class="btn btn-default" onclick="location.href='{% url 'new_post' %}'">
+                            Enter Now</button></p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
