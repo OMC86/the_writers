@@ -2,13 +2,11 @@
 from __future__ import unicode_literals
 
 from django.contrib import messages, auth
-from django.shortcuts import render
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, redirect, get_object_or_404
 from django.utils import timezone
-from django.shortcuts import redirect
 from .models import Post, Competition
 from .forms import PostForm
-import stripe
+from .utils import activate
 import arrow
 
 
@@ -39,10 +37,7 @@ def new_post(request):
                 end = user.subscription_end
                 now = arrow.now()
                 if now < end:
-                    competition = Competition.objects.all()
-                    for comp in competition:
-                        comp._is_active()
-
+                    activate()
                     a = Competition.objects.get(is_active=True)
                     post.comp = a
                     post.save()
@@ -75,14 +70,9 @@ def edit_post(request, id):
 
 
 def show_competition(request):
-    competition = Competition.objects.all()
-    for x in competition:
-        x._is_active()
-
+    activate()
     comp = Competition.objects.filter(is_active=True)
     return render(request, 'competition/comp.html', {'comp': comp})
-
-
 
 
 

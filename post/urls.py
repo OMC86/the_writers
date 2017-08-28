@@ -10,4 +10,5 @@ urlpatterns = [
 
     # competition
     url(r'^competition/$', views.show_competition, name='view_comp'),
+    url(r'^competition/entries/$', views.comp_entries, name='view_entries'),
 ]
