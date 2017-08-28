@@ -91,6 +91,10 @@ def show_competition(request):
     return render(request, 'competition/comp.html', {'comp': comp})
 
 
-
+def comp_entries(request):
+    activate()
+    comp = Competition.objects.get(is_active=True)
+    entries = Post.objects.filter(is_entry=True)
+    return render(request, 'competition/entrylist.html', {'entries': entries, 'comp': comp})
 
 
