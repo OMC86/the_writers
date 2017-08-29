@@ -15,7 +15,14 @@
                         <p>{{ post.content }}</p>
                         <p><button class="btn btn-default" onclick="location.href='/posts'">Back to Posts</button></p>
                         {% if user.id == post.author.id %}
-                        <p><button class="btn btn-default" onclick="location.href='{% url 'edit' post.id %}'">Edit</button></p>
+                            <p>
+                                <button class="btn btn-default" onclick="location.href='{% url 'edit' post.id %}'">
+                                Edit</button>
+                            </p>
+                            <p>
+                                <button class="btn btn-default" onclick="location.href='{% url 'delete' post.id %}'">
+                                Delete</button>
+                            </p>
                         {% endif %}
                     </div>
                 </div>

@@ -85,6 +85,14 @@ def edit_post(request, id):
     return render(request, 'posts/postform.html', {'form': form})
 
 
+def delete_post(request, id):
+    post = get_object_or_404(Post, pk=id)
+    post.delete()
+
+    messages.success(request, "Your post was deleted")
+    return redirect(post_list)
+
+
 def show_competition(request):
     activate()
     comp = Competition.objects.filter(is_active=True)
