@@ -98,3 +98,7 @@ def comp_entries(request):
     return render(request, 'competition/entrylist.html', {'entries': entries, 'comp': comp})
 
 
+def featured(request):
+    posts = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()
+                                ).order_by('-date_published')
+    return render(request, 'featured/featuredlist.html', {'posts': posts})
