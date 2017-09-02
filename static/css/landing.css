@@ -1,0 +1,209 @@
+
+.container-fluid{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+ul{
+    list-style: none;
+}
+
+li a{
+    color: #000000;
+    text-align: center;
+}
+
+ul.nav a:hover{
+    background: transparent;
+    border: 1px solid #fff;
+    color: #000;
+    padding-bottom: 5px;
+}
+
+ul.nav a:active{
+    background: transparent;
+    border: 1px solid #000;
+    color: #000;
+}
+
+ul.nav a:focus{
+    background: transparent;
+    border: 1px solid #000;
+    color: #000;
+}
+
+#landingButtons .btn-default{
+    border: 1px solid #42ab9e;
+    float: right;
+    margin: 10px;
+}
+
+#hideButtons .btn-default{
+    border: 1px solid #42ab9e;
+    float: right;
+    margin: 10px;
+}
+
+/*NAV*/
+#navCollapse{
+    background-color: #42ab9e;
+}
+
+.navbar-toggle {
+    border: 1px solid black;
+}
+
+.navbar-toggle *{
+    border: 1px solid black;
+}
+
+#nav{
+    display: none
+}
+
+.titleCircle{
+    margin: 0 auto;
+    margin-top: 20px;
+    padding-top: 30px;
+    height: 180px;
+    width: 180px;
+    border: 1px solid #979797;
+    background-color: #000;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+
+}
+
+#hideButtons{
+    display: none;
+}
+
+.title{
+    font-family: Consolas;
+    font-size: 36px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.link{
+    padding-top: 75px;
+}
+
+.land-link{
+    font-family: Bangla MN;
+    font-size: 24px;
+    color: #000;
+}
+
+#line-rel{
+    position: relative;
+}
+
+#line{
+    display: none;
+    position: absolute;
+    left:140px;
+    margin: 0 auto;
+    width: 304px;
+    height: 113px;
+    border-left: 1px solid #BD5461;
+    border-bottom: 1px solid #BD5461;
+}
+
+#line-two{
+    display: none;
+    position: absolute;
+    border-right: 1px solid #BD5461;
+    height:142px;
+    left: 771px;
+    top:48px
+
+}
+
+.mainHeading{
+    position: relative;
+    font-family: Bangla MN;
+    font-size: 36px;
+}
+
+#listPosition{
+    margin-top: 50px;
+}
+
+.landing-list li{
+    padding-top: 20px;
+    font-family: Bangala MN;
+    font-size: 24px;
+}
+
+.landing-list > li > i{
+    padding: 10px;
+    color: #BD5461;
+}
+
+#form-box{
+    border: 1px solid #42ab9e;
+    padding: 20px;
+    margin-top: 40px;
+}
+
+@media screen and (min-width: 768px) {
+
+    #landingButtons{
+        display: none;
+    }
+
+    #hideButtons{
+    display: block;
+}
+    #navCollapse{
+        height: 265px;
+    }
+
+}
+
+@media screen and (min-width: 992px) {
+
+    #navCollapse{
+        display: none;
+    }
+
+    #nav{
+        display: block;
+    }
+
+    #landing-nav{
+    height: 265px;
+    background-color: #42ab9e;
+    }
+
+    #line{
+        display: block;
+        left:140px;
+    }
+
+    #line-two{
+        display: block;
+        left: 771px;
+    }
+
+    .mainHeading{
+        padding-top: 50px;
+    }
+
+    h1{
+        margin-top:50px;
+    }
+
+}
+
+@media screen and (min-width: 1200px) {
+    #line{
+        left: 175px;
+    }
+
+    #line-two{
+        left: 873px;
+    }
+}
