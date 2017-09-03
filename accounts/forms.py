@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from accounts.models import User
 from django.core.exceptions import ValidationError
+from .models import User
 from django.contrib import auth
 
 class UserRegistrationForm(UserCreationForm):
@@ -53,3 +54,14 @@ class UserSubscriptionForm(forms.Form):
 
         fields = ['stripe_id']
         exclude = ['username']
+
+
+class UserUploadPhoto(forms.ModelForm):
+
+    avatar = forms.ImageField(label='Profile photo')
+
+    class Meta:
+        model = User
+        fields = ['avatar']
+
+

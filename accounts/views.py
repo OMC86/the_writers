@@ -2,7 +2,7 @@ from django.contrib import messages, auth
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.template.context_processors import csrf
-from accounts.forms import UserRegistrationForm, UserLoginForm, UserSubscriptionForm
+from accounts.forms import UserRegistrationForm, UserLoginForm, UserSubscriptionForm, UserUploadPhoto
 from models import User
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
@@ -20,10 +20,6 @@ stripe.api_key = settings.STRIPE_SECRET
 # renders the landing page
 def landing(request):
     return render(request, "landing.html")
-
-
-def profile(request):
-    return render(request, 'base.html')
 
 
 # renders the registration form and registers users
@@ -85,6 +81,7 @@ def subscribe(request):
     return render(request, 'subscribe.html', args)
 
 
+@login_required
 def cancel_subscription(request):
     try:
         customer = stripe.Customer.retrieve(request.user.stripe_id)
@@ -118,10 +115,27 @@ def login(request):
     return render(request, 'login.html', args)
 
 
+@login_required
 def logout(request):
     auth.logout(request)
-    messages.success(request, 'You have successfully logged out')
     return redirect(reverse('login'))
+
+
+@login_required
+def upload(request):
+    if request.method == 'POST':
+        form = UserUploadPhoto(request.POST, request.FILES)
+        if form.is_valid():
+            user = request.user
+            user.avatar = request.FILES['avatar']
+            user.save()
+            return redirect(reverse('home'))
+    else:
+        form = UserUploadPhoto()
+        args = {'form': form}
+        args.update(csrf(request))
+
+        return render(request, 'uploadavatar.html', args)
 
 
 @csrf_exempt
