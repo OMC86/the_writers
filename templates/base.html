@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/posts.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% block head_js %}{% endblock %}
@@ -20,73 +20,86 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="baseTitle">
-                        The Writers
+                        <p>The <br>Writers</p>
                     </div>
                 </div>
             </div>
+         <div id='baseNav' class="borders">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="borders">
-                        <ul class="nav nav-pills pull-right">
-                            <li><a href="{% url 'home' %}">Home</a></li>
-                            <li><a href="#">Shop</a></li>
-                            <li><a href="{% url 'faq' %}">FAQ</a></li>
-                            <li><a href="{% url 'contact' %}">Contact</a></li>
-                            <li><a href="{% url 'about' %}">About</a></li>
-                        </ul>
-                    </div>
+                    <ul class="nav nav-pills pull-right baseNavWords">
+                        <li><a href="{% url 'home' %}">Home</a></li>
+                        <li><a href="#">Shop</a></li>
+                        <li><a href="{% url 'contact' %}">Contact</a></li>
+                        <li><a href="{% url 'about' %}">About</a></li>
+                    </ul>
                 </div>
             </div>
+         </div>
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-xs-3 col-md-3">
                     <div id="profile" class="borders">
-                        <p>{{ user.username }}</p>
-
-                        <div class="row">
-                            <div class="col-md-3">
-                               <button class="btn btn-primary">Upload Photo</button>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <p>Create</p>
-                                <a href="{% url 'new_post' %}"><p>Write something new</p></a>
-                                <a href="{% url 'post_list' %}"><p>View your work</p></a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <p>Competitions</p>
-                                <a href="{% url 'view_comp' %}"><p>Competition details</p></a>
-                                <a href="{% url 'view_entries' %}"><p>Vote</p></a>
-                            </div>
-                        </div>
-                         <div class="row">
-                            <div class="col-md-3">
-                                <p>Featured Works</p>
-                                <a href="{% url 'featured' %}"><p>Featured</p></a>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <p>Account</p>
-
-                                {% if user.strip_id %}
-                                    <a href="{% url 'cancel' %}"><p>Cancel Subscription</p></a>
-                                {% else %}
-                                    <a href="{% url 'subscribe' %}"><p>Upgrade account</p></a>
+                        <div id="userPhotoContainer">
+                            <div id="userPhoto">
+                                {% if user.avatar %}
+                                    <img id="avatar" src="/media/{{ user.avatar }}">
                                 {% endif %}
                             </div>
                         </div>
-
+                        <div id="username">
+                            <p>{{ user.username }}</p>
+                        </div>
+                        {% if user.avatar %}
+                        {% else %}
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-xs-10 col-md-10">
+                                <a href="{% url 'upload' %}"><button class="btn btn-default">Upload Photo</button></a>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="row">
+                            <div class="col-xs-10 col-md-10">
+                                <p class="profile-title">Get Creative</p>
+                                <a href="{% url 'new_post' %}"><p>Create a post</p></a>
+                                <a href="{% url 'post_list' %}"><p>View your work</p></a>
+                            </div>
+                        </div>
+                    <hr>
+                        <div class="row">
+                            <div class="col-xs-10 col-md-10">
+                                <p class="profile-title">Competitions</p>
+                                <a href="{% url 'view_comp' %}"><p>Competition details</p></a>
+                                <a href="{% url 'view_entries' %}"><p>Vote</p></a>
+                                <a href="{% url 'winner' %}"><p>Winners</p></a>
+                            </div>
+                        </div>
+                    <hr>
+                         <div class="row">
+                            <div class="col-xs-10 col-md-10">
+                                <p class="profile-title">Featured Works</p>
+                                <a href="{% url 'featured' %}"><p>Featured</p></a>
+                            </div>
+                        </div>
+                    <hr>
+                        <div class="row">
+                            <div class="col-xs-10 col-md-10">
+                                <p class="profile-title">Account</p>
+                                {% if user.avatar %}
+                                    <a href="{% url 'upload' %}"><p>Change Profile pic</p>
+                                    </a>
+                                {% endif %}
+                                    <a href="{% url 'subscribe' %}"><p>Upgrade account</p></a>
+                            </div>
+                        </div>
+                    <hr>
+                        <div class="row">
+                            <div class="col-xs-10 col-md-10">
                                 <a href="{%  url 'logout' %}"><button class="btn btn-primary">Log Out</button></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-md-9">
+                <div class="col-xs-9 col-md-9">
                     {% block content %}
                     {% endblock %}
                 </div>
