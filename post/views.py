@@ -131,6 +131,25 @@ def entry_detail(request, id):
     return render(request, "competition/entrydetail.html", {'post': post, 'votes': votes, 'voteobjects': voteobjects})
 
 
+@login_required
+def cast_vote(request, id):
+    post = get_object_or_404(Post, pk=id)
+    competition = Competition.objects.all()
+    for comp in competition:
+        if comp.can_vote():
+            new_vote, created = Vote.objects.get_or_create(voter=request.user,
+                                                           post_id=post, comp=comp)
+            if not created:
+                messages.info(request, "You have already voted for this entry")
+                return redirect(entry_detail, post.pk)
+            else:
+                messages.info(request, "Thanks for voting")
+                return redirect(entry_detail, post.pk)
+    else:
+        messages.info(request, "Voting closed")
+        return redirect(entry_detail, post.pk)
+
+
 def featured(request):
     posts = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()
                                 ).order_by('-date_published')
