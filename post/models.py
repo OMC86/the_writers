@@ -82,12 +82,6 @@ class Post(models.Model):
         return self.title
 
 
-class Vote(models.Model):
-    voter = models.ForeignKey(settings.AUTH_USER_MODEL)
-    comp = models.ForeignKey('Competition')
-    post_id = models.ForeignKey('Post')
-
-
 class Competition(models.Model):
     title = models.CharField(max_length=50)
     brief = models.CharField(max_length=300)

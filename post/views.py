@@ -122,59 +122,7 @@ def comp_entries(request):
         return render(request, 'competition/entrylist.html', {'entries': entries, 'comp': comp})
 
 
-def winner(request):
-    competition = Competition.objects.all()
-    for comp in competition:
-        if comp.get_winner():
-            x = Vote.objects.filter(comp=comp)
-            winners = x.values_list('post_id').annotate(
-                vote_count=Count('post_id')).order_by('-vote_count')
-            winner = winners[0]     # the winner tuple post_id, votes
-            getentry = winner[0]    # get the post_id from the tuple
-            entry = Post.objects.get(id=getentry)
-            comp.winner = entry
-            comp.save()
-            return render(request, 'competition/winner.html', {'competition': competition, 'entry': entry})
-    else:
-        return render(request, 'competition/winner.html', {'competition': competition})
-
-
-def entry_detail(request, id):
-    post = get_object_or_404(Post, pk=id)
-    post.views += 1
-    post.save()
-    voteobjects = Vote.objects.filter(post_id=post).values('voter')
-    votes = voteobjects.all().count()
-    return render(request, "competition/entrydetail.html", {'post': post, 'votes': votes, 'voteobjects': voteobjects})
-
-
-@login_required
-def cast_vote(request, id):
-    post = get_object_or_404(Post, pk=id)
-    competition = Competition.objects.all()
-    for comp in competition:
-        if comp.can_vote():
-            new_vote, created = Vote.objects.get_or_create(voter=request.user,
-                                                           post_id=post, comp=comp)
-            if not created:
-                messages.info(request, "You have already voted for this entry")
-                return redirect(entry_detail, post.pk)
-            else:
-                messages.info(request, "Thanks for voting")
-                return redirect(entry_detail, post.pk)
-    else:
-        messages.info(request, "Voting closed")
-        return redirect(entry_detail, post.pk)
-
-
 def featured(request):
     posts = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()
                                 ).order_by('-date_published')
     return render(request, 'featured/featuredlist.html', {'posts': posts})
-
-
-def featured_detail(request, id):
-    post = get_object_or_404(Post, pk=id)
-    post.views += 1
-    post.save()
-    return render(request, "featured/featureddetail.html", {'post': post})
