@@ -12,7 +12,11 @@ urlpatterns = [
     # competition
     url(r'^competition/$', views.show_competition, name='view_comp'),
     url(r'^competition/entries/$', views.comp_entries, name='view_entries'),
+    url(r'^competition/entries/(?P<id>\d+)/$', views.entry_detail, name='entry_detail'),
+    
+    
 
     # featured
     url(r'^featured/$', views.featured, name='featured'),
+    url(r'^featured/(?P<id>\d+)/$', views.featured_detail, name='featured_detail'),
 ]

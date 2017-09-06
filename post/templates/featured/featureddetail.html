@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-9">
+            <div>
+                {{ post.date_created }}
+            </div>
+            <div class="col-md-9">
+                <h3>{{ post.title }}</h3>
+                <div class="row">
+                    <div class="col-xs-9">
+                        {% if post.image %}
+                            <img src="/media/{{ post.image }}">
+                        {% endif %}
+                        <p>{{ post.content }}</p>
+                        <p><button class="btn btn-default" onclick="location.href='/featured'">Back</button></p>
+                        {% if user == post.author %}
+                            <p>
+                                <button class="btn btn-default" onclick="location.href='{% url 'edit' post.id %}'">
+                                Edit</button>
+                            </p>
+                            <p>
+                                <button class="btn btn-default" onclick="location.href='{% url 'delete' post.id %}'">
+                                Delete</button>
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% load disqus_tags %}
+    {% disqus_dev %}
+    {% set_disqus_title post.title %}
+    {% disqus_show_comments %}
+{% endblock %}

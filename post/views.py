@@ -122,7 +122,23 @@ def comp_entries(request):
         return render(request, 'competition/entrylist.html', {'entries': entries, 'comp': comp})
 
 
+def entry_detail(request, id):
+    post = get_object_or_404(Post, pk=id)
+    post.views += 1
+    post.save()
+    voteobjects = Vote.objects.filter(post_id=post).values('voter')
+    votes = voteobjects.all().count()
+    return render(request, "competition/entrydetail.html", {'post': post, 'votes': votes, 'voteobjects': voteobjects})
+
+
 def featured(request):
     posts = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()
                                 ).order_by('-date_published')
     return render(request, 'featured/featuredlist.html', {'posts': posts})
+
+
+def featured_detail(request, id):
+    post = get_object_or_404(Post, pk=id)
+    post.views += 1
+    post.save()
+    return render(request, "featured/featureddetail.html", {'post': post})

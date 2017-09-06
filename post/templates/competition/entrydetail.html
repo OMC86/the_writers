@@ -1,10 +1,55 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            {% if post.image %}
+                <img src="/media/{{ post.image }}">
+            {% endif %}
+            <h3>{{ post.title }}</h3>
+            <div class="row">
+                <div class="col-xs-12">
+                        <p>{{ post.content }}</p>
 
-</body>
-</html>
+                            {% if user in voteobjects %}
+                                <p>{{ user }} has already voted</p>
+                            {% else %}
+                                <p>Clicking this button will cast a vote for this entry</p>
+                                <button class="btn btn-success" onclick="location.href='{% url 'cast_vote' post.id %}'">
+                                    Vote
+                                </button>
+                            {% endif %}
+
+
+
+
+
+                    <div>
+                        <p>This entry has {{ votes }} votes</p>
+                    </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-default" onclick="location.href='/competition/entries/'">
+                            Back to Entries
+                        </button>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% load disqus_tags %}
+    {% disqus_dev %}
+    {% set_disqus_title post.title %}
+    {% disqus_show_comments %}
+{% endblock %}
