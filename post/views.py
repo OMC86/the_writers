@@ -27,15 +27,21 @@ def post_detail(request, id):
     return render(request, "posts/postdetail.html", {'post': post})
 
 
+@login_required 
 def new_post(request):
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.date_published = timezone.now()
-
+            """
+            First Check if the post is a competition entry. If so, check that the user 
+            has an active subscription and finally check for a competition which 
+            has an active entry period. If these conditions return true the post is saved 
+            as a competition entry.
+            """
             if post.is_entry:
+                post.date_published = timezone.now()
                 user = request.user
                 end = user.subscription_end
                 now = timezone.now()
@@ -52,6 +58,11 @@ def new_post(request):
                 else:
                     messages.error(request, "Please subscribe to enter competition")
                     return redirect(new_post)
+            elif post.is_featured:
+                post.date_published = timezone.now()
+                post.save()
+                return redirect(post_detail, post.pk)
+
             else:
                 post.save()
                 return redirect(post_detail, post.pk)
@@ -60,6 +71,7 @@ def new_post(request):
     return render(request, 'posts/postform.html', {'form': form})
 
 
+@login_required
 def edit_post(request, id):
     post = get_object_or_404(Post, pk=id)
     if request.method == "POST":
@@ -67,9 +79,9 @@ def edit_post(request, id):
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
-            post.date_published = timezone.now()
 
             if post.is_entry:
+                post.date_published = timezone.now()
                 user = request.user
                 end = user.subscription_end
                 now = timezone.now()
@@ -87,6 +99,11 @@ def edit_post(request, id):
                 else:
                     messages.error(request, "Please subscribe to enter competition")
                     return redirect(new_post)
+            elif post.is_featured:
+                post.date_published = timezone.now()
+                post.save()
+                return redirect(post_detail, post.pk)
+
             else:
                 post.save()
                 return redirect(post_detail, post.pk)
@@ -95,10 +112,10 @@ def edit_post(request, id):
     return render(request, 'posts/postform.html', {'form': form})
 
 
+@login_required
 def delete_post(request, id):
     post = get_object_or_404(Post, pk=id)
     post.delete()
-
     messages.success(request, "Your post was deleted")
     return redirect(post_list)
 
@@ -106,10 +123,13 @@ def delete_post(request, id):
 def show_competition(request):
     competition = Competition.objects.all()
     for comp in competition:
+        """
+        get the currently active competition
+        """
         if comp.is_active():
             return render(request, 'competition/comp.html', {'comp': comp})
     else:
-        return render(request, 'competition/comp.html', {'comp': comp})
+        return render(request, 'competition/comp.html')
 
 
 def comp_entries(request):

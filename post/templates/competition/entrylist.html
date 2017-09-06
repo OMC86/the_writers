@@ -2,17 +2,19 @@
 {% block content %}
 
     <h3>{{ comp.title }}</h3>
+    <h4>{{ comp.brief }}</h4>
 
     {% for entry in entries %}
         <div>
-            {% if comp.id == entry.comp.id %}
+            {% if comp == entry.comp %}
                 <div class="col-md-12">
+                <hr>
                     <h4>{{ entry.title }}</h4>
                     <div class="row">
                         <div class="col-xs-12">
                             <p>{{ entry.content|truncatewords:30 }}</p>
                             <p><button class="btn btn-default" onclick="location.href={{ entry.id }}">Read More</button></p>
-                            <p>Posted by {{ entry.author }} Votes {{ entry.vote_count }}</p>
+                            <p>Posted by {{ entry.author }}</p>
                         </div>
                     </div>
                 </div>
