@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row">
+        <div class="com-md-12">
+            {% if messages %}
+                <ul class="messages">
+                    {% for message in messages %}
+                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Welcome to The Writers</h1>
+            <div class="introContainer">
+                <p class='intro'>The online space that allows you to showcase your creative writing talents.
+                </p>
+                <p>Things you can do on The Writers!</p>
+                <ul>
+                    <li> <p>Subscribe and enter competitions for your chance to win cash money!</p></li>
+                    <li><p>Post your work for everyone to see and talk about</p></li>
+                    <li><p>Join the community discussing featured works.</p></li>
+                    <li><p>Vote for the competition entry you think deserves to win</p></li>
+                    <li><p>Have 100% control over when your posts are published.</p></li>
+                    <li><p>Edit or delete your posts any time. (Competition entries can't be edited during the voting period.)</p></li>
+                </ul>
+                
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="com-md-12">
+            <hr>
+            <div class="compContainer">
+                <h2>Competition</h2>
+                <p>The cash prize is made up directly from subscription fees
+                which means the more of you who enter, the bigger the pot will be!</p>
+                <p>Become a subscriber now and enjoy our limitedspecial offer of £2.00 a month</p>
+                <p>CASH prize for this months winner £ {{ prize }}.00</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="com-md-12">
+        {% if comp %}
+            <div>
+                <p>Brief: {{ comp.brief }}</p>
+            </div>
+            <div>
+                {% if user in users %}
+                    <p><button class="btn btn-default homeEnter" onclick="location.href='/posts/new/'">Enter</button></p>
+                {% else %}
+                    <p><button class="btn btn-default homeEnter" onclick="location.href='/accounts/subscribe/'">Subscribe</button></p>
+                {% endif %}
+            <p><button class="btn btn-default homeEnter" onclick="location.href='/competition/'">More</button></p>
+            </div>
+            {% else %}
+                <p>There are no active competitions at this time</p>
+                {% endif %}
+        </div>
+    </div>
+    <hr>
+     <div class="row">
+        <div class="com-md-12">
+            <div>
+                <h2>Featured Work</h2>
+                {% for p in post|slice:':2' %}
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div id=homeFeaturedList>
+                                <h4>{{ p.title }} by {{ p.author }}</h4>
+                                <p>{{ p.content|truncatewords:10 }}</p>
+                                <p>Published on: {{ p.date_published }}</p>
+                                <p> Views: {{ p.views }}
+                                <button class="btn btn-default homeEnter" onclick="location.href='/featured/'">More</button></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+
+{% endblock %}
