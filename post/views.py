@@ -170,6 +170,23 @@ def cast_vote(request, id):
         return redirect(entry_detail, post.pk)
 
 
+def winner(request):
+    competition = Competition.objects.all()
+    for comp in competition:
+        if comp.get_winner():
+            x = Vote.objects.filter(comp=comp)
+            winners = x.values_list('post_id').annotate(
+                vote_count=Count('post_id')).order_by('-vote_count')
+            winner = winners[0]     # the winner tuple post_id, votes
+            getentry = winner[0]    # get the post_id from the tuple
+            entry = Post.objects.get(id=getentry)
+            comp.winner = entry
+            comp.save()
+            return render(request, 'competition/winner.html', {'competition': competition, 'entry': entry})
+    else:
+        return render(request, 'competition/winner.html', {'competition': competition})
+
+
 def featured(request):
     posts = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()
                                 ).order_by('-date_published')

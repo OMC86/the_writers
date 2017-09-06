@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^competition/entries/$', views.comp_entries, name='view_entries'),
     url(r'^competition/entries/(?P<id>\d+)/$', views.entry_detail, name='entry_detail'),
     url(r'^competition/entries/voted/(?P<id>\d+)/$', views.cast_vote, name='cast_vote'),
-    
+    url(r'^competition/entries/winners/$', views.winner, name='winner'),
 
     # featured
     url(r'^featured/$', views.featured, name='featured'),
