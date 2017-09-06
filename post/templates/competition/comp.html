@@ -2,12 +2,33 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-        {% for x in comp %}
             <div>
-                <h1>{{ x.title }}</h1>
+                <h1>The writers monthly cash give away</h1>
+                <p>Every month on the writers we hold a competition for our subscribers in which
+                they can win a cash prize. The more subscribers we have, the bigger the prize
+                for the winner.</p>
+                <p>There are two stages to each competition. The entry period and the voting period.
+                Once the voting period ends, the entry with the most votes wins the cash</p>
+                <ul>
+                    <li>The entry period</li>
+                    <p>Subscribers can submit their work to the competition during this time.
+                    </p>
+                    <li>The voting period</li>
+                    <p>Once the entry period ends, the voting period begins. No submissions
+                    can be made during this time. Users can vote for the entry they think deserves
+                    to win the cash prize.</p>
+                    <li>The Prize</li>
+                    <p>The reason we ask competition entries to come from subscribers only is that we use the
+                        subscription money to fun the winners pot. This means the more subscribers we have, the
+                    bigger the prize will be</p>
+                </ul>
+            </div>
+            <div>
+                <h1>This Month's Competition</h1>
+                <h1>{{ comp.title }}</h1>
             </div>
             <div class="col-md-12">
-                <h3>{{ x.brief }}</h3>
+                <h3>{{ comp.brief }}</h3>
                 <div class="row">
                     <div class="col-md-9">
                         <p>This competition is open for entries between</p>
@@ -15,8 +36,8 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <p>{{ x.entry_period_start }} and
-                            {{ x.entry_period_fin }}
+                        <p>{{ comp.entry_period_start }} and
+                            {{ comp.entry_period_fin }}
                         </p>
                     </div>
                 </div>
@@ -27,11 +48,11 @@
                  </div>
                 <div class="row">
                     <div class="col-md-12">
-                         <p>{{ x.vote_period_start }} -
-                            {{ x.vote_period_end }}</p>
+                         <p>{{ comp.vote_period_start }} -
+                            {{ comp.vote_period_end }}</p>
                     </div>
                 </div>
-            {% endfor %}
+
                 <div>
                     {% if user.stripe_id %}
                         <div>
@@ -46,9 +67,6 @@
                             </button>
                         </div>
                     {% endif %}
-                <div>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda beatae consequuntur cupiditate dolor et excepturi fuga fugiat harum impedit inventore iste magni maiores, modi nam perferendis sapiente totam velit veritatis.</p>
-                </div>
                 </div>
             </div>
         </div>
