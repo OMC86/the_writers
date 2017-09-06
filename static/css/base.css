@@ -1,13 +1,36 @@
 
+/* General css*/
 
-.borders{
-    border: 1px solid #BD5461;
+
+.btn-default {
+    border: 1px solid #42ab9e;
 }
 
-#profile{
-    margin-top: 12px;
-    padding: 15px;
+a{
+    color: #000;
+    text-decoration: none;
 }
+
+p{
+    font-family: Bangala MN;
+    font-size: 18px;
+}
+
+h1{
+    color:#01403B;
+    font-family: Bangala MN;
+}
+
+h2{
+     color:#01403B;
+    font-family: Bangala MN;
+}
+
+h4{
+    color:#01403B;
+}
+
+/*TITLE*/
 
 .baseTitle{
     font-family: Consolas;
@@ -15,28 +38,67 @@
     color: #000;
 }
 
-a{
-    color: #000;
+
+/*TOP NAV*/
+
+#baseNav{
+    height: 80px;
 }
 
-#username{
+.baseNavWords{
+    font-family: Bangala MN;
     font-size: 18px;
-    color: #BD5461;
-    text-align: center;
+    padding-top: 15px;
 }
 
-#userPhotoContainer{
-    position: absolute;
+.borders{
+    border: 1px solid #BD5461;      /* borders for top and side nav*/
+}
+
+
+/*SIDE NAV*/
+
+#profile{
+    margin-top: 15px;
+    padding: 15px;
 }
 
 #userPhoto{
     position: relative;
-    top: -20px;
+    display: block;
+    top: -65px;
     margin: 0 auto;
-    height: 50px;
-    width: 50px;
+    height: 80px;
+    width: 80px;
     border: 1px solid #979797;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
+}
+
+#avatar{
+    width: 80px;
+    height: 100%;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
+
+#username{
+    position: relative;
+    font-size: 18px;
+    color: #BD5461;
+    text-align: center;
+    top: -40px;
+}
+
+.profile-title{
+    font-weight: bold;
+    font-size: 18px;
+    color: #01403B;
+}
+
+#profile .btn-default{
+    display: block;
+    margin: 0 auto;
 }

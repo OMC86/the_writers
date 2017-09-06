@@ -9,6 +9,9 @@
     <meta name="author" content="">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/postform.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/postlist.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% block head_js %}{% endblock %}
@@ -19,33 +22,32 @@
         <div class="masthead">
             <div class="row">
                 <div class="col-md-12">
-                    <div class="baseTitle">
+                    <div class=" nav navbar-header baseTitle">
                         <p>The <br>Writers</p>
                     </div>
                 </div>
             </div>
-         <div id='baseNav' class="borders">
             <div class="row">
                 <div class="col-md-12">
-                    <ul class="nav nav-pills pull-right baseNavWords">
-                        <li><a href="{% url 'home' %}">Home</a></li>
-                        <li><a href="#">Shop</a></li>
-                        <li><a href="{% url 'contact' %}">Contact</a></li>
-                        <li><a href="{% url 'about' %}">About</a></li>
-                    </ul>
+                    <div id='baseNav' class="borders">
+                        <ul class="nav nav-pills pull-right baseNavWords">
+                            <li><a href="{% url 'home' %}">Home</a></li>
+                            <li><a href="#">Shop</a></li>
+                            <li><a href="{% url 'contact' %}">Contact</a></li>
+                            <li><a href="{% url 'about' %}">About</a></li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-         </div>
             <div class="row">
                 <div class="col-xs-3 col-md-3">
                     <div id="profile" class="borders">
-                        <div id="userPhotoContainer">
-                            <div id="userPhoto">
-                                {% if user.avatar %}
-                                    <img id="avatar" src="/media/{{ user.avatar }}">
-                                {% endif %}
-                            </div>
+                        <div id="userPhoto">
+                            {% if user.avatar %}
+                                <img id="avatar" src="/media/{{ user.avatar }}">
+                            {% endif %}
                         </div>
+
                         <div id="username">
                             <p>{{ user.username }}</p>
                         </div>
@@ -58,7 +60,7 @@
                         </div>
                         {% endif %}
                         <div class="row">
-                            <div class="col-xs-10 col-md-10">
+                            <div class="col-xs-12 col-md-12">
                                 <p class="profile-title">Get Creative</p>
                                 <a href="{% url 'new_post' %}"><p>Create a post</p></a>
                                 <a href="{% url 'post_list' %}"><p>View your work</p></a>
@@ -66,7 +68,7 @@
                         </div>
                     <hr>
                         <div class="row">
-                            <div class="col-xs-10 col-md-10">
+                            <div class="col-xs-12 col-md-12">
                                 <p class="profile-title">Competitions</p>
                                 <a href="{% url 'view_comp' %}"><p>Competition details</p></a>
                                 <a href="{% url 'view_entries' %}"><p>Vote</p></a>
@@ -75,14 +77,14 @@
                         </div>
                     <hr>
                          <div class="row">
-                            <div class="col-xs-10 col-md-10">
+                            <div class="col-xs-12 col-md-12">
                                 <p class="profile-title">Featured Works</p>
                                 <a href="{% url 'featured' %}"><p>Featured</p></a>
                             </div>
                         </div>
                     <hr>
                         <div class="row">
-                            <div class="col-xs-10 col-md-10">
+                            <div class="col-xs-12 col-md-12">
                                 <p class="profile-title">Account</p>
                                 {% if user.avatar %}
                                     <a href="{% url 'upload' %}"><p>Change Profile pic</p>
@@ -94,7 +96,7 @@
                     <hr>
                         <div class="row">
                             <div class="col-xs-10 col-md-10">
-                                <a href="{%  url 'logout' %}"><button class="btn btn-primary">Log Out</button></a>
+                                <a id='logoutBtn' href="{%  url 'logout' %}"><button class="btn btn-default">Log Out</button></a>
                             </div>
                         </div>
                     </div>
