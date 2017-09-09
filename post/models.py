@@ -90,6 +90,7 @@ class Competition(models.Model):
     vote_period_start = models.DateTimeField(blank=True, null=True)
     vote_period_end = models.DateTimeField(blank=True, null=True)
     winner = models.OneToOneField('Post', blank=True, null=True)
+    prize = models.IntegerField(blank=True, null=True)
 
     def is_active(self):
         now = timezone.now()
