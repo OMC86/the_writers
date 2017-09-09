@@ -30,6 +30,9 @@ urlpatterns = [
     # post
     url(r'', include('post.urls')),
 
+    # search
+    url(r'', include('search.urls')),
+
     # images
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
 ]

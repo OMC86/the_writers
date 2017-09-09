@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+         {% if post.date_published %}
+            <h2>{{ post.title }}</h2>
+                <div class="row">
+                    <div class="col-xs-12">
+                        {% if post.image %}
+                            <img src="/media/{{ post.image }}">
+                        {% endif %}
+                        <p>{{ post.content }}</p>
+
+                        <p>Published on {{ post.date_published }}</p>
+
+         {% endif %}
+            </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    {% if user == post.author %}
+                        <div class="floatRight">
+                            <a href="{% url 'edit' post.id %}"><span class="fa fa-pencil-square-o fa-2x"></span></a>
+                            <a href="{% url 'edit' post.id %}"><i class="fa fa-trash-o fa-2x"></i></a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <p><button class="btn btn-default" onclick="location.href='/search/{{ post.author.id }}'">
+                        Back to Posts</button></p>
+                </div>
+            </div>
+        </div>
+{% endblock %}
