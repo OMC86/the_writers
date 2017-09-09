@@ -1,7 +1,23 @@
 {% extends 'base.html' %}
 {%  block content %}
     {% load bootstrap_tags %}
-<h1>New post</h1>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>New post</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <p>Use this form to post your work. You can choose whether
+            you want it to be made public by selecting the featured radio button,
+                or entered into a competition by selecting the entry radio button, or if
+            you don’t want anyone to see it just yet you can save it so only
+            you can view it. You can come back and edit it any time and even delete it
+            if you want</p>
+        </div>
+    </div>
+
+
     {% if messages %}
     <ul class="messages">
         {% for message in messages %}
@@ -12,6 +28,6 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form | as_bootstrap }}
-        <button type="submit" class="btn btn-info">Save</button>
+        <button type="submit" class="btn btn-default subForm">Save</button>
     </form>
 {% endblock %}

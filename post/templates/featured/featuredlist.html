@@ -1,7 +1,40 @@
 {% extends 'base.html' %}
 {% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <div class="list-title">
+                <h1>Featured Posts</h1>
+            </div>
+        </div>
+    </div>
     {% for post in posts %}
-        {{ post.title }}
+        <div>
+            <div class="col-md-6">
+        <hr>
+                <h3>{{ post.title }}</h3>
+                <p>{{ post.content|truncatewords:30 }}</p>
+                <p>Catagory: {{ post.category }}</p>
+                <p>Genre: {{ post.genre }}</p>
+                <p><button class="btn btn-default" onclick="location.href={{ post.id }}">Read More</button></p>
+                <p>Posted by {{ post.author }} on {{ post.date_published }} | Views {{ post.views }}</p>
+            </div>
+        </div>
     {% endfor %}
+{% if posts.has_other_pages %}
+        <div class="pagination">
+    <span class="step-links">
+        {% if posts.has_previous %}
+            <a href="?page={{ posts.previous_page_number }}">previous</a>
+        {% endif %}
 
+        <span class="current">
+            Page {{ posts.number }} of {{ posts.paginator.num_pages }}.
+        </span>
+
+        {% if posts.has_next %}
+            <a href="?page={{ posts.next_page_number }}">next</a>
+        {% endif %}
+    {% endif %}
+    </span>
+</div>
 {% endblock %}

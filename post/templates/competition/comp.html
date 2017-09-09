@@ -14,21 +14,19 @@
                     <p>Subscribers can submit their work to the competition during this time.
                     </p>
                     <li>The voting period</li>
-                    <p>Once the entry period ends, the voting period begins. No submissions
-                    can be made during this time. Users can vote for the entry they think deserves
-                    to win the cash prize.</p>
+                    <p>Once the entry period ends, the voting period begins. No submissions or edits can be made during this time. Users can vote for the entry they think deserves to win the cash prize.</p>
                     <li>The Prize</li>
-                    <p>The reason we ask competition entries to come from subscribers only is that we use the
-                        subscription money to fun the winners pot. This means the more subscribers we have, the
-                    bigger the prize will be</p>
+                    <p>The reason we ask competition entries to come from subscribers only is that we use the subscription money to fun the winners pot. This means the more subscribers we have, the bigger the prize will be</p>
                 </ul>
             </div>
+            <hr>
+        {% if comp %}
             <div>
                 <h1>This Month's Competition</h1>
-                <h1>{{ comp.title }}</h1>
+                <h2>{{ comp.title }}</h2>
             </div>
             <div class="col-md-12">
-                <h3>{{ comp.brief }}</h3>
+                <h4>{{ comp.brief }}</h4>
                 <div class="row">
                     <div class="col-md-9">
                         <p>This competition is open for entries between</p>
@@ -55,13 +53,13 @@
 
                 <div>
                     {% if user.stripe_id %}
-                        <div>
+                        <div class="floatRight">
                             <button class="btn btn-default" onclick="location.href='{% url 'new_post' %}'">
                                 Enter Now
                             </button>
                         </div>
                     {% else %}
-                        <div>
+                        <div class='floatRight'>
                             <button class="btn btn-default" onclick="location.href='{% url 'subscribe' %}'">
                                 Upgrade account
                             </button>
@@ -69,6 +67,14 @@
                     {% endif %}
                 </div>
             </div>
+            {% else %}
+            <div class="row">
+                <div class="col-md-12">
+                    <p>There are no active competitions at this time</p>
+                </div>
+            </div>
+        {% endif %}
+
         </div>
     </div>
 {% endblock %}
