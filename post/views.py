@@ -4,9 +4,11 @@ from __future__ import unicode_literals
 from django.contrib import messages, auth
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from django.utils import timezone
 from .models import Post, Competition, Vote
+from accounts.models import User
 from .forms import PostForm
 
 
@@ -15,8 +17,17 @@ import arrow
 
 # renders a list of posts descending order
 def post_list(request):
-    posts = Post.objects.filter(date_published__lte=timezone.now()
-                                ).order_by('-date_published')
+    postlist = Post.objects.filter(author=request.user)
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(postlist, 3)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
+
     return render(request, 'posts/postlist.html', {'posts': posts})
 
 
@@ -139,16 +150,21 @@ def comp_entries(request):
         if comp.is_active():
             return render(request, 'competition/entrylist.html', {'entries': entries, 'comp': comp})
     else:
-        return render(request, 'competition/entrylist.html', {'entries': entries, 'comp': comp})
+        return render(request, 'competition/entrylist.html')
 
 
 def entry_detail(request, id):
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
-    voteobjects = Vote.objects.filter(post_id=post).values('voter')
+    voteobjects = Vote.objects.filter(post_id=post)
     votes = voteobjects.all().count()
-    return render(request, "competition/entrydetail.html", {'post': post, 'votes': votes, 'voteobjects': voteobjects})
+    for vote in voteobjects:
+        if vote.voter == request.user:
+            return render(request, "competition/entrydetail.html",
+                          {'post': post, 'votes': votes, 'vote': vote})
+    else:
+        return render(request, "competition/entrydetail.html", {'post': post, 'votes': votes})
 
 
 @login_required
@@ -170,26 +186,66 @@ def cast_vote(request, id):
         return redirect(entry_detail, post.pk)
 
 
-def winner(request):
-    competition = Competition.objects.all()
-    for comp in competition:
-        if comp.get_winner():
-            x = Vote.objects.filter(comp=comp)
-            winners = x.values_list('post_id').annotate(
+def winners(request):
+    competitions = Competition.objects.all().order_by('-vote_period_end')
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(competitions, 3)
+    try:
+        comps = paginator.page(page)
+    except PageNotAnInteger:
+        comps = paginator.page(1)
+    except EmptyPage:
+        comps = paginator.page(paginator.num_pages)
+
+    for comp in competitions:
+        if comp.is_active():
+            return render(request, 'competition/winnerlist.html', {'comps': comps})
+        elif comp.winner is None:
+            try:
+                comp = Competition.objects.get(winner=None)
+                x = Vote.objects.filter(comp=comp)
+                winners = x.values_list('post_id').annotate(
                 vote_count=Count('post_id')).order_by('-vote_count')
-            winner = winners[0]     # the winner tuple post_id, votes
-            getentry = winner[0]    # get the post_id from the tuple
-            entry = Post.objects.get(id=getentry)
-            comp.winner = entry
-            comp.save()
-            return render(request, 'competition/winner.html', {'competition': competition, 'entry': entry})
-    else:
-        return render(request, 'competition/winner.html', {'competition': competition})
+                winner = winners[0]     # the winner tuple post_id, votes
+                getentry = winner[0]    # get the post_id from the tuple
+                entry = Post.objects.get(id=getentry)
+                comp.winner = entry
+
+                subscribers = User.objects.filter(subscription_end__gte=timezone.now())
+                prize = subscribers.count()
+                comp.prize = prize
+                comp.save()
+                return render(request, 'competition/winnerlist.html', {'comps': comps})
+
+            except Exception:
+                return render(request, 'competition/winnerlist.html', {'comps': comps})
+
+
+
+def winner_detail(request, id):
+    post = get_object_or_404(Post, pk=id)
+    post.views += 1
+    post.save()
+    voteobjects = Vote.objects.filter(post_id=post)
+    votes = voteobjects.all().count()
+    return render(request, 'competition/winnerdetail.html', {'post': post, 'votes': votes})
+
+
 
 
 def featured(request):
-    posts = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()
+    postlist = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()
                                 ).order_by('-date_published')
+    page = request.GET.get('page', 1)
+
+    paginator = Paginator(postlist, 4)
+    try:
+        posts = paginator.page(page)
+    except PageNotAnInteger:
+        posts = paginator.page(1)
+    except EmptyPage:
+        posts = paginator.page(paginator.num_pages)
     return render(request, 'featured/featuredlist.html', {'posts': posts})
 
 
