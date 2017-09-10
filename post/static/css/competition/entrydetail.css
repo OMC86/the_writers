@@ -1,0 +1,10 @@
+
+#voteButton{
+    display: block;
+    margin: 0 auto;
+    width: 200px;
+}
+
+#voteBtnContainer > .btn {
+    background-color: #42ab9e;
+}

@@ -17,7 +17,8 @@
                             {% if post.is_featured %}
                                 <p>Published on {{ post.date_published }}</p>
                             {% else %}
-                                <p>This post was created on {{ post.date_published }}. To publish this post, when you edit, select feautured post and save.</p>
+                                <p>This post was created on {{ post.date_published }}. To publish this post, when you
+                                    edit, select featured post and save.</p>
                             {% endif %}
 
                             <p><button class="btn btn-default floatRight" onclick="location.href={{ post.id }}">Read More

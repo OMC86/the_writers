@@ -7,20 +7,20 @@
                 <div class="col-lg-12">
                     <hr>
                     <div>
-                        <h1>{{ c.title }}</h1>
+                        <h1 class="winnerscomp">{{ c.title }}</h1>
                     </div>
                     <div>
-                        <h2>{{ c.brief }}</h2>
+                        <h2 class="winnerscomp">{{ c.brief }}</h2>
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-lg-12">
                     <div>
-                        <h3>The winner is: {{ c.winner.author }}</h3>
+                        <h3 class="winner">The winner is: {{ c.winner.author }}</h3>
                     </div>
                     <div>
-                        <h3>with the post: {{ c.winner.title }}</h3>
+                        <h3 class="winner">with the post: {{ c.winner.title }}</h3>
                     </div>
                 </div>
             </div>
@@ -28,6 +28,7 @@
             </button></p>
         {% endif %}
     {% endfor %}
+
 
     {% if comps.has_other_pages %}
         <div class="pagination">

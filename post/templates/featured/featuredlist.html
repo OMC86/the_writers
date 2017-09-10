@@ -13,10 +13,10 @@
         <hr>
                 <h3>{{ post.title }}</h3>
                 <p>{{ post.content|truncatewords:30 }}</p>
-                <p>Catagory: {{ post.category }}</p>
+                <p>Category: {{ post.category }}</p>
                 <p>Genre: {{ post.genre }}</p>
-                <p><button class="btn btn-default" onclick="location.href={{ post.id }}">Read More</button></p>
                 <p>Posted by {{ post.author }} on {{ post.date_published }} | Views {{ post.views }}</p>
+                <p><button class="btn btn-default" onclick="location.href={{ post.id }}">Read More</button></p>
             </div>
         </div>
     {% endfor %}
