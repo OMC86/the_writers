@@ -24,14 +24,14 @@ def faq(request):
 
 def profile(request):
 
-    users = User.objects.filter(subscription_end__gte=timezone.now())
-    prize = users.count()
+    subscribers = User.objects.filter(subscription_end__gte=timezone.now())
+    prize = subscribers.count()
     post = Post.objects.filter(is_featured=True)
     competition = Competition.objects.all()
     for comp in competition:
         if comp.is_active():
-            return render(request, 'home.html', {'post': post, 'comp': comp, 'prize': prize, 'users': users})
+            return render(request, 'home.html', {'post': post, 'comp': comp, 'prize': prize, 'users': subscribers})
     else:
-        return render(request, 'home.html', {'post': post, 'prize': prize, 'users': users})
+        return render(request, 'home.html', {'post': post, 'prize': prize, 'users': subscribers})
 
 

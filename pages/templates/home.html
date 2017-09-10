@@ -14,20 +14,16 @@
     <div class="row">
         <div class="col-md-12">
             <h1>Welcome to The Writers</h1>
-            <div class="introContainer">
-                <p class='intro'>The online space that allows you to showcase your creative writing talents.
-                </p>
-                <p>Things you can do on The Writers!</p>
-                <ul>
-                    <li> <p>Subscribe and enter competitions for your chance to win cash money!</p></li>
-                    <li><p>Post your work for everyone to see and talk about</p></li>
-                    <li><p>Join the community discussing featured works.</p></li>
-                    <li><p>Vote for the competition entry you think deserves to win</p></li>
-                    <li><p>Have 100% control over when your posts are published.</p></li>
-                    <li><p>Edit or delete your posts any time. (Competition entries can't be edited during the voting period.)</p></li>
-                </ul>
-                
-            </div>
+            <h2>The online space that allows you to showcase your creative writing talents.</h2>    
+           <h3>Things you can do on The Writers!</h3>
+            <ul>
+                <li>Subscribe and enter competitions for your chance to win cash money!</li>
+                <li>Post your work for everyone to see and talk about.</li>
+                <li>Join the community discussing featured works.</li>
+                <li>Vote for the competition entry you think deserves to win.</li>
+                <li>Have 100% control over when your posts are published.</li>
+                <li>Edit or delete your posts any time. (Competition entries can't be edited during the voting period.)</li>
+            </ul>
         </div>
     </div>
     <div class="row">
@@ -35,10 +31,13 @@
             <hr>
             <div class="compContainer">
                 <h2>Competition</h2>
+                {% if user.stripe_id %}
+                {% else %}
                 <p>The cash prize is made up directly from subscription fees
-                which means the more of you who enter, the bigger the pot will be!</p>
+                which means the more of you who enter, the bigger the prize will be!</p>
                 <p>Become a subscriber now and enjoy our limitedspecial offer of £2.00 a month</p>
                 <p>CASH prize for this months winner £ {{ prize }}.00</p>
+                {% endif %}
             </div>
         </div>
     </div>
@@ -67,8 +66,8 @@
             <div>
                 <h2>Featured Work</h2>
                 {% for p in post|slice:':2' %}
-                    <div class="row">
-                        <div class="col-md-12">
+                  
+                        <div class="col-md-6">
                             <div id=homeFeaturedList>
                                 <h4>{{ p.title }} by {{ p.author }}</h4>
                                 <p>{{ p.content|truncatewords:10 }}</p>
