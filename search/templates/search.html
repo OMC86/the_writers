@@ -2,7 +2,7 @@
 {% block content %}
     {% load bootstrap_tags %}
   <form method="get">
-    {{ filter.form | as_bootstrap }}
+    {{ posts.form | as_bootstrap }}
     <button type="submit" class="btn btn-default">Search</button>
   </form>
 
@@ -17,9 +17,9 @@
             </tr>
         </thead>
     <tbody>
-  {% for post in filter.qs %}
+  {% for post in posts.qs %}
     <tr>
-        <td><a onclick="location.href={{ post.author.id }}">{{ post.author }}</a ></td>
+        <td><a onclick="location.href={{ post.id }}">{{ post.author }}</a ></td>
         <td>{{ post.category }}</td>
         <td>{{ post.genre }}</td>
         <td>{{ post.title }}</td>
@@ -29,3 +29,4 @@
     </tbody>
     </table>
 {% endblock %}
+
