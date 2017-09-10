@@ -8,10 +8,13 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/libraries/font-awesome/css/font-awesome.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/postform.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/postlist.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/posts/postform.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/posts/postlist.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/competition/entrydetail.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/competition/winnerlist.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% block head_js %}{% endblock %}
@@ -32,7 +35,7 @@
                     <div id='baseNav' class="borders">
                         <ul class="nav nav-pills pull-right baseNavWords">
                             <li><a href="{% url 'home' %}">Home</a></li>
-                            <li><a href="#">Shop</a></li>
+                            <li><a href="{% url 'search' %}">Search</a></li>
                             <li><a href="{% url 'contact' %}">Contact</a></li>
                             <li><a href="{% url 'about' %}">About</a></li>
                         </ul>
@@ -47,17 +50,17 @@
                                 <img id="avatar" src="/media/{{ user.avatar }}">
                             {% endif %}
                         </div>
-
                         <div id="username">
                             <p>{{ user.username }}</p>
                         </div>
                         {% if user.avatar %}
                         {% else %}
-                        <div class="row">
-                            <div class="col-xs-10 col-md-10">
-                                <a href="{% url 'upload' %}"><button class="btn btn-default">Upload Photo</button></a>
+                            <div id="upBtnContainer">
+                            <a href="{% url 'upload' %}"><button id="uploadPhotoBtn" class="btn btn-default">
+                                Upload Photo</button>
+                            </a>
                             </div>
-                        </div>
+
                         {% endif %}
                         <div class="row">
                             <div class="col-xs-12 col-md-12">
@@ -72,7 +75,7 @@
                                 <p class="profile-title">Competitions</p>
                                 <a href="{% url 'view_comp' %}"><p>Competition details</p></a>
                                 <a href="{% url 'view_entries' %}"><p>Vote</p></a>
-                                <a href="{% url 'winner' %}"><p>Winners</p></a>
+                                <a href="{% url 'winners' %}"><p>Winners</p></a>
                             </div>
                         </div>
                     <hr>
