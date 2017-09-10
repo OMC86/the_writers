@@ -182,7 +182,7 @@ def cast_vote(request, id):
                 messages.info(request, "Thanks for voting")
                 return redirect(entry_detail, post.pk)
     else:
-        messages.info(request, "Voting closed")
+        messages.info(request, "Voting hasn't begun yet")
         return redirect(entry_detail, post.pk)
 
 
@@ -220,6 +220,11 @@ def winners(request):
 
             except Exception:
                 return render(request, 'competition/winnerlist.html', {'comps': comps})
+
+        # if all competitions have winners and there's no active comps
+        else:
+            return render(request, 'competition/winnerlist.html', {'comps': comps})
+
 
 
 
