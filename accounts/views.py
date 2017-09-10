@@ -91,7 +91,6 @@ def cancel_subscription(request):
     return redirect('home')
 
 
-
 # Renders the login form and authenticates user
 def login(request):
     if request.method == 'POST':
