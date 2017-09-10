@@ -61,8 +61,8 @@ class Post(models.Model):
     )
 
     author = models.ForeignKey(settings.AUTH_USER_MODEL)
-    category = models.CharField(max_length=20, choices=TYPE, default="")
-    genre = models.CharField(max_length=20, choices=GENRE, default="")
+    category = models.CharField(max_length=20, choices=TYPE, blank=True, null=True)
+    genre = models.CharField(max_length=20, choices=GENRE, blank=True, null=True)
     title = models.CharField(max_length=100)
     content = models.TextField(max_length=3000)
     date_created = models.DateTimeField(auto_now_add=True)
