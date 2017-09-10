@@ -45,6 +45,7 @@
         <div class="com-md-12">
         {% if comp %}
             <div>
+                <h3>{{ comp.title }}</h3>
                 <p>Brief: {{ comp.brief }}</p>
             </div>
             <div>
@@ -60,13 +61,13 @@
                 {% endif %}
         </div>
     </div>
-    <hr>
+
      <div class="row">
         <div class="com-md-12">
             <div>
                 <h2>Featured Work</h2>
                 {% for p in post|slice:':2' %}
-                  
+
                         <div class="col-md-6">
                             <div id=homeFeaturedList>
                                 <h4>{{ p.title }} by {{ p.author }}</h4>
