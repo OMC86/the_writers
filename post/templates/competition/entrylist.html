@@ -9,10 +9,10 @@
             {% if comp == entry.comp %}
                 <div class="col-md-6">
                 <hr>
-                    <h4>{{ entry.title }}</h4>
+                    <h3>{{ entry.title }}</h3>
                     <div class="row">
                         <div class="col-xs-12">
-                            <p>{{ entry.content|truncatewords:30 }}</p>
+                            <p>{{ entry.content|truncatewords:15 }}</p>
                             <p>Posted by {{ entry.author }}</p>
                              <button class="btn btn-default" onclick="location.href={{ entry.id }}">Read More</button>
                         </div>

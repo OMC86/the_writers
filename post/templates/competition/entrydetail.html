@@ -13,10 +13,10 @@
     </div>
     <div class="row">
         <div class="col-md-12">
+            <h3>{{ post.title }}</h3>
             {% if post.image %}
                 <img src="/media/{{ post.image }}">
             {% endif %}
-            <h3>{{ post.title }}</h3>
             <div class="row">
                 <div class="col-xs-12 col-md-12">
                     <div id='competitionContent'>
@@ -49,8 +49,4 @@
         </div>
     </div>
 
-    {% load disqus_tags %}
-    {% disqus_dev %}
-    {% set_disqus_title post.title %}
-    {% disqus_show_comments %}
 {% endblock %}
