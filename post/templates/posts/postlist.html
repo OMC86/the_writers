@@ -1,34 +1,45 @@
 {% extends "base.html" %}
 {% block content %}
-    {% for post in posts %}
-        <div class="row">
-            <div class="col-md-12">
-
-                <hr>
-                <div class="col-md-12">
-                    <h4 class="listTitle">{{ post.title }}</h4>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <p>{{ post.content|truncatewords:30 }}</p>
-                            <p>Posted by {{ post.author }} on {{ post.date_created }} | Views {{ post.views }}</p>
-                            {% if post.is_entry %}
-                                <p>Entered in {{ post.comp }} competition</p>
-                            {% endif %}
-                            {% if post.is_featured %}
-                                <p>Published on {{ post.date_published }}</p>
-                            {% else %}
-                                <p>This post was created on {{ post.date_published }}. To publish this post, when you
-                                    edit, select featured post and save.</p>
-                            {% endif %}
-
-                            <p><button class="btn btn-default floatRight" onclick="location.href={{ post.id }}">Read More
-                            </button></p>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Your Posts</h1>
         </div>
+    </div>
+
+    {% for post in posts %}
+
+        <div class="col-md-12">
+        <hr>
+            <h3>{{ post.title }}</h3>
+            <p>{{ post.content|truncatewords:30 }}</p>
+            {% if post.category is not None %}
+                <p>Category: {{ post.category }}
+                {% endif %}
+            {% if post.genre is not None %}
+                | Genre: {{ post.genre }}</p>
+            {% endif %}
+
+            {% if post.is_featured %}
+                <p>This post has been published on The Writers</p>
+            {% endif %}
+
+            {% if post.is_entry %}
+                <p>This post was entered in post.competition.title</p>
+            {% endif %}
+
+            <p>Posted by {{ post.author }} on
+                {% if post.is_featured %}
+                    {{ post.date_published }}
+                    {% else %}
+                    {{ post.date_created }}
+                {% endif %}
+                | Views {{ post.views }}
+            </p>
+            <p>
+                <button class="btn btn-default" onclick="location.href={{ post.id }}">Read More</button></p>
+        </div>
+
+
     {% endfor %}
     {% if posts.has_other_pages %}
         <div class="pagination">

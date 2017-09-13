@@ -1,41 +1,93 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% load bootstrap_tags %}
 
     <div class="row">
         <div class="col-md-12">
-            <div>
-                <h1>{{ post.title }}</h1>
+            <div class="detailInfo">
+                <div class="col-md-3">
+                    <p>Written by: {{ post.author }}</p>
+                </div>
+                {% if post.category is not None %}
+                <div class="col-md-3">
+                    <p>Category: {{ post.category }}</p>
+                </div>
+                {% endif %}
+                {% if post.genre is not None %}
+                <div class="col-md-3">
+                    <p>Genre: {{ post.genre }}</p>
+                </div>
+                {% endif %}
+                {% if post.comp is not None %}
+                <div class="col-md-3">
+                    <p>Entered in competition: {{ post.comp }}</p>
+                </div>
+                {% endif %}
+                <div class="col-md-3">
+                    <p>Views: {{ post.views }}</p>
+                </div>
             </div>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+             <h2>{{ post.title }}</h2>
         </div>
     </div>
     <div class="row">
         <div class="col-xs-12">
             {% if post.image %}
-                <img src="/media/{{ post.image }}">
+                <img class="centreImg" src="/media/{{ post.image }}">
             {% endif %}
         </div>
     </div>
     <div class="row">
+        <div class="col-xs-12">
+            <p class="postContent">{{ post.content }}</p>
+        </div>
+    </div>
+
+    <div class="row">
         <div class="col-md-12">
-            <div>
-                <p> {{ post.content }} </p>
-            </div>
+            <p class="floatRight">{{ post.date_published }}</p>
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <div>
-                <p>{{ request.user }} won £{{ post.comp.prize }}.00 with {{ votes }} votes</p>
-            </div>
+
+            <h3>{{ post.author }} won £{{ post.comp.prize }}.00 with {{ votes }} votes
+            </h3>
+
         </div>
     </div>
     <div class="row">
         <div class="col-md-12">
-            <button class="btn btn-default" onclick="location.href='/competition/entries/winners'">
+            <button class="btn btn-default floatRight" onclick="location.href='/competition/entries/winners'">
                 Back to Winners
             </button>
         </div>
     </div>
 
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+        {% for comment in post.comments.all %}
+            <hr>
+            <div class="comment">
+                <div class="date">{{ comment.date_created }}</div>
+                <strong>{{ comment.author }}</strong>
+                <p>{{ comment.content|linebreaks }}</p>
+            </div>
+        {% empty %}
+            <p>Be the first to leave a comment</p>
+        {% endfor %}
+        <form method="POST" class="commentForm">
+            {% csrf_token %}
+            {{ form | as_bootstrap }}
+            <button type="submit" class="btn btn-default">Post</button>
+            </form>
+        </div>
+    </div>
 
 {% endblock %}
