@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+SITE_ID = 2
 
 # Application definition
 
@@ -39,11 +40,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_forms_bootstrap',
     'django.contrib.sites',
-    'disqus',
     'accounts',
     'post',
     'pages',
     'search',
+    'comments',
+
+
+
 
 
 ]
@@ -139,10 +143,6 @@ AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'accounts.backends.EmailAuth',
 )
-
-# Disqus comments
-DISQUS_WEBSITE_SHORTNAME = 'the_writers'
-SITE_ID = 2
 
 # house images
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
