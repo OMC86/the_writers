@@ -71,8 +71,7 @@ class Post(models.Model):
     is_entry = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     image = models.ImageField(upload_to="images", blank=True, null=True)
-    comp = models.ForeignKey('Competition', blank=True, null=True)
-
+    comp = models.ForeignKey('Competition', blank=True, null=True, related_name='posts')
 
     def publish(self):
         self.date_published = timezone.now()
@@ -89,7 +88,7 @@ class Competition(models.Model):
     entry_period_fin = models.DateTimeField(blank=True, null=True)
     vote_period_start = models.DateTimeField(blank=True, null=True)
     vote_period_end = models.DateTimeField(blank=True, null=True)
-    winner = models.OneToOneField('Post', blank=True, null=True)
+    winner = models.OneToOneField(Post, blank=True, null=True, related_name='winner')
     prize = models.IntegerField(blank=True, null=True)
 
     def is_active(self):
@@ -110,10 +109,3 @@ class Competition(models.Model):
 
     def __unicode__(self):
         return self.title
-
-
-class Vote(models.Model):
-    voter = models.ForeignKey(settings.AUTH_USER_MODEL)
-    comp = models.ForeignKey('Competition')
-    post_id = models.ForeignKey('Post')
-
