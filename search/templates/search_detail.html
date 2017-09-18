@@ -1,35 +1,39 @@
 {% extends "base.html" %}
 {% block content %}
+{% load bootstrap_tags %}
+
+    {% if post.date_published %}
+        {% include 'post.html' %}
+    {% else %}
+        <p>This post has yet to be published</p>
+    {% endif %}
+
+    {% if c %}
+    <div class="row">
+        <div class="com-md-12">
+            <div>
+                <p>Click this button to vote for this entry</p>
+            </div>
+            <div id="voteBtnContainer">
+                <button id='voteButton' class="btn" onclick="location.href='{% url 'cast_vote' post.id %}'">
+                    Vote
+                </button>
+            </div>
+            <hr>
+            {% endif %}
+
+            {% include 'messages.html' %}
+
+
     <div class="row">
         <div class="col-md-12">
-         {% if post.date_published %}
-            <h2>{{ post.title }}</h2>
-                <div class="row">
-                    <div class="col-xs-12">
-                        {% if post.image %}
-                            <img src="/media/{{ post.image }}">
-                        {% endif %}
-                        <p>{{ post.content }}</p>
-
-                        <p>Published on {{ post.date_published }}</p>
-
-         {% endif %}
-            </div>
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    {% if user == post.author %}
-                        <div class="floatRight">
-                            <a href="{% url 'edit' post.id %}"><span class="fa fa-pencil-square-o fa-2x"></span></a>
-                            <a href="{% url 'edit' post.id %}"><i class="fa fa-trash-o fa-2x"></i></a>
-                        </div>
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="col-md-12">
-                    <p><button class="btn btn-default" onclick="location.href='/search/'">
-                        Back to Search</button></p>
-                </div>
-            </div>
+            <p>
+                <button class="btn btn-default floatRight" onclick="location.href='/search/'">Back</button>
+            </p>
         </div>
+    </div>
+
+    {% include 'comments/comments.html' %}
+
+
 {% endblock %}

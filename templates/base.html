@@ -11,10 +11,14 @@
     <link rel="stylesheet" href="{% static 'css/libraries/font-awesome/css/font-awesome.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/comments.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/posts/postform.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/posts/postlist.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/competition/entrydetail.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/competition/winnerlist.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/competition/comp.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/accountinfo.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% block head_js %}{% endblock %}
@@ -47,7 +51,7 @@
                     <div id="profile" class="borders">
                         <div id="userPhoto">
                             {% if user.avatar %}
-                                <img id="avatar" src="/media/{{ user.avatar }}">
+                                <img class="avatar" src="/media/{{ user.avatar }}">
                             {% endif %}
                         </div>
                         <div id="username">
