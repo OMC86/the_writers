@@ -2,13 +2,11 @@
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <div>
+            <div class="compInfo">
                 <h1>The writers monthly cash give away</h1>
                 <p>Every month on the writers we hold a competition for our subscribers in which
-                they can win a cash prize. The more subscribers we have, the bigger the prize
-                for the winner.</p>
-                <p>There are two stages to each competition. The entry period and the voting period.
-                Once the voting period ends, the entry with the most votes wins the cash</p>
+                    they can <span>win a cash prize</span>. The <span>more subscribers</span> we have, <span>the bigger
+                        the prize</span> for the winner.</p>
                 <ul>
                     <li>The entry period</li>
                     <p>Subscribers can submit their work to the competition during this time.
@@ -20,60 +18,8 @@
                 </ul>
             </div>
             <hr>
-        {% if comp %}
-            <div>
-                <h1>This Month's Competition</h1>
-                <h2>{{ comp.title }}</h2>
-            </div>
-            <div class="col-md-12">
-                <h4>{{ comp.brief }}</h4>
-                <div class="row">
-                    <div class="col-md-9">
-                        <p>This competition is open for entries between</p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <p>{{ comp.entry_period_start }} and
-                            {{ comp.entry_period_fin }}
-                        </p>
-                    </div>
-                </div>
-                 <div class="row">
-                     <div class="col-md-12">
-                         <p>You can vote between</p>
-                     </div>
-                 </div>
-                <div class="row">
-                    <div class="col-md-12">
-                         <p>{{ comp.vote_period_start }} -
-                            {{ comp.vote_period_end }}</p>
-                    </div>
-                </div>
 
-                <div>
-                    {% if user.stripe_id %}
-                        <div class="floatRight">
-                            <button class="btn btn-default" onclick="location.href='{% url 'new_post' %}'">
-                                Enter Now
-                            </button>
-                        </div>
-                    {% else %}
-                        <div class='floatRight'>
-                            <button class="btn btn-default" onclick="location.href='{% url 'subscribe' %}'">
-                                Upgrade account
-                            </button>
-                        </div>
-                    {% endif %}
-                </div>
-            </div>
-            {% else %}
-            <div class="row">
-                <div class="col-md-12">
-                    <p>There are no active competitions at this time</p>
-                </div>
-            </div>
-        {% endif %}
+        {% include 'competition.html' %}
 
         </div>
     </div>

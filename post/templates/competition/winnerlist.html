@@ -1,8 +1,12 @@
 {% extends 'base.html' %}
 {% block content %}
 
+    {% include 'messages.html' %}
+
     {% for c in comps %}
-        {% if c.winner is not none %}
+        {% if c.winner %}
+            {% for p in posts %}
+                {% if p.comp == c %}
             <div class="row">
                 <div class="col-lg-12">
                     <hr>
@@ -17,17 +21,20 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div>
-                        <h3 class="winner">The winner is: {{ c.winner.author }}</h3>
+                        <h3 class="winner">The winner is: {{ p.author }}</h3>
                     </div>
                     <div>
-                        <h3 class="winner">with the post: {{ c.winner.title }}</h3>
+                        <h3 class="winner">with the post: {{ p.title }}</h3>
                     </div>
                 </div>
             </div>
-            <p><button class="btn btn-default floatRight" onclick="location.href={{ c.winner.id }}">Read More
+            <p><button class="btn btn-default floatRight" onclick="location.href={{ p.id }}">Read More
             </button></p>
         {% endif %}
     {% endfor %}
+    {% endif %}
+    {% endfor %}
+
 
 
     {% if comps.has_other_pages %}
@@ -47,4 +54,6 @@
         </span>
         </div>
     {% endif %}
+
+
 {% endblock %}

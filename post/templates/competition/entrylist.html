@@ -1,27 +1,31 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% if entries %}
+        <h1>{{ comp.title }}</h1>
+        <h3>{{ comp.brief }}</h3>
+        {% if x < comp.entry_period_fin %}
+        <h4>Entry period ends and voting begins in {{ comp.entry_period_fin|timeuntil }}</h4>
+        {% else %}
+        <h4>Voting ends in {{ comp.vote_period_end|timeuntil }}</h4>
+        {% endif %}
 
-    <h1>{{ comp.title }}</h1>
-    <h3>{{ comp.brief }}</h3>
-
-    {% for entry in entries %}
-        <div>
-            {% if comp == entry.comp %}
-                <div class="col-md-6">
-                <hr>
-                    <h3>{{ entry.title }}</h3>
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <p>{{ entry.content|truncatewords:15 }}</p>
-                            <p>Posted by {{ entry.author }}</p>
-                             <button class="btn btn-default" onclick="location.href={{ entry.id }}">Read More</button>
+        {% for entry in entries %}
+            <div>
+                {% if comp == entry.comp %}
+                    <div class="col-md-6">
+                    <hr>
+                        <h3>{{ entry.title }}</h3>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <p>{{ entry.content|truncatewords:5 }}</p>
+                                <p>Posted by {{ entry.author }}</p>
+                                 <button class="btn btn-default" onclick="location.href={{ entry.id }}">Read More</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {% endif %}
-        </div>
-    {% endfor %}
-    {% if entries %}
+                {% endif %}
+            </div>
+        {% endfor %}
     {% else %}
     <div class="row">
         <div class="col-md-12">
@@ -29,5 +33,5 @@
         </div>
     </div>
     {% endif %}
-
+    {% include 'messages.html' %}
 {% endblock %}

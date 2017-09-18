@@ -1,0 +1,6 @@
+
+{% if x < comp.entry_period_fin %}
+    <p>You can enter this competition for another {{ comp.entry_period_fin|timeuntil }}</p>
+{% else %}
+    <p>Voting ends in {{ comp.vote_period_end|timeuntil }}</p>
+{% endif %}

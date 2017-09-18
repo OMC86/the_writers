@@ -24,7 +24,7 @@
             {% endif %}
 
             {% if post.is_entry %}
-                <p>This post was entered in post.competition.title</p>
+                <p>This post was entered in {{ post.comp.title }}</p>
             {% endif %}
 
             <p>Posted by {{ post.author }} on

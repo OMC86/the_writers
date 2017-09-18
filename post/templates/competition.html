@@ -1,0 +1,43 @@
+
+{% if comp %}
+            <div>
+                <h1>This Month's Competition</h1>
+                <h2>Title: {{ comp.title }}</h2>
+            </div>
+            <div class="col-md-12">
+                <h3>Brief: {{ comp.brief }}</h3>
+                {% if x < comp.entry_period_fin and user.stripe_id %}
+                <h4>Entry period is now open and ends in {{ comp.entry_period_fin|timeuntil }}.</h4>
+                    <div class="floatRight">
+                        <button class="btn btn-default" onclick="location.href='{% url 'new_post' %}'">
+                            Enter Now
+                        </button>
+                    </div>
+                {% else %}
+
+                <h4>Voting is now open and ends in {{ comp.vote_period_end|timeuntil }}</h4>
+                     <div class="floatRight">
+                        <button class="btn btn-default" onclick="location.href='{% url 'view_entries' %}'">
+                            Vote Now
+                        </button>
+                    </div>
+                {% endif %}
+                <div>
+                    {% if user.stripe_id %}
+                    {% else %}
+                        <div class='floatRight'>
+                            <button class="btn btn-default" onclick="location.href='{% url 'subscribe' %}'">
+                                Upgrade account
+                            </button>
+                        </div>
+                    {% endif %}
+                 <h3>CASH prize for this months winner £ {{ prize }}.00</h3>
+                </div>
+            </div>
+            {% else %}
+            <div class="row">
+                <div class="col-md-12">
+                    <p>There are no active competitions at this time</p>
+                </div>
+            </div>
+        {% endif %}

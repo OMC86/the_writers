@@ -1,69 +1,8 @@
 {% extends "base.html" %}
 {% block content %}
-    {% load bootstrap_tags %}
-    <div class="row">
-        <div class="col-md-12">
-            <div class="detailInfo">
-                <div class="col-md-3">
-                    <p>Written by: {{ post.author }}</p>
-                </div>
-                {% if post.category is not None %}
-                <div class="col-md-3">
-                    <p>Category: {{ post.category }}</p>
-                </div>
-                {% endif %}
-                {% if post.genre is not None %}
-                <div class="col-md-3">
-                    <p>Genre: {{ post.genre }}</p>
-                </div>
-                {% endif %}
-                {% if post.comp is not None %}
-                <div class="col-md-3">
-                    <p>Entered in competition: {{ post.comp }}</p>
-                </div>
-                {% endif %}
-                <div class="col-md-3">
-                    <p>Views: {{ post.views }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div class="row">
-        <div class="col-md-12">
-             <h2>{{ post.title }}</h2>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            {% if post.image %}
-                <img class="centreImg" src="/media/{{ post.image }}">
-            {% endif %}
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-xs-12">
-            <p class="postContent">{{ post.content }}</p>
-        </div>
-    </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <p class="floatRight">{{ post.date_published }}</p>
-        </div>
-    </div>
+    {% include 'post.html' %}
 
-    <div class="row">
-        <div class="col-md-12">
-            {% if user == post.author %}
-                <div class="floatRight">
-                    <a href="{% url 'edit' post.id %}"><span class="fa fa-pencil-square-o fa-2x"></span></a>
-                    <a href="{% url 'delete' post.id %}"><i class="fa fa-trash-o fa-2x"></i></a>
-                </div>
-            {% endif %}
-        </div>
-    </div>
-    <hr>
     <div class="row">
         <div class="col-md-12">
             <p>
@@ -72,23 +11,6 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-md-12">
-        {% for comment in post.comments.all %}
-            <div class="comment">
-                <div class="date">{{ comment.date_created }}</div>
-                <strong>{{ comment.author }}</strong>
-                <p>{{ comment.content|linebreaks }}</p>
-            </div>
-        {% empty %}
-            <p>Be the first to leave a comment</p>
-        {% endfor %}
-        <form method="POST" class="commentForm">
-            {% csrf_token %}
-            {{ form | as_bootstrap }}
-            <button type="submit" class="btn btn-default">Post</button>
-            </form>
-        </div>
-    </div>
+    {% include 'comments/comments.html' %}
 
 {% endblock %}
