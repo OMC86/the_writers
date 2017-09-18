@@ -16,52 +16,23 @@
             <h1>Welcome to The Writers</h1>
             <h2>The online space that allows you to showcase your creative writing talents.</h2>    
            <h3>Things you can do on The Writers!</h3>
-            <ul>
+            <ul class="homeList">
                 <li>Subscribe and enter competitions for your chance to win cash money!</li>
                 <li>Post your work for everyone to see and talk about.</li>
                 <li>Join the community discussing featured works.</li>
                 <li>Vote for the competition entry you think deserves to win.</li>
                 <li>Have 100% control over when your posts are published.</li>
-                <li>Edit or delete your posts any time. (Competition entries can't be edited during the voting period.)</li>
+                <li>Edit or delete your featured posts any time.</li>
             </ul>
         </div>
     </div>
+<hr>
     <div class="row">
         <div class="com-md-12">
-            <hr>
-            <div class="compContainer">
-                <h2>Competition</h2>
-                {% if user.stripe_id %}
-                {% else %}
-                <p>The cash prize is made up directly from subscription fees
-                which means the more of you who enter, the bigger the prize will be!</p>
-                <p>Become a subscriber now and enjoy our limitedspecial offer of £2.00 a month</p>
-                <p>CASH prize for this months winner £ {{ prize }}.00</p>
-                {% endif %}
-            </div>
+        {% include 'competition.html' %}
         </div>
     </div>
-    <div class="row">
-        <div class="com-md-12">
-        {% if comp %}
-            <div>
-                <h3>{{ comp.title }}</h3>
-                <p>Brief: {{ comp.brief }}</p>
-            </div>
-            <div>
-                {% if user in users %}
-                    <p><button class="btn btn-default homeEnter" onclick="location.href='/posts/new/'">Enter</button></p>
-                {% else %}
-                    <p><button class="btn btn-default homeEnter" onclick="location.href='/accounts/subscribe/'">Subscribe</button></p>
-                {% endif %}
-            <p><button class="btn btn-default homeEnter" onclick="location.href='/competition/'">More</button></p>
-            </div>
-            {% else %}
-                <p>There are no active competitions at this time</p>
-                {% endif %}
-        </div>
-    </div>
-
+<hr>
      <div class="row">
         <div class="com-md-12">
             <div>
