@@ -13,4 +13,4 @@ urlpatterns = [
 
     # Webhooks
     url(r'^subscriptions_webhook/$', views.subscriptions_webhook, name='subscriptions_webhook'),
-    ]gi
+]
