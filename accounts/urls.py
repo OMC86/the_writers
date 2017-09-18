@@ -10,6 +10,7 @@ urlpatterns = [
     url(r'^accounts/cancel/$', views.cancel_subscription, name='cancel'),
     url(r'^accounts/upload/$', views.upload, name='upload'),
 
+
     # Webhooks
     url(r'^subscriptions_webhook/$', views.subscriptions_webhook, name='subscriptions_webhook'),
-    ]
+    ]gi
