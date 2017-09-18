@@ -1,40 +1,77 @@
 
 /* General css*/
 
-
-.btn-default {
-    border: 1px solid #42ab9e;
-}
-
 a{
     color: #000;
     text-decoration: none;
 }
 
-p{
+p, li{
     font-family: Bangala MN;
     font-size: 18px;
 }
 
-h1{
-    color:#01403B;
-    font-family: Bangala MN;
-}
-
-h2{
+h2, h3, h4{
      color:#01403B;
     font-family: Bangala MN;
 }
 
-h4{
-    color:#01403B;
+h1{
+     color:#331100;
+    font-family: Bangala MN;
+    text-align: center;
+}
+
+
+.btn-default {
+    border: 1px solid #42ab9e;
+}
+
+.floatRight{
+    float: right;
+}
+
+.messages{
+    margin-top: 15px;
+    font-family: Bangala MN;
+    font-size: 21px;
+}
+
+.centre{
+    display: block;
+    margin: 0 auto;
+}
+
+span{
+    color: #BD5461;
+    font-weight: bold;
+}
+/* GENERAL POST DETAIL */
+
+.postContent{
+    margin-left: 25px;
+}
+
+.authorMargin{
+    margin-right: 50px;
+}
+
+.detailInfo{
+    display: block;
+    margin-top: 25px;
+}
+
+/* FORMS */
+
+.formContainer{
+    margin-top: 20px;
 }
 
 /*TITLE*/
 
-.baseTitle{
-    font-family: Consolas;
-    font-size: 28px;
+.baseTitle p{
+    font-family: Bangala MN;
+    font-size: 30px;
     color: #000;
 }
 
@@ -76,7 +113,7 @@ h4{
     border-radius: 50%;
 }
 
-#avatar{
+.avatar{
     width: 80px;
     height: 100%;
     -moz-border-radius: 50%;
@@ -86,10 +123,14 @@ h4{
 
 #username{
     position: relative;
-    font-size: 18px;
     color: #BD5461;
     text-align: center;
     top: -40px;
+}
+
+#username p{
+    font-size: 25px;
+    margin-bottom: -15px;
 }
 
 .profile-title{
@@ -101,4 +142,16 @@ h4{
 #profile .btn-default{
     display: block;
     margin: 0 auto;
+}
+
+#upBtnContainer{
+    margin-top: -40px;
+    margin-bottom: 20px;
+}
+
+#uploadPhotoBtn{
+    display: block;
+    margin: 0 auto;
+
+
 }

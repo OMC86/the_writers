@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     'django_forms_bootstrap',
     'django.contrib.sites',
     'accounts',
+    'comments',
+    'search',
     'post',
     'pages',
-    'search',
-    'comments',
+    'vote',
 
 
 
