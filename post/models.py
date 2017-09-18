@@ -60,7 +60,7 @@ class Post(models.Model):
         ))
     )
 
-    author = models.ForeignKey(settings.AUTH_USER_MODEL)
+    author = models.ForeignKey(settings.AUTH_USER_MODEL, related_name='user')
     category = models.CharField(max_length=20, choices=TYPE, blank=True, null=True)
     genre = models.CharField(max_length=20, choices=GENRE, blank=True, null=True)
     title = models.CharField(max_length=100)
@@ -69,9 +69,10 @@ class Post(models.Model):
     date_published = models.DateTimeField(blank=True, null=True)
     is_featured = models.BooleanField(default=False)
     is_entry = models.BooleanField(default=False)
+    is_winner = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     image = models.ImageField(upload_to="images", blank=True, null=True)
-    comp = models.ForeignKey('Competition', blank=True, null=True, related_name='posts')
+    comp = models.ForeignKey('Competition', blank=True, null=True, related_name='comp')
 
     def publish(self):
         self.date_published = timezone.now()
@@ -88,7 +89,7 @@ class Competition(models.Model):
     entry_period_fin = models.DateTimeField(blank=True, null=True)
     vote_period_start = models.DateTimeField(blank=True, null=True)
     vote_period_end = models.DateTimeField(blank=True, null=True)
-    winner = models.OneToOneField(Post, blank=True, null=True, related_name='winner')
+    winner = models.BooleanField(default=False)
     prize = models.IntegerField(blank=True, null=True)
 
     def is_active(self):
