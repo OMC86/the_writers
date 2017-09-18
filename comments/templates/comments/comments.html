@@ -1,0 +1,48 @@
+{% load bootstrap_tags %}
+
+ <div class="row">
+    <div class="col-md-12">
+
+        {% for comment in post.comments.all %}
+
+                <div class="col-md-2">
+                    <div class="avatarContainer">
+                        {% if comment.author.avatar %}
+                            <img class="avatar" src="/media/{{ comment.author.avatar }}">
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="commentContent">
+                        <p>By {{ comment.author }} on {{ comment.date_created }}
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-10">
+                    <div class="commentContent">
+                        <p>{{ comment.content|linebreaks }}</p>
+                    </div>
+                </div>
+
+
+
+        {% empty %}
+            <p>Be the first to leave a comment</p>
+        {% endfor %}
+
+        <div class="col-md-2">
+            <div class="avatarContainer commentForm">
+                {% if request.user.avatar %}
+                    <img class="avatar" src="/media/{{ request.user.avatar }}">
+                {% endif %}
+            </div>
+        </div>
+        <div class="col-md-10">
+            <form method="POST" class="commentForm">
+                {% csrf_token %}
+                {{ form | as_bootstrap }}
+                <button type="submit" class="btn btn-default">Post</button>
+            </form>
+        </div>
+    </div>
+ </div>
