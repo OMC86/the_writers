@@ -20,4 +20,5 @@ urlpatterns = [
     # featured
     url(r'^featured/$', views.featured, name='featured'),
     url(r'^featured/(?P<id>\d+)/$', views.featured_detail, name='featured_detail'),
+
 ]
