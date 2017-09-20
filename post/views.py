@@ -7,6 +7,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from django.utils import timezone
+from random import shuffle
 from .models import Post, Competition
 from vote.models import Vote
 from accounts.models import User
@@ -64,7 +65,7 @@ def new_post(request):
                             post.save()
                             return redirect(post_detail, post.pk)
                     else:
-                        messages.error(request, "The entry period has ended")
+                        messages.error(request, "The entry period has ended for the current competition")
                         return redirect(new_post)
                 else:
                     messages.error(request, "Please subscribe to enter competition")
@@ -205,10 +206,11 @@ def cast_vote(request, id):
 
 
 def winners(request):
+    # get all competitions and order them by most recent
     competitions = Competition.objects.all().order_by('-vote_period_end')
-    page = request.GET.get('page', 1)
+    page = request.GET.get('page')
 
-    paginator = Paginator(competitions, 3)
+    paginator = Paginator(competitions, 1)
     try:
         comps = paginator.page(page)
     except PageNotAnInteger:
@@ -216,64 +218,74 @@ def winners(request):
     except EmptyPage:
         comps = paginator.page(paginator.num_pages)
 
-    for comp in competitions:
-        posts = Post.objects.filter(is_winner=True)
-        if comp.is_active():
+    # Get all past winning entries
+    posts = Post.objects.filter(is_winner=True)
+    # get the most recent competition and save associated posts to a variable to later check if anyone has
+    #  entered
+    comp = competitions[0]
+    comp_posts = Post.objects.filter(comp=comp)
+
+    # get the prize and save it to the competition
+    def get_prize():
+        subscribers = User.objects.filter(subscription_end__gte=timezone.now())
+        prize = subscribers.count()
+        comp.prize = prize
+        return prize
+
+    # find the winner or winners of the most recent competition
+    def get_winners():
+        # Get all vote objects associated with comp and count how often the same post occurs in the votes
+        x = Vote.objects.filter(comp=comp)
+        entries = x.values_list('post_id').annotate(
+            vote_count=Count('post_id'))
+        # if there were no votes render the winners page
+        if len(entries) == 0:
             return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
-        elif not comp.winner:
-            try:
-                # Get the competition with no winner and all vote objects associated with it
-                comp = Competition.objects.get(winner=False)
-                x = Vote.objects.filter(comp=comp)
-
-                # Count how many times the same post_id occurs in post objects for x comp
-                winners = x.values_list('post_id').annotate(
-                    vote_count=Count('post_id'))
-
-                # find max votes. Add all post_id with max votes to tied list (index[0] = post_id, index[1] = votes)
-                max_val = max(x[1] for x in winners)
-                tied = []
-                for v in winners:
-                    if v[1] == max_val:
-                        tied.append(v[0])
-                else:
-                    # if there is a tie length of tied will be more than one
-                    if len(tied) > 1:
-                        champs = Post.objects.filter(id__in=tied)
-                        for c in champs:
-                            c.is_winner = 1
-                            c.save()
-                        comp.winner = 1
-                        subscribers = User.objects.filter(subscription_end__gte=timezone.now())
-                        prize = subscribers.count()
-                        comp.prize = (prize % len(tied))
-                        comp.save()
-                        return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
-
-                    else:
-                        getentry = tied[0]
-                        entry = Post.objects.get(id=getentry)
-                        entry.is_winner = 1
-                        entry.save()
-
-                        comp.winner = 1
-                        subscribers = User.objects.filter(subscription_end__gte=timezone.now())
-                        prize = subscribers.count()
-                        comp.prize = prize
-                        comp.save()
-                        return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
-            # Catches 500 server error when there's an active comp with no winner assigned
-            except Exception:
-                return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
-
-        # if all competitions have winners and there's no active comps
+        # or if there were find max votes. Add all posts with max votes to tied list
+        #  (index[0] = post_id, index[1] = votes)
         else:
-            return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
+            max_val = max(x[1] for x in entries)
+            tied = []
+            for v in entries:
+                if v[1] == max_val:
+                    tied.append(v[0])
+            # check if there's more than one winner. If so save the winners and divide the prize between them,
+            # then render the winners page
+            if len(tied) > 1:
+                champs = Post.objects.filter(id__in=tied)
+                for c in champs:
+                    c.is_winner = 1
+                    c.save()
 
+                comp.winner = 1
+                comp.prize = get_prize() / len(tied)
+                comp.save()
 
+            # If there is only one winner, save it, save the prize and render the winners page
+            else:
+                getentry = tied[0]
+                entry = Post.objects.get(id=getentry)
+                entry.is_winner = 1
+                entry.save()
+
+                comp.winner = 1
+                comp.prize = get_prize()
+                comp.save()
+
+    # Check if the most recent competition is still active, if it is render the winners page
+    if comp.is_active():
+        return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
+    # If most recent comp has finished, check if anyone has entered. If they have get the winners
+    elif not comp.winner and len(comp_posts) >= 1:
+        get_winners()
+        return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
+    # or if there were no entries or no comps without winners render the winners page
+    else:
+        return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
 
 
 def winner_detail(request, id):
+    x = timezone.now()
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
@@ -289,9 +301,7 @@ def winner_detail(request, id):
             return redirect(winner_detail, post.id)
     else:
         form = CommentForm()
-        return render(request, 'competition/winnerdetail.html', {'post': post, 'votes': votes, 'form': form})
-
-
+        return render(request, 'competition/winnerdetail.html', {'post': post, 'votes': votes, 'form': form, 'x': x})
 
 
 def featured(request):
