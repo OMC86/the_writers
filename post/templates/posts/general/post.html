@@ -62,10 +62,10 @@
         {% if user == post.author %}
             <div class="floatRight">
             {% if post.is_entry and x > post.comp.entry_period_fin %}
-                {% else %}
+            {% else %}
                 <a href="{% url 'edit' post.id %}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
                 <a href="{% url 'delete' post.id %}"><i class="fa fa-trash-o fa-2x"></i></a>
-                {% endif %}
+            {% endif %}
             </div>
         {% endif %}
     </div>

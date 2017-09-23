@@ -7,19 +7,9 @@
             </div>
         </div>
     </div>
-    {% for post in posts %}
-        <div>
-            <div class="col-md-6">
-        <hr>
-                <h3>{{ post.title }}</h3>
-                <p>{{ post.content|truncatewords:5 }}</p>
-                <p>Category: {{ post.category }}</p>
-                <p>Genre: {{ post.genre }}</p>
-                <p>Posted by {{ post.author }} on {{ post.date_published }} | Views {{ post.views }}</p>
-                <p><button class="btn btn-default" onclick="location.href={{ post.id }}">Read More</button></p>
-            </div>
-        </div>
-    {% endfor %}
+
+    {% include 'posts/general/listposts.html' %}
+
 {% if posts.has_other_pages %}
         <div class="pagination">
     <span class="step-links">

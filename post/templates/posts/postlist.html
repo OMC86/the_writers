@@ -6,41 +6,8 @@
         </div>
     </div>
 
-    {% for post in posts %}
+    {% include 'posts/general/listposts.html' %}
 
-        <div class="col-md-12">
-        <hr>
-            <h3>{{ post.title }}</h3>
-            <p>{{ post.content|truncatewords:30 }}</p>
-            {% if post.category is not None %}
-                <p>Category: {{ post.category }}
-                {% endif %}
-            {% if post.genre is not None %}
-                | Genre: {{ post.genre }}</p>
-            {% endif %}
-
-            {% if post.is_featured %}
-                <p>This post has been published on The Writers</p>
-            {% endif %}
-
-            {% if post.is_entry %}
-                <p>This post was entered in {{ post.comp.title }}</p>
-            {% endif %}
-
-            <p>Posted by {{ post.author }} on
-                {% if post.is_featured %}
-                    {{ post.date_published }}
-                    {% else %}
-                    {{ post.date_created }}
-                {% endif %}
-                | Views {{ post.views }}
-            </p>
-            <p>
-                <button class="btn btn-default" onclick="location.href={{ post.id }}">Read More</button></p>
-        </div>
-
-
-    {% endfor %}
     {% if posts.has_other_pages %}
         <div class="pagination">
     <span class="step-links">

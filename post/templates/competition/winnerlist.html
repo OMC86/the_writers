@@ -5,35 +5,46 @@
 
     {% for c in comps %}
         {% if c.winner %}
-            {% for p in posts %}
-                {% if p.comp == c %}
             <div class="row">
                 <div class="col-lg-12">
                     <hr>
-                    <div>
-                        <h1 class="winnerscomp">{{ c.title }}</h1>
+                    <div class="col-md-12">
+                        <h1>Competition: {{ c.title }}</h1>
                     </div>
-                    <div>
-                        <h2 class="winnerscomp">{{ c.brief }}</h2>
+                     <div class="col-md-6">
+                        <h2 class="winnerscomp">Prize: £{{ c.prize }}.00</h2>
                     </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12">
-                    <div>
-                        <h3 class="winner">The winner is: {{ p.author }}</h3>
-                    </div>
-                    <div>
-                        <h3 class="winner">with the post: {{ p.title }}</h3>
+                    <div class="col-md-6">
+                        <h2 class="winnerscomp">Brief: {{ c.brief }}</h2>
                     </div>
                 </div>
             </div>
-            <p><button class="btn btn-default floatRight" onclick="location.href={{ p.id }}">Read More
-            </button></p>
         {% endif %}
     {% endfor %}
-    {% endif %}
+    {% for c in comps %}
+        {% if c.winner %}
+            {% for p in posts %}
+                {% if p.comp == c %}
+                    <hr>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div>
+                                <h3 class="winner">The winner is: {{ p.author }}</h3>
+                            </div>
+                            <div>
+                                <h3 class="winner">with the post: {{ p.title }}</h3>
+                                <p><button class="btn btn-default floatRight" onclick="location.href={{ p.id }}">Read More
+                                </button></p>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
     {% endfor %}
+    {% if novotes == 1 %}
+    <p>A winner could not be determined because no body voted.</p>
+    {% endif %}
 
 
 

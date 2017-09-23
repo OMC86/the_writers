@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 
-    {% include 'post.html' %}
+    {% include 'posts/general/post.html' %}
 
     <div class="row">
         <div class="col-md-12">
@@ -10,7 +10,7 @@
             </p>
         </div>
     </div>
-
+    {% include 'messages.html' %}
     <div class="row">
         <div class="col-md-12">
             {% for comment in post.comments.all %}

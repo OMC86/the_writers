@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+    {% load post_extras %}
     {% if entries %}
         <h1>{{ comp.title }}</h1>
         <h3>{{ comp.brief }}</h3>
@@ -9,7 +10,7 @@
         <h4>Voting ends in {{ comp.vote_period_end|timeuntil }}</h4>
         {% endif %}
 
-        {% for entry in entries %}
+        {% for entry in entries|shuffle %}
             <div>
                 {% if comp == entry.comp %}
                     <div class="col-md-6">
