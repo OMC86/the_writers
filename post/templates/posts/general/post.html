@@ -59,6 +59,9 @@
         <p class="floatRight">{{ post.date_published }}</p>
     </div>
 </div>
-
+{% if user.is_superuser %}
+    <a href="{% url 'edit' post.id %}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+    <a href="{% url 'delete' post.id %}"><i class="fa fa-trash-o fa-2x"></i></a>
+{% endif %}
 
 <hr>
