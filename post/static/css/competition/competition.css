@@ -1,0 +1,49 @@
+
+.compInfo li{
+    font-size: 25px;
+    color: #01403B;
+}
+
+/* Competition.html */
+
+#subscribeBtn{
+    margin-right: 15px;
+}
+
+.noComps {
+    margin: 15px;
+    font-size: 28px;
+}
+
+.compT{
+    color: #42ab9e;
+}
+
+/* Competition detail */
+
+#voteButton{
+    display: block;
+    margin: 0 auto 10px;
+    width: 200px;
+
+}
+
+#voteBtnContainer > .btn {
+    background-color: #42ab9e;
+}
+
+.voteBack{
+    margin-right: 15px;
+}
+
+
+/* Winner list*/
+
+.winnerscomp{
+    text-align: center;
+    color: #331100;
+}
+
+.winner{
+    color: #007f76;
+}
