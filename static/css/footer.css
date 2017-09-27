@@ -1,0 +1,80 @@
+/* FOOTER */
+
+/*FOOTER*/
+#footer{
+    position: absolute;                 /*Footer styles*/
+    width: 100%;
+    padding-top: 10px;
+    margin-top: 50px;
+    border-top: 1px solid #BD5461;
+    height: 950px;
+    left: 0;
+    background-color: #01403B;
+}
+
+.flex-container{                        /*Flex box*/
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-content: center;
+    align-items: center;
+}
+
+.flex-item{
+    width: 300px;
+    height: 300px;
+    border-bottom: 1px solid #fff;
+}
+
+.title{
+    padding-top: 15px;
+    font-size: 21px;
+    color: #fff;
+}
+
+.foot{
+    padding-top: 10px;
+    font: 15px Bangala MN;
+    color: #fff;
+}
+
+.icon{
+    padding: 10px;
+}
+
+.foot > i{
+    color: #42ab9e;
+    padding: 10px;
+}
+
+.foot > span{
+    color: #42ab9e;
+    font-size: 18px;
+}
+
+/*MEDIA QUERIES*/
+@media screen and (min-width: 600px){
+
+    #footer{
+        height: 600px;
+    }
+
+    .flex-item{
+        border-bottom: none;
+    }
+
+}
+
+@media screen and (min-width: 900px){
+
+    #footer{
+        height: 300px;
+    }
+}
+
+@media screen and (min-width: 1200px){
+
+
+
+}

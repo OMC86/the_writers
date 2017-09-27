@@ -1,0 +1,51 @@
+{% load post_extras account_extras comment_extras %}
+<footer id="footer">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="cos-sm-12 col-lg-12">
+                    <div class="row">
+                        <div class="flex-container">
+
+                            <div class="flex-item">
+                                <ul class="title">About us</ul>
+                                <ul class="foot">The Writers is a space for people who like to share what they
+                                    write with the world.
+                                </ul>
+                                <ul class="foot"> Writers can discuss what they have written with those who read it.
+                                </ul>
+                                <a href="{% url 'about'%}"><ul class="foot">Read more<i class="fa fa-arrow-circle-o-right">
+                                </i></ul></a>
+                            </div>
+
+                             <div class="flex-item">
+                                 <ul class="title">Stats</ul>
+                                 <ul class="foot">There are <span>{% count_users %}</span> people using The Writers</ul>
+                                 <ul class="foot">who have posted a total of <span>{% get_total_posts %}</span> posts</ul>
+                                 <ul class="foot">and commented on posts <span>{% count_comments %}</span> times.</ul>
+                                 <ul class="foot">So far there have been <span>{% get_total_comps %}</span> competitions</ul>
+                                 <ul class="foot">And we have given away <span>£{% total_prize %}.00</span> to our winners</ul>
+
+                            </div>
+
+                            <div class="flex-item">
+                                <ul class="title">Contact Info</ul>
+                                <ul class="foot"><i class="fa fa-envelope-o">
+                                </i> Christoal@outlook.com</ul>
+                                <ul class="foot"><i class="fa fa-phone">
+                                </i> 3333 222 1111</ul>
+                                <ul class="foot"><i class="fa fa-map-marker">
+                                </i>  423 windmill drive</ul>
+
+                                <div class="flex-container">
+                                    <div class="foot"><i class="fa fa-facebook"></i></div>
+                                    <div class="foot"><i class="fa fa-instagram"></i></div>
+                                    <div class="foot"><i class="fa fa-twitter"></i></div>
+                                    <div class="foot"><i class="fa fa-linkedin"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
