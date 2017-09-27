@@ -1,40 +1,43 @@
 {% load account_extras %}
-{% if comp %}
-    <div class="row">
-        <div class="col-md-12">
+    {% if comp %}
+        <h2>The Competition</h2>
+        <h3>CASH prize so far £ {{ prize }}.00</h3>
+        <h3>For each new subscriber the prize will increase by £1.00</h3>
 
-            <h1>This Month's Competition</h1>
-            <h2>Title: {{ comp.title }}</h2>
-            <h3>Brief: {{ comp.brief }}</h3>
-            <h3>CASH prize for this months winner £ {{ prize }}.00</h3>
-            {% if x < comp.entry_period_fin and user.subscription_end > x %}
-                <h4>Entry period is now open and ends in {{ comp.entry_period_fin|timeuntil }}.</h4>
-                    <div class="floatRight">
-                        <button class="btn btn-default" onclick="location.href='{% url 'new_post' %}'">
-                            Enter Now
-                        </button>
-                    </div>
-            {% else %}
-                <div>
+        <h3><span class="compT">Title:</span></h3>
+        <p>{{ comp.title|title }}</p>
+        <h3><span class="compT">Brief:</span></h3>
+        <p>{{ comp.brief }}</p>
+
+        {% if x < comp.entry_period_fin and user.subscription_end > x %}
+            <p>Entry period is now open and ends in {{ comp.entry_period_fin|timeuntil }}.
+                <button class="btn btn-default floatRight" onclick="location.href='{% url 'new_post' %}'">
+                    Enter Now
+                </button>
+            </p>
+            <hr>
+            {% endif %}
+            {% if not user.stripe_id and x < comp.entry_period_fin %}
+                <p>Entry period is now open and ends in {{ comp.entry_period_fin|timeuntil }}.
                     <button id="subscribeBtn" class="btn btn-default floatRight"
                             onclick="location.href='{% url 'subscribe' %}'">Upgrade account
                     </button>
-                </div>
+                </p>
+                <hr>
             {% endif %}
             {% if x > comp.entry_period_fin %}
-                    <h4>Voting is now open and ends in {{ comp.vote_period_end|timeuntil }}</h4>
-                    <div>
-                        <button class="btn btn-default floatRight" onclick="location.href='{% url 'view_entries' %}'">
-                            Vote Now
-                        </button>
-                    </div>
+                <p>Voting is now open and ends in {{ comp.vote_period_end|timeuntil }}
+                    <button class="btn btn-default floatRight" onclick="location.href='{% url 'view_entries' %}'">
+                        Vote Now
+                    </button>
+                </p>
+                <hr>
             {% endif %}
-
-{% else %}
-            <div class="row">
-                <div class="col-md-12">
-                    <p>There are no active competitions at this time</p>
-                </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-12">
+                <p class="noComps">There are no active competitions at this time</p>
             </div>
+        </div>
+        <hr>
 {% endif %}
-</div>
