@@ -1,10 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
-<h1>This is the about page</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% block content %}
+{% load post_extras %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>About</h1>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Introducing The Writers</h2>
+            <p>The Writers is a space for people who like to share what they write with the world.
+                Writers can discuss what they have written with those who read it gaining valuable
+                insight on their work hard to find anywhere else.</p>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Competitive Writing</h2>
+            <p>Here at The Writers we want to reward those of you who have exceptional writing
+            talents with money! Cool right? Subscribers have the chance to enter our competitions
+            and potentially turn their creativeness into actual money.</p>
+            <p>So far on the writers we have given away a total of £{% total_prize %}.00</p>
+        </div>
+    </div>
+    <hr>
+
+{% endblock %}
