@@ -2,36 +2,34 @@
 {% block content %}
 
     {% include 'posts/general/post.html' %}
-
-    <div class="row">
-        <div class="com-md-12">
-            <div>
+    <div class="container">
+        <div class="row">
+            <div class="com-md-12">
                 <p>This entry has {{ votes }} votes</p>
-            </div>
-            {% if vote %}
-                <div>
-                    <p>{{ user }}: You have voted for this entry</p>
-                    {% else %}
-                    <p>Clicking this button will cast a vote for this entry</p>
-                </div>
-                <div id="voteBtnContainer">
-                    <button id='voteButton' class="btn" onclick="location.href='{% url 'cast_vote' post.id %}'">
-                        Vote
-                    </button>
-                </div>
-            {% endif %}
+                {% if vote %}
+                    <div>
+                        <p>{{ user }}: You have voted for this entry</p>
+                        {% else %}
+                        <p>Clicking this button will cast a vote for this entry</p>
+                    </div>
+                    <div id="voteBtnContainer">
+                        <button id='voteButton' class="btn" onclick="location.href='{% url 'cast_vote' post.id %}'">
+                            Vote
+                        </button>
+                    </div>
+                {% endif %}
 
-            {% include 'messages.html' %}
+                {% include 'messages.html' %}
 
-            <div class="row">
-                <div class="col-md-12">
-                    <button class="btn btn-default floatRight" onclick="location.href='/competition/entries/'">
-                        Back to Entries
-                    </button>
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-default floatRight voteBack" onclick="location.href='/competition/entries/'">
+                            Back to Entries
+                        </button>
+                    </div>
                 </div>
+                {% include 'comments/comments.html' %}
             </div>
         </div>
-
-    {% include 'comments/comments.html' %}
-
+    </div>
 {% endblock %}
