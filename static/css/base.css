@@ -1,6 +1,10 @@
 
 /* General css*/
 
+body{
+    bottom: 0px;
+}
+
 a{
     color: #000;
     text-decoration: none;
@@ -12,12 +16,12 @@ p, li{
 }
 
 h2, h3, h4{
-     color:#01403B;
+    color: #000000;
     font-family: Bangala MN;
 }
 
 h1{
-     color:#331100;
+    color:#42ab9e;
     font-family: Bangala MN;
     text-align: center;
 }
@@ -75,17 +79,45 @@ span{
     color: #000;
 }
 
+.baseTitle button{
+    margin-right: 5px;
+}
+
 
 /*TOP NAV*/
+#userPhotoSmall{
+    position: relative;
+    display: block;
+    margin: 10px auto -5px;
+    height: 80px;
+    width: 80px;
+    border: 1px solid #979797;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+}
 
 #baseNav{
+    display: none;
     height: 80px;
+}
+
+#baseNavTitle{
+    width: 15px;
+    color: black;
 }
 
 .baseNavWords{
     font-family: Bangala MN;
     font-size: 18px;
-    padding-top: 15px;
+}
+
+.navbar-toggle {
+    border: 1px solid black;
+}
+
+.navbar-toggle *{
+    border: 1px solid black;
 }
 
 .borders{
@@ -96,6 +128,7 @@ span{
 /*SIDE NAV*/
 
 #profile{
+    display: none;
     margin-top: 15px;
     padding: 15px;
 }
@@ -145,13 +178,46 @@ span{
 }
 
 #upBtnContainer{
-    margin-top: -40px;
-    margin-bottom: 20px;
+
 }
 
 #uploadPhotoBtn{
     display: block;
     margin: 0 auto;
+}
 
+
+@media screen and (min-width: 768px) {
+
+    #baseNav {
+        display: block;
+    }
+
+    #navCollapseBase{
+        display: none;
+    }
+
+    #profile{
+        display: block;
+    }
+
+    .baseNavWords {
+        font-family: Bangala MN;
+        font-size: 18px;
+        padding-top: 15px;
+    }
+
+    .baseTitle p a{
+        display: none;
+    }
+
+    #upBtnContainer{
+        margin-top: -40px;
+        margin-bottom: 20px;
+    }
+
+    #userPhotoSmall{
+        display: none;
+    }
 
 }

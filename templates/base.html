@@ -10,13 +10,11 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/libraries/font-awesome/css/font-awesome.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/home.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/comments.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/posts/postform.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/posts/postlist.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/competition/entrydetail.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/competition/winnerlist.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/competition/comp.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/posts/post.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/competition/competition.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/accountinfo.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -24,28 +22,103 @@
     {% block head_js %}{% endblock %}
 </head>
 <body>
-    <!-- Landing page navigation-->
+    <!--Navigation-->
     <div class="container">
         <div class="masthead">
             <div class="row">
                 <div class="col-md-12">
                     <div class=" nav navbar-header baseTitle">
-                        <p>The <br>Writers</p>
+                        <p>The <br>Writers
+                            <a href="{%  url 'logout' %}"><button class="btn btn-default floatRight">Log Out
+                            </button>
+                            </a>
+                            {% if user.avatar %}
+                            {% else %}
+                                <a href="{% url 'upload' %}"><button class="btn btn-default floatRight">
+                                    Upload Photo</button>
+                                </a>
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
             </div>
+    <!-- Nav for small screen less that 767px -->
+            <nav id='navCollapseBase' class="borders">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                                data-target="#collapseListBase">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                        </button>
+                        <ul class="nav nav-pills pull-left baseNavWordsSm">
+                            <li><a href="{% url 'home' %}">Home</a></li>
+                            <li><a href="{% url 'search' %}">Search</a></li>
+                            <li><a href="{% url 'about' %}">About</a></li>
+                        </ul>
+                    </div>
+                    <div id="collapseListBase" class="collapse navbar-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="link land-link">
+                                <a href="#" id="bOne" data-toggle="collapse" data-target="#getWriting"
+                                   aria-expanded="false">Get Writing
+                                    <i class="fa fa-caret-square-o-down"></i>
+                                </a>
+
+                                <ul class="nav collapse" id="getWriting" role="menu" aria-labelledby="bOne">
+                                    <li><a href="{% url 'new_post' %}"><p>Create a post</p></a></li>
+                                    <li><a href="{% url 'post_list' %}"><p>View your work</p></a></li>
+                                </ul>
+                            </li>
+                            <li class="link land-link"><a href="#" id="bTwo" data-toggle="collapse"
+                                                          data-target="#navComp" aria-expanded="false">Competitions</a>
+
+                                <ul class="nav collapse" id="navComp" role="menu" aria-labelledby="bTwo">
+                                    <li><a href="{% url 'view_comp' %}"><p>Competition details</p></a></li>
+                                    <li><a href="{% url 'view_entries' %}"><p>Vote</p></a></li>
+                                    <li><a href="{% url 'winners' %}"><p>Winners</p></a></li>
+                                </ul>
+                            </li>
+                            <li class="link land-link"><a href="#" id="bThree" data-toggle="collapse"
+                                                          data-target="#navFeatured" aria-expanded="false">Featured Posts</a>
+                                <ul class="nav collapse" id="navFeatured" role="menu" aria-labelledby="bThree">
+                                    <li><a href="{% url 'featured' %}"><p>Featured</p></a></li>
+                                </ul>
+                            </li>
+                            <li class="link land-link"><a href="#" id="bFour" data-toggle="collapse"
+                                                          data-target="#navAccount" aria-expanded="false">Account</a>
+                                <ul class="nav collapse" id="navAccount" role="menu" aria-labelledby="bFour">
+                                    {% if user.avatar %}
+                                        <li>
+                                            <a href="{% url 'upload' %}"><p>Change Profile pic</p>
+                                            </a>
+                                        </li>
+                                    {% endif %}
+                                    <li><a href="{% url 'subscribe' %}"><p>Upgrade account</p></a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+
             <div class="row">
                 <div class="col-md-12">
                     <div id='baseNav' class="borders">
                         <ul class="nav nav-pills pull-right baseNavWords">
                             <li><a href="{% url 'home' %}">Home</a></li>
                             <li><a href="{% url 'search' %}">Search</a></li>
-                            <li><a href="{% url 'contact' %}">Contact</a></li>
                             <li><a href="{% url 'about' %}">About</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
+        <div id="userPhotoSmall">
+            {% if user.avatar %}
+                <img class="avatar" src="/media/{{ user.avatar }}">
+            {% endif %}
+        </div>
             <div class="row">
                 <div class="col-xs-3 col-md-3">
                     <div id="profile" class="borders">
@@ -60,9 +133,9 @@
                         {% if user.avatar %}
                         {% else %}
                             <div id="upBtnContainer">
-                            <a href="{% url 'upload' %}"><button id="uploadPhotoBtn" class="btn btn-default">
-                                Upload Photo</button>
-                            </a>
+                                <a href="{% url 'upload' %}"><button id="uploadPhotoBtn" class="btn btn-default">
+                                    Upload Photo</button>
+                                </a>
                             </div>
 
                         {% endif %}
@@ -103,18 +176,21 @@
                     <hr>
                         <div class="row">
                             <div class="col-xs-10 col-md-10">
-                                <a id='logoutBtn' href="{%  url 'logout' %}"><button class="btn btn-default">Log Out</button></a>
+                                <a id='logoutBtn' href="{%  url 'logout' %}"><button class="btn btn-default">Log Out
+                                </button></a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-xs-9 col-md-9">
+                <div class="col-xs-12 col-sm-9">
                     {% block content %}
                     {% endblock %}
                 </div>
             </div>
         </div>
     </div>
+    <!--FOOTER-->
+    {% include 'footer.html' %}
 
 </body>
 
