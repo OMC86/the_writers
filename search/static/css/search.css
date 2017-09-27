@@ -2,3 +2,13 @@
 .formContainer{
     margin-top: 20px;
 }
+
+th{
+    font-family: Bangala MN;
+    font-size: 21px;
+}
+
+td{
+    font-family: Bangala MN;
+    font-size: 18px;
+}

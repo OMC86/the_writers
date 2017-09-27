@@ -1,12 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
     {% load bootstrap_tags %}
+    {% load staticfiles %}
+    {% block head_js %}
+        <script type="text/javascript" src="{% static "js/search.js" %}"></script>
+    {% endblock %}
     <div class="row">
         <div class="col-md-12">
             <div class="formContainer">
+                <h1>Search</h1>
+
                 <form method="get">
                     {{ posts.form | as_bootstrap }}
-                    <button type="submit" class="btn btn-default">Search</button>
+                    <button id="search" type="submit" class="btn btn-default">Search</button>
                 </form>
             </div>
             <hr>
@@ -14,7 +20,7 @@
     </div>
 
 
-    <table class="table table-bordered">
+    <table class="table">
         <thead>
             <tr>
                 <th>Author</th>
@@ -27,7 +33,8 @@
         <tbody>
             {% for post in posts.qs %}
                 <tr>
-                    <td><a onclick="location.href={{ post.id }}">{{ post.author }}</a ></td>
+                    <td><a onclick="location.href={{ post.id }}">
+                        <button class="btn btn-default">{{ post.author }}</button></a></td>
                     <td>{{ post.category }}</td>
                     <td>{{ post.genre }}</td>
                     <td>{{ post.title }}</td>
