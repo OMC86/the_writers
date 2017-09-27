@@ -5,12 +5,27 @@
 
     <div class="row">
         <div class="col-md-12">
+            {% if user == post.author or user.is_superuser %}
+                <div class="floatRight">
+                {% if post.is_entry and x > post.comp.entry_period_fin %}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'edit' post.id %}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                        <a href="{% url 'delete' post.id %}"><i class="fa fa-trash-o fa-2x"></i></a>
+                    {% endif %}
+                {% else %}
+                    <a href="{% url 'edit' post.id %}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                    <a href="{% url 'delete' post.id %}"><i class="fa fa-trash-o fa-2x"></i></a>
+                {% endif %}
+                </div>
+            {% endif %}
+
             <p>
                 <button class="btn btn-default floatRight" onclick="location.href='/posts'">Back to Posts</button>
             </p>
         </div>
     </div>
     {% include 'messages.html' %}
+    <hr>
     <div class="row">
         <div class="col-md-12">
             {% for comment in post.comments.all %}
