@@ -1,12 +1,13 @@
 {% for post in posts %}
 
         <div class="col-md-6">
-            <hr>
-            <h3>{{ post.title }}</h3>
+            <h3>{{ post.title|title }}</h3>
             <p>{{ post.content|truncatewords:5 }}</p>
             <p>Category: {{ post.category }} | Genre: {{ post.genre }}</p>
-            <p>Posted by {{ post.author }} on {{ post.date_published }} | Views {{ post.views }}</p>
-            <p><button class="btn btn-default floatRight" onclick="location.href={{ post.id }}">Read More</button></p>
+            <p>Posted by {{ post.author|title }} on {{ post.date_published }} | Views {{ post.views }}
+            <button class="btn btn-default floatRight" onclick="location.href={{ post.id }}">Read More</button>
+            </p>
+        <hr>
         </div>
 
 {% endfor %}
