@@ -1,25 +1,13 @@
 
-#homeIntro{
-	margin-top: 15px;
-}
-
-.intro{
-	font-size: 18px;
-}
-
-.homeEnter{
-	float: right;
-	margin: 10px;
-}
-
-.homeMore{
-	float: right;
-}
-
-#homeFeaturedList{
-	margin-top: 15px;
-}
-
 .homeList li{
 	font-size: 20px;
+}
+
+#featuredTitle{
+    margin-left: 10px;
+}
+
+#hideList{
+    margin-left: 15px;
+    color: #01403B;
 }
