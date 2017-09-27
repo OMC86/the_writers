@@ -26,13 +26,13 @@ def profile(request):
     x = timezone.now()
     subscribers = User.objects.filter(subscription_end__gte=timezone.now())
     prize = subscribers.count()
-    post = Post.objects.filter(is_featured=True)
+    posts = Post.objects.filter(is_featured=True).order_by('-date_published')[:2]
     competition = Competition.objects.all()
     for comp in competition:
         if comp.is_active():
-            return render(request, 'home.html', {'post': post, 'comp': comp, 'prize': prize, 'users': subscribers,
+            return render(request, 'home.html', {'posts': posts, 'comp': comp, 'prize': prize, 'users': subscribers,
                                                  'x': x})
     else:
-        return render(request, 'home.html', {'post': post, 'prize': prize, 'users': subscribers, 'x': x})
+        return render(request, 'home.html', {'posts': posts, 'prize': prize, 'users': subscribers, 'x': x})
 
 
