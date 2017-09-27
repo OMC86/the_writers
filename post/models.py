@@ -4,6 +4,8 @@ from django.utils import timezone
 from writers import settings
 from django.db.models import Count
 from datetime import datetime
+from accounts.models import User
+
 # Create your models here.
 
 
@@ -72,7 +74,7 @@ class Post(models.Model):
     is_winner = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     image = models.ImageField(upload_to="images", blank=True, null=True)
-    comp = models.ForeignKey('Competition', blank=True, null=True, related_name='comp')
+    comp = models.ForeignKey('Competition', blank=True, null=True)
 
     def publish(self):
         self.date_published = timezone.now()
@@ -107,6 +109,21 @@ class Competition(models.Model):
     def get_winner(self):
         now = timezone.now()
         return self.vote_period_end < now
+
+    def check_votes(self):
+        return self.votes.count()
+
+    def check_posts(self):
+        return self.post.count()
+
+    def get_prize(self):
+        subscribers = User.objects.filter(subscription_end__gte=timezone.now())
+        prize = subscribers.count()
+        return prize
+
+
+
+
 
     def __unicode__(self):
         return self.title

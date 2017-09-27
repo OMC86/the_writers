@@ -7,7 +7,8 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from django.utils import timezone
-from random import shuffle
+from django.views.generic.edit import DeleteView
+from django.urls import reverse_lazy
 from .models import Post, Competition
 from vote.models import Vote
 from accounts.models import User
@@ -17,10 +18,10 @@ from comments.forms import CommentForm
 
 # renders a list of posts descending order
 def post_list(request):
-    postlist = Post.objects.filter(author=request.user)
-    page = request.GET.get('page', 1)
+    postlist = Post.objects.filter(author=request.user).order_by('-date_created')
+    page = request.GET.get('page')
 
-    paginator = Paginator(postlist, 3)
+    paginator = Paginator(postlist, 6)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -63,6 +64,11 @@ def new_post(request):
                         if comp.can_enter():
                             post.comp = comp
                             post.save()
+                            messages.info(request, "Your post has been entered. Please note that in the unlikely "
+                                                   "event of there being no votes by the time the vote period ends, "
+                                                   "the competition will be removed from The Writers database and your"
+                                                   " entry will be re-assigned as not entered in a competition. Good"
+                                                   " luck!")
                             return redirect(post_detail, post.pk)
                     else:
                         messages.error(request, "The entry period has ended for the current competition")
@@ -153,7 +159,11 @@ def comp_entries(request):
     competition = Competition.objects.all()
     for comp in competition:
         if comp.is_active():
-            return render(request, 'competition/entrylist.html', {'entries': entries, 'comp': comp, 'x': x})
+            if x > comp.entry_period_fin and not comp.check_posts():
+                comp.delete()
+                return render(request, 'competition/entrylist.html')
+            else:
+                return render(request, 'competition/entrylist.html', {'entries': entries, 'comp': comp, 'x': x})
     else:
         return render(request, 'competition/entrylist.html')
 
@@ -210,7 +220,7 @@ def winners(request):
     competitions = Competition.objects.all().order_by('-vote_period_end')
     page = request.GET.get('page')
 
-    paginator = Paginator(competitions, 1)
+    paginator = Paginator(competitions, 2)
     try:
         comps = paginator.page(page)
     except PageNotAnInteger:
@@ -220,17 +230,22 @@ def winners(request):
 
     # Get all past winning entries
     posts = Post.objects.filter(is_winner=True)
-    # get the most recent competition and save associated posts to a variable to later check if anyone has
-    #  entered
+    # get the most recent competition. If no one entered delete the competition
     comp = competitions[0]
-    comp_posts = Post.objects.filter(comp=comp)
 
-    # get the prize and save it to the competition
-    def get_prize():
-        subscribers = User.objects.filter(subscription_end__gte=timezone.now())
-        prize = subscribers.count()
-        comp.prize = prize
-        return prize
+    def comp_del():
+        if not comp.check_posts():
+            comp.delete()
+    # check if anyone has voted. If no one voted delete the competition and save the posts as not entered in a comp
+        elif not comp.check_votes():
+            p = comp.post.all()
+            for x in p:
+                x.is_entry = 0
+                x.comp = None
+                x.save()
+            comp.delete()
+        else:
+            get_winners()
 
     # find the winner or winners of the most recent competition
     def get_winners():
@@ -238,46 +253,42 @@ def winners(request):
         x = Vote.objects.filter(comp=comp)
         entries = x.values_list('post_id').annotate(
             vote_count=Count('post_id'))
-        # if there were no votes render the winners page
-        if len(entries) == 0:
-            return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
-        # or if there were find max votes. Add all posts with max votes to tied list
+        # Find max votes. Add all posts with max votes to tied list
         #  (index[0] = post_id, index[1] = votes)
-        else:
-            max_val = max(x[1] for x in entries)
-            tied = []
-            for v in entries:
-                if v[1] == max_val:
-                    tied.append(v[0])
+        max_val = max(x[1] for x in entries)
+        tied = []
+        for v in entries:
+            if v[1] == max_val:
+                tied.append(v[0])
             # check if there's more than one winner. If so save the winners and divide the prize between them,
             # then render the winners page
-            if len(tied) > 1:
-                champs = Post.objects.filter(id__in=tied)
-                for c in champs:
-                    c.is_winner = 1
-                    c.save()
+        if len(tied) > 1:
+            champs = Post.objects.filter(id__in=tied)
+            for c in champs:
+                c.is_winner = 1
+                c.save()
 
-                comp.winner = 1
-                comp.prize = get_prize() / len(tied)
-                comp.save()
+            comp.winner = 1
+            comp.prize = comp.get_prize()
+            comp.save()
 
             # If there is only one winner, save it, save the prize and render the winners page
-            else:
-                getentry = tied[0]
-                entry = Post.objects.get(id=getentry)
-                entry.is_winner = 1
-                entry.save()
+        else:
+            getentry = tied[0]
+            entry = Post.objects.get(id=getentry)
+            entry.is_winner = 1
+            entry.save()
 
-                comp.winner = 1
-                comp.prize = get_prize()
-                comp.save()
+            comp.winner = 1
+            comp.prize = comp.get_prize()
+            comp.save()
 
     # Check if the most recent competition is still active, if it is render the winners page
     if comp.is_active():
         return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
     # If most recent comp has finished, check if anyone has entered. If they have get the winners
-    elif not comp.winner and len(comp_posts) >= 1:
-        get_winners()
+    elif not comp.winner:
+        comp_del()
         return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
     # or if there were no entries or no comps without winners render the winners page
     else:
@@ -307,9 +318,9 @@ def winner_detail(request, id):
 def featured(request):
     postlist = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()
                                 ).order_by('-date_published')
-    page = request.GET.get('page', 1)
+    page = request.GET.get('page')
 
-    paginator = Paginator(postlist, 4)
+    paginator = Paginator(postlist, 6)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
