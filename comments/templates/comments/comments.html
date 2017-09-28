@@ -1,7 +1,6 @@
 {% load bootstrap_tags %}
 
- <div class="row">
-    <div class="col-md-12">
+
 
         {% for comment in post.comments.all %}
 
@@ -20,14 +19,17 @@
                 </div>
                 <div class="col-md-10">
                     <div class="commentContent">
+
+                        {% if comment.author == request.user %}
+                        <a href="{% url 'edit_comment' post.id %}"><i class="fa fa-pencil-square-o floatRight"></i></a>
+                        <a href="{% url 'delete_comment' post.id %}"><i class="fa fa-trash-o floatRight"></i></a>
+                        {% endif %}
                         <p>{{ comment.content|linebreaks }}</p>
                     </div>
                 </div>
 
-
-
         {% empty %}
-            <p>Be the first to leave a comment</p>
+            <p class="space">Be the first to leave a comment</p>
         {% endfor %}
 
         <div class="col-md-2">
@@ -44,5 +46,3 @@
                 <button type="submit" class="btn btn-default">Post</button>
             </form>
         </div>
-    </div>
- </div>

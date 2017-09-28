@@ -2,13 +2,13 @@
 {% block content %}
 
     {% include 'posts/general/post.html' %}
-    <div class="container">
+
         <div class="row">
             <div class="com-md-12">
-                <p>This entry has {{ votes }} votes</p>
+                <p class="space">This entry has {{ votes }} votes</p>
                 {% if vote %}
                     <div>
-                        <p>{{ user }}: You have voted for this entry</p>
+                        <p class="space">{{ user }}: You have voted for this entry</p>
                         {% else %}
                         <p>Clicking this button will cast a vote for this entry</p>
                     </div>
@@ -31,5 +31,4 @@
                 {% include 'comments/comments.html' %}
             </div>
         </div>
-    </div>
 {% endblock %}

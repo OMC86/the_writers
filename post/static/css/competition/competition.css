@@ -47,3 +47,17 @@
 .winner{
     color: #007f76;
 }
+
+/* Winner detail*/
+
+.space{
+    padding-left: 15px;
+}
+
+
+@media screen and (min-width: 768px) {
+
+    .space{
+        padding-left: 0px;
+    }
+}
