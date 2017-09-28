@@ -7,6 +7,7 @@ from django.utils import timezone
 from filters import PostFilter
 from comments.forms import CommentForm
 from post.models import Competition
+from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
@@ -16,6 +17,7 @@ def search(request):
     return render(request, 'search.html', {'posts': post_filter})
 
 
+@login_required
 def search_detail(request, id):
     x = timezone.now()
     post = get_object_or_404(Post, pk=id)

@@ -17,6 +17,7 @@ from comments.forms import CommentForm
 
 
 # renders a list of posts descending order
+@login_required
 def post_list(request):
     postlist = Post.objects.filter(author=request.user).order_by('-date_created')
     page = request.GET.get('page')
@@ -168,6 +169,7 @@ def comp_entries(request):
         return render(request, 'competition/entrylist.html')
 
 
+@login_required
 def entry_detail(request, id):
     x = timezone.now()
     post = get_object_or_404(Post, pk=id)
@@ -295,6 +297,7 @@ def winners(request):
         return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
 
 
+@login_required
 def winner_detail(request, id):
     x = timezone.now()
     post = get_object_or_404(Post, pk=id)
@@ -330,6 +333,7 @@ def featured(request):
     return render(request, 'featured/featuredlist.html', {'posts': posts})
 
 
+@login_required
 def featured_detail(request, id):
     x = timezone.now()
     post = get_object_or_404(Post, pk=id)
