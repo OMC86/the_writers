@@ -125,6 +125,15 @@ span{
 }
 
 
+.link > a{
+    text-align: center;
+    border: 1px solid #BD5461;
+}
+
+#bFour{
+    margin-bottom: -7px;
+}
+
 /*SIDE NAV*/
 
 #profile{
