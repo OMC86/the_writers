@@ -74,7 +74,7 @@ class Post(models.Model):
     is_winner = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     image = models.ImageField(upload_to="images", blank=True, null=True)
-    comp = models.ForeignKey('Competition', blank=True, null=True)
+    comp = models.ForeignKey('Competition', blank=True, null=True, related_name='post')
 
     def publish(self):
         self.date_published = timezone.now()
