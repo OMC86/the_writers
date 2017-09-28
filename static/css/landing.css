@@ -122,18 +122,18 @@ ul.nav a:focus{
 }
 
 #listPosition{
-    margin-top: 50px;
+    margin-top: 40px;
 }
 
 .landing-list li{
-    padding-top: 20px;
+    padding-top: 10px;
     font-family: Bangala MN;
-    font-size: 24px;
+    font-size: 20px;
 }
 
 .landing-list > li > i{
-    padding: 10px;
-    color: #BD5461;
+    padding: 5px;
+    color: #007f76;
 }
 
 #form-box{
@@ -149,10 +149,15 @@ ul.nav a:focus{
     }
 
     #hideButtons{
-    display: block;
-}
+        display: block;
+    }
+
     #navCollapse{
         height: 265px;
+    }
+
+    .link a{
+        font-size: 21px;
     }
 
 }
