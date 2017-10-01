@@ -79,8 +79,8 @@
                                 <ul class="nav collapse" id="navComp" role="menu" aria-labelledby="bTwo">
                                     <li><a href="{% url 'view_comp' %}"><p>Competition details</p></a></li>
                                     <li><a href="{% url 'winners' %}"><p>Competition Winners</p></a></li>
-                                    {% active_comp as active_comp %}
-                                    {% if active_comp %}
+                                    {% can_vote_comp as can_vote_comp %}
+                                    {% if can_vote_comp %}
                                     <li><a href="{% url 'view_entries' %}"><p>Vote</p></a></li>
                                     {% endif %}
 
@@ -162,7 +162,7 @@
                                 <p class="profile-title">Competitions</p>
                                 <a href="{% url 'view_comp' %}"><p>Competition details</p></a>
                                 <a href="{% url 'winners' %}"><p>Competition Winners</p></a>
-                                {% if active_comp %}
+                                {% if can_vote_comp %}
                                 <a href="{% url 'view_entries' %}"><p>Vote</p></a>
                                 {% endif %}
                             </div>

@@ -36,7 +36,7 @@ def total_prize():
 
 
 @register.simple_tag
-def active_comp():
+def can_vote_comp():
     comps = Competition.objects.all().order_by('-vote_period_end')
     comp = comps[0]
-    return comp.is_active()
+    return comp.can_vote()

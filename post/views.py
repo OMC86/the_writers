@@ -38,7 +38,18 @@ def post_detail(request, id):
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
-    args = {'post': post, 'x': x}
+
+    if request.method == 'POST':
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.author = request.user
+            comment.post = post
+            comment.save()
+            return redirect(featured_detail, post.id)
+    else:
+        form = CommentForm()
+    args = {'post': post, 'form': form, 'x': x}
     return render(request, "posts/postdetail.html", args)
 
 

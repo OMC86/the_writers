@@ -30,33 +30,7 @@
             </p>
         </div>
     </div>
-    {% include 'messages.html' %
+    {% include 'messages.html' %}
     <hr>
-    <div class="row">
-        <div class="col-md-12">
-            {% for comment in post.comments.all %}
-                <hr>
-                <div class="col-md-2">
-                    <div class="avatarContainer">
-                        {% if post.author.avatar %}
-                            <img class="avatar" src="/media/{{ post.author.avatar }}">
-                        {% endif %}
-                    </div>
-                </div>
-                <div class="col-md-10">
-                    <div class="commentContent">
-                        <p>By {{ comment.author }} on {{ comment.date_created }}
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-10">
-                    <div class="commentContent">
-                        <p>{{ comment.content|linebreaks }}</p>
-                    </div>
-                </div>
-            {% empty %}
-                <p>Your post has no comments</p>
-            {% endfor %}
-        </div>
-    </div>
+    {% include 'comments/comments.html' %}
 {% endblock %}
