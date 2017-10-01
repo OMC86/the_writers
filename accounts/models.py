@@ -6,6 +6,7 @@ from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 
+
 # Create your models here.
 class AccountUserManager(UserManager):
     def _create_user(self, username, email, password,

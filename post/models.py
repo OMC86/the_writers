@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
 from django.utils import timezone
-from writers import settings
-from django.db.models import Count
-from datetime import datetime
+from django.conf import settings
 from accounts.models import User
 from django.core.exceptions import ValidationError
 # Create your models here.
