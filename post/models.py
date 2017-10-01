@@ -5,7 +5,7 @@ from writers import settings
 from django.db.models import Count
 from datetime import datetime
 from accounts.models import User
-
+from django.core.exceptions import ValidationError
 # Create your models here.
 
 
@@ -73,7 +73,15 @@ class Post(models.Model):
     is_entry = models.BooleanField(default=False)
     is_winner = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
-    image = models.ImageField(upload_to="images", blank=True, null=True)
+
+    # https://stackoverflow.com/questions/6195478/max-image-size-on-file-upload
+    def validate_image(fieldfile_obj):
+        filesize = fieldfile_obj.file.size
+        megabyte_limit = 5.0
+        if filesize > megabyte_limit * 1024 * 1024:
+            raise ValidationError("Maximum file size is %sMB" % str(megabyte_limit))
+
+    image = models.ImageField(upload_to="images", blank=True, null=True, validators=[validate_image])
     comp = models.ForeignKey('Competition', blank=True, null=True, related_name='post')
 
     def publish(self):

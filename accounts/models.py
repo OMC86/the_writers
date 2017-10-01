@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from django.db import models
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.utils import timezone
+from django.core.exceptions import ValidationError
 
 # Create your models here.
 class AccountUserManager(UserManager):
@@ -25,10 +25,20 @@ class AccountUserManager(UserManager):
 
         return user
 
+
 class User(AbstractUser):
 
     stripe_id = models.CharField(max_length=40, default='')
     subscription_end = models.DateTimeField(default=timezone.now)
-    avatar = models.ImageField(upload_to="avatars", blank=True, null=True)
+
+    # https://stackoverflow.com/questions/6195478/max-image-size-on-file-upload
+    def validate_image(fieldfile_obj):
+        filesize = fieldfile_obj.file.size
+        megabyte_limit = 5.0
+        if filesize > megabyte_limit*1024*1024:
+            raise ValidationError("Maximum file size is %sMB" % str(megabyte_limit))
+
+    avatar = models.ImageField(upload_to="avatars", blank=True, null=True, validators=[validate_image])
     objects = AccountUserManager()
+
 # Create your models here.
