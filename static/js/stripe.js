@@ -1,6 +1,4 @@
-/**
- * Created by Chris on 17/08/2017.
- */
+
 $(function() {
     $("#subscription-form").submit(function() {
         var form = this;

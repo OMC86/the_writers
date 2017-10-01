@@ -16,12 +16,13 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/posts/post.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/competition/competition.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/search.css' %}">
-    <link rel="stylesheet" type="text/css" href="{% static 'css/accountinfo.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js"></script>
     {% block head_js %}{% endblock %}
 </head>
 <body>
+{% load post_extras %}
     <!--Navigation-->
     <div class="container">
         <div class="masthead">
@@ -78,7 +79,11 @@
                                 <ul class="nav collapse" id="navComp" role="menu" aria-labelledby="bTwo">
                                     <li><a href="{% url 'view_comp' %}"><p>Competition details</p></a></li>
                                     <li><a href="{% url 'winners' %}"><p>Competition Winners</p></a></li>
+                                    {% active_comp as active_comp %}
+                                    {% if active_comp %}
                                     <li><a href="{% url 'view_entries' %}"><p>Vote</p></a></li>
+                                    {% endif %}
+
                                 </ul>
                             </li>
                             <li class="link">
@@ -157,7 +162,9 @@
                                 <p class="profile-title">Competitions</p>
                                 <a href="{% url 'view_comp' %}"><p>Competition details</p></a>
                                 <a href="{% url 'winners' %}"><p>Competition Winners</p></a>
+                                {% if active_comp %}
                                 <a href="{% url 'view_entries' %}"><p>Vote</p></a>
+                                {% endif %}
                             </div>
                         </div>
                     <hr>
