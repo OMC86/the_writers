@@ -33,6 +33,9 @@ urlpatterns = [
     # search
     url(r'', include('search.urls')),
 
+    # comment
+    url(r'', include('comments.urls')),
+
     # images
     url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
 ]
