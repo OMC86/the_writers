@@ -2,16 +2,18 @@ from django.contrib import messages, auth
 from django.core.urlresolvers import reverse
 from django.shortcuts import render, redirect
 from django.template.context_processors import csrf
-from accounts.forms import UserRegistrationForm, UserLoginForm, UserSubscriptionForm, UserUploadPhoto
-from models import User
+from django.utils.http import is_safe_url
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 from django.conf import settings
+from accounts.forms import UserRegistrationForm, UserLoginForm, UserSubscriptionForm, UserUploadPhoto
+from models import User
 import datetime
 import stripe
 import arrow
 import json
+from pages.views import profile
 
 
 stripe.api_key = settings.STRIPE_SECRET
@@ -19,11 +21,16 @@ stripe.api_key = settings.STRIPE_SECRET
 
 # renders the landing page
 def landing(request):
-    return render(request, "landing.html")
+    args = {'next': request.GET.get('next', '')}
+    return render(request, "landing.html", args)
 
 
 # renders the registration form and registers users
 def register(request):
+
+    redirect_to = request.POST.get('next', '')
+    url_is_safe = is_safe_url(redirect_to)
+
     if request.method == 'POST':
         form = UserRegistrationForm(request.POST)
         if form.is_valid():
@@ -32,7 +39,12 @@ def register(request):
             user = auth.authenticate(email=request.POST.get('email'),
                                      password=request.POST.get('password1'))
 
-            if user:
+            if redirect_to is not None and url_is_safe:
+                auth.login(request, user)
+                messages.info(request, "You have successfully logged in")
+                return redirect(redirect_to)
+
+            elif user:
                 auth.login(request, user)
                 messages.success(request, "You have successfully registered")
                 return redirect(reverse('home'))
@@ -43,7 +55,7 @@ def register(request):
     else:
         form = UserRegistrationForm()
 
-    args = {'form': form}
+    args = {'form': form, 'next': request.GET.get('next', '')}
     args.update(csrf(request))
 
     return render(request, 'register.html', args)
@@ -90,16 +102,24 @@ def cancel_subscription(request):
         messages.error(request, e)
     return redirect('home')
 
-
+# http://andrearobertson.com/blog/2016/10/05/django-example-redirecting-to-a-passed-in-url/
 # Renders the login form and authenticates user
 def login(request):
+
+    redirect_to = request.POST.get('next', '')
+    url_is_safe = is_safe_url(redirect_to)
+
     if request.method == 'POST':
         form = UserLoginForm(request.POST)
         if form.is_valid():
             user = auth.authenticate(email=request.POST.get('email'),
                                      password=request.POST.get('password'))
 
-            if user is not None:
+            if redirect_to is not None and url_is_safe:
+                auth.login(request, user)
+                messages.error(request, "You have successfully logged in")
+                return redirect(redirect_to)
+            elif user is not None:
                 auth.login(request, user)
                 messages.error(request, "You have successfully logged in")
                 return redirect(reverse('home'))
@@ -109,7 +129,7 @@ def login(request):
     else:
         form = UserLoginForm()
 
-    args = {'form': form}
+    args = {'form': form, 'next': request.GET.get('next', '')}
     args.update(csrf(request))
     return render(request, 'login.html', args)
 
@@ -131,10 +151,9 @@ def upload(request):
             return redirect(reverse('home'))
     else:
         form = UserUploadPhoto()
-        args = {'form': form}
-        args.update(csrf(request))
-
-        return render(request, 'uploadavatar.html', args)
+    args = {'form': form}
+    args.update(csrf(request))
+    return render(request, 'uploadavatar.html', args)
 
 
 @csrf_exempt

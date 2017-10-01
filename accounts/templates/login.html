@@ -6,7 +6,10 @@
         {% csrf_token %}
         {{ form| as_bootstrap }}
         <div class="form-group">
-            <button type="submit" class="btn btn-default">Login</button>
+            <input type="submit" class="btn btn-default sub" />
         </div>
+        <input type="hidden" name="next" value="{{ next }}" />
     </form>
+
+    <div class="text-xs-center"><small>Don't have an account? <a href="{% url 'register' %}{% if next %}?next={{ next }}{% endif %}">Sign up</a></small></div>
 {% endblock %}

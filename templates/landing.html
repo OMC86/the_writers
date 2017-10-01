@@ -10,7 +10,7 @@
     <script src="https://use.fontawesome.com/7dc7b1b8bc.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}">
-
+    <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
 </head>
 <body>
     <!-- Landing page navigation-->
@@ -119,8 +119,11 @@
                 <div class="col-xs-12 col-sm-6 col-md-6">
                     <div id="form-box">
                     <div id="hideButtons">
+                        {% if next %}
+                        {% else %}
                         <a href="{% url 'register' %}"><button class="btn btn-default">Sign Up</button></a>
                         <a href="{% url 'login' %}"><button class="btn btn-default">Login</button></a>
+                        {% endif %}
                     </div>
                         {% block content %}
                         {% endblock %}
