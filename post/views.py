@@ -38,7 +38,8 @@ def post_detail(request, id):
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
-    return render(request, "posts/postdetail.html", {'post': post, 'x': x})
+    args = {'post': post, 'x': x}
+    return render(request, "posts/postdetail.html", args)
 
 
 @login_required 
@@ -149,7 +150,8 @@ def show_competition(request):
         get the currently active competition
         """
         if comp.is_active():
-            return render(request, 'competition/comp.html', {'comp': comp, 'x': x, 'prize': prize})
+            args = {'comp': comp, 'x': x, 'prize': prize}
+            return render(request, 'competition/comp.html', args)
     else:
         return render(request, 'competition/comp.html')
 
@@ -164,7 +166,8 @@ def comp_entries(request):
                 comp.delete()
                 return render(request, 'competition/entrylist.html')
             else:
-                return render(request, 'competition/entrylist.html', {'entries': entries, 'comp': comp, 'x': x})
+                args = {'entries': entries, 'comp': comp, 'x': x}
+                return render(request, 'competition/entrylist.html', args)
     else:
         return render(request, 'competition/entrylist.html')
 
@@ -190,12 +193,13 @@ def entry_detail(request, id):
         form = CommentForm()
         for vote in voteobjects:
             if vote.voter == request.user:
-                return render(request, "competition/entrydetail.html",
-                              {'post': post, 'votes': votes, 'vote': vote, 'form': form, 'x': x})
+                args = {'post': post, 'votes': votes, 'vote': vote, 'form': form, 'x': x}
+                return render(request, "competition/entrydetail.html", args)
         else:
             form = CommentForm()
-            return render(request, "competition/entrydetail.html",
-                          {'post': post, 'votes': votes, 'form': form, 'x': x})
+        args = {'post': post, 'votes': votes, 'form': form, 'x': x}
+        return render(request, "competition/entrydetail.html", args)
+
 
 
 @login_required
@@ -315,7 +319,8 @@ def winner_detail(request, id):
             return redirect(winner_detail, post.id)
     else:
         form = CommentForm()
-        return render(request, 'competition/winnerdetail.html', {'post': post, 'votes': votes, 'form': form, 'x': x})
+    args = {'post': post, 'votes': votes, 'form': form, 'x': x}
+    return render(request, 'competition/winnerdetail.html', args)
 
 
 def featured(request):
@@ -350,4 +355,5 @@ def featured_detail(request, id):
             return redirect(featured_detail, post.id)
     else:
         form = CommentForm()
-        return render(request, "featured/featureddetail.html", {'post': post, 'form': form, 'x': x})
+    args = {'post': post, 'form': form, 'x': x}
+    return render(request, "featured/featureddetail.html", args)

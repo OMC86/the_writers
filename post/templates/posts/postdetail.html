@@ -1,5 +1,16 @@
 {% extends "base.html" %}
 {% block content %}
+{% block head_js %}
+  <script type="text/javascript"></script>
+  <script>
+      function deleteCheck() {
+          if (confirm('Are you sure you want to delete this post?')) {
+              return true;
+          }
+          return false;
+      }
+  </script>
+{% endblock %}
 
     {% include 'posts/general/post.html' %}
 
@@ -9,8 +20,8 @@
                 <div class="floatRight">
                 {% if post.is_entry and x > post.comp.entry_period_fin %}
                 {% else %}
-                    <a href="{% url 'edit' post.id %}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
-                    <a href="{% url 'delete' post.id %}"><i class="fa fa-trash-o fa-2x"></i></a>
+                    <a href="{% url 'edit' post.id %}"><i class="fa fa-pencil fa-2x"></i></a>
+                    <a href="{% url 'delete' post.id %}" onclick="return deleteCheck();"><i class="fa fa-trash-o fa-2x"></i></a>
                 {% endif %}
                 </div>
             {% endif %}
@@ -19,7 +30,7 @@
             </p>
         </div>
     </div>
-    {% include 'messages.html' %}
+    {% include 'messages.html' %
     <hr>
     <div class="row">
         <div class="col-md-12">

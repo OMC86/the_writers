@@ -6,3 +6,10 @@
 .btpBtn{
     margin-right: 15px;
 }
+
+.centreImg{
+    width: auto;
+    height: 300px;
+    display: block;
+    margin: 0 auto;
+}

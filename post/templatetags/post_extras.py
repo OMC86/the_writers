@@ -33,3 +33,10 @@ def total_prize():
     for c in comps:
         prize_list.append(c.prize)
     return sum(prize_list)
+
+
+@register.simple_tag
+def active_comp():
+    comps = Competition.objects.all().order_by('-vote_period_end')
+    comp = comps[0]
+    return comp.is_active()
