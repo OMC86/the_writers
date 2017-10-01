@@ -1,5 +1,9 @@
-
+/*Account info*/
 #infoContainer{
     display: block;
     margin: 0 auto;
+}
+
+.sub{
+    margin-top: 25px;
 }
