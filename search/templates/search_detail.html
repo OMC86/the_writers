@@ -8,7 +8,7 @@
         <p>This post has yet to be published</p>
     {% endif %}
 
-    {% if c %}
+    {% if c and c == post.comp %}
     <div class="row">
         <div class="com-md-12">
             <div>
@@ -25,15 +25,15 @@
             {% include 'messages.html' %}
 
 
-    <div class="row">
-        <div class="col-md-12">
-            <p>
-                <button class="btn btn-default floatRight" onclick="location.href='/search/'">Back</button>
-            </p>
+        <div class="row">
+            <div class="col-md-12">
+                <p>
+                    <button class="btn btn-default floatRight" onclick="location.href='/search/'">Back</button>
+                </p>
+            </div>
         </div>
-    </div>
 
     {% include 'comments/comments.html' %}
 
-
+    </div>
 {% endblock %}
