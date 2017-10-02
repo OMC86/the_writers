@@ -123,6 +123,7 @@ ul.nav a:focus{
 
 #listPosition{
     margin-top: 40px;
+    margin-left: -10px;
 }
 
 .landing-list li{
@@ -132,7 +133,7 @@ ul.nav a:focus{
 }
 
 .landing-list > li > i{
-    padding: 5px;
+    padding-right: 5px;
     color: #007f76;
 }
 
