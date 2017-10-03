@@ -3,7 +3,7 @@
  */
 $(document).ready(function(){
 
-    if(window.location.href == "https//:thewriters.herokuapp.com/search/")
+    if(window.location.href == "https://thewriters.herokuapp.com/search/")
         $('table').hide();
     else
         $('table').show();
