@@ -3,7 +3,7 @@
  */
 $(document).ready(function(){
 
-    if(window.location.href == "http://127.0.0.1:8000/search/")
+    if(window.location.href == "https//:thewriters.herokuapp.com/search/")
         $('table').hide();
     else
         $('table').show();
