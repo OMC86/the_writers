@@ -102,6 +102,7 @@ def cancel_subscription(request):
         messages.error(request, e)
     return redirect('home')
 
+
 # http://andrearobertson.com/blog/2016/10/05/django-example-redirecting-to-a-passed-in-url/
 # Renders the login form and authenticates user
 def login(request):

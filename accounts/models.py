@@ -7,6 +7,14 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 
 
+# https://stackoverflow.com/questions/6195478/max-image-size-on-file-upload
+def validate_image(fieldfile_obj):
+    filesize = fieldfile_obj.file.size
+    megabyte_limit = 5.0
+    if filesize > megabyte_limit*1024*1024:
+        raise ValidationError("Maximum file size is %sMB" % str(megabyte_limit))
+
+
 # Create your models here.
 class AccountUserManager(UserManager):
     def _create_user(self, username, email, password,
@@ -31,14 +39,6 @@ class User(AbstractUser):
 
     stripe_id = models.CharField(max_length=40, default='')
     subscription_end = models.DateTimeField(default=timezone.now)
-
-    # https://stackoverflow.com/questions/6195478/max-image-size-on-file-upload
-    def validate_image(fieldfile_obj):
-        filesize = fieldfile_obj.file.size
-        megabyte_limit = 5.0
-        if filesize > megabyte_limit*1024*1024:
-            raise ValidationError("Maximum file size is %sMB" % str(megabyte_limit))
-
     avatar = models.ImageField(upload_to="avatars", blank=True, null=True, validators=[validate_image])
     objects = AccountUserManager()
 
