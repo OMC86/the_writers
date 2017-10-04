@@ -7,6 +7,14 @@ from django.core.exceptions import ValidationError
 # Create your models here.
 
 
+# https://stackoverflow.com/questions/6195478/max-image-size-on-file-upload
+def validate_image(fieldfile_obj):
+    filesize = fieldfile_obj.file.size
+    megabyte_limit = 5.0
+    if filesize > megabyte_limit * 1024 * 1024:
+        raise ValidationError("Maximum file size is %sMB" % str(megabyte_limit))
+
+
 class Post(models.Model):
 
     POEM = 'Poem'
@@ -71,14 +79,7 @@ class Post(models.Model):
     is_entry = models.BooleanField(default=False)
     is_winner = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
-
-    # https://stackoverflow.com/questions/6195478/max-image-size-on-file-upload
-    def validate_image(fieldfile_obj):
-        filesize = fieldfile_obj.file.size
-        megabyte_limit = 5.0
-        if filesize > megabyte_limit * 1024 * 1024:
-            raise ValidationError("Maximum file size is %sMB" % str(megabyte_limit))
-
+    tags = models.CharField(max_length=30, blank=True, null=True)
     image = models.ImageField(upload_to="images", blank=True, null=True, validators=[validate_image])
     comp = models.ForeignKey('Competition', blank=True, null=True, related_name='post')
 
@@ -126,10 +127,6 @@ class Competition(models.Model):
         subscribers = User.objects.filter(subscription_end__gte=timezone.now())
         prize = subscribers.count()
         return prize
-
-
-
-
 
     def __unicode__(self):
         return self.title

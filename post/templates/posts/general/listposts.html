@@ -4,7 +4,21 @@
         <hr>
             <h3>{{ post.title|title }}</h3>
             <p>{{ post.content|truncatewords:5 }}</p>
-            <p>Category: {{ post.category }} | Genre: {{ post.genre }}</p>
+            <p>{% if post.category %}
+                    Category: {{ post.category }}
+                {% endif %}
+                {% if post.genre %}
+                   | Genre: {{ post.genre }}
+                {% endif %}
+                {% if post.tags and post.genre %}
+                    | Tags: {{ post.tags|title }}
+                {% elif post.tags and post.category %}
+                    | Tags: {{ post.tags|title }}
+                {% elif post.tags %}
+                    Tags: {{ post.tags|title }}
+                {% endif %}
+            </p>
+
             <p>Posted by {{ post.author|title }} on {{ post.date_published }} | Views {{ post.views }}
             <button class="btn btn-default floatRight" onclick="location.href={{ post.id }}">Read More</button>
             </p>

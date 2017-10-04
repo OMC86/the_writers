@@ -15,6 +15,11 @@
                     <p>Genre: {{ post.genre }}</p>
                 </div>
             {% endif %}
+            {% if post.tags is not None %}
+                <div class="col-md-3">
+                    <p>Tags: {{ post.tags|title }}</p>
+                </div>
+            {% endif %}
             {% if post.comp %}
                 {% if post.is_winner %}
                     <div class="col-md-3">
