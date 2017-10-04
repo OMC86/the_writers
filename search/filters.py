@@ -1,5 +1,6 @@
 from post.models import Post
 import django_filters as filters
+from django.utils.translation import ugettext_lazy as _
 
 
 class PostFilter(filters.FilterSet):
@@ -8,4 +9,6 @@ class PostFilter(filters.FilterSet):
 
     class Meta:
         model = Post
-        fields = ['author__username', 'title', 'category', 'genre', 'comp']
+        fields = ['author__username', 'title', 'category', 'genre', 'tags', 'comp']
+
+

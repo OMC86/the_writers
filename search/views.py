@@ -9,7 +9,7 @@ from comments.forms import CommentForm
 from post.models import Competition
 from django.contrib.auth.decorators import login_required
 # Create your views here.
-
+# https://simpleisbetterthancomplex.com/tutorial/2016/11/28/how-to-filter-querysets-dynamically.html
 
 def search(request):
     post_list = Post.objects.all()
@@ -37,7 +37,9 @@ def search_detail(request, id):
         comp = Competition.objects.all()
         for c in comp:
             if c.can_vote():
-                return render(request, 'search_detail.html', {'post': post, 'form': form, 'c': c})
+                args = {'post': post, 'form': form, 'c': c}
+                return render(request, 'search_detail.html', args)
         else:
-            return render(request, 'search_detail.html', {'post': post, 'form': form, 'x': x})
+            args = {'post': post, 'form': form, 'x': x}
+            return render(request, 'search_detail.html', args)
 
