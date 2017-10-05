@@ -4,11 +4,29 @@
 }
 
 th{
-    font-family: Bangala MN;
+    font-family: 'Crimson Text', serif;
     font-size: 21px;
 }
 
 td{
-    font-family: Bangala MN;
+    font-family: 'Crimson Text', serif;
     font-size: 18px;
+}
+
+tr td a{
+    width: 100%;
+    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+td a.btn{
+    width: 100%;
+    height: 100%;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.tableColour{
+    border: 2px solid #42ab9e;
 }

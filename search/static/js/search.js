@@ -8,4 +8,16 @@ $(document).ready(function(){
     else
         $('table').show();
 
-});
+
+    $('tbody tr').mouseenter(function() {
+        $(this).addClass('tableColour')
+    });
+
+    $('tbody tr').mouseleave(function() {
+        $(this).removeClass('tableColour')
+    })
+
+
+
+})
+

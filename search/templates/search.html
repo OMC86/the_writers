@@ -32,14 +32,15 @@
         </thead>
         <tbody>
             {% for post in posts.qs %}
+
                 <tr>
-                    <td><a onclick="location.href={{ post.id }}">
-                        <button class="btn btn-default">{{ post.author }}</button></a></td>
-                    <td>{{ post.category }}</td>
-                    <td>{{ post.genre }}</td>
-                    <td>{{ post.title }}</td>
-                    <td>{{ post.comp }}</td>
+                    <td><a class="btn" onclick="location.href={{ post.id }}">{{ post.author }}</a></td>
+                    <td><a class="btn" onclick="location.href={{ post.id }}">{{ post.category }}</a></td>
+                    <td><a class="btn" onclick="location.href={{ post.id }}">{{ post.genre }}</a></td>
+                    <td><a class="btn" onclick="location.href={{ post.id }}">{{ post.title }}</a></td>
+                    <td><a class="btn" onclick="location.href={{ post.id }}">{{ post.comp }}</a></td>
                 </tr>
+
             {% endfor %}
         </tbody>
     </table>
