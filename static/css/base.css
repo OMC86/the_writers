@@ -11,18 +11,18 @@ a{
 }
 
 p, li{
-    font-family: Bangala MN;
+    font-family: 'Crimson Text', serif;
     font-size: 18px;
 }
 
 h2, h3, h4{
     color: #000000;
-    font-family: Bangala MN;
+    font-family: 'Crimson Text', serif;
 }
 
 h1{
     color:#42ab9e;
-    font-family: Bangala MN;
+    font-family: 'Crimson Text', serif;
     text-align: center;
 }
 
@@ -37,7 +37,7 @@ h1{
 
 .messages{
     margin-top: 15px;
-    font-family: Bangala MN;
+    font-family: 'Crimson Text', serif;
     font-size: 21px;
 }
 
@@ -74,7 +74,7 @@ span{
 /*TITLE*/
 
 .baseTitle p{
-    font-family: Bangala MN;
+    font-family: 'Crimson Text', serif;
     font-size: 30px;
     color: #000;
 }
@@ -108,7 +108,7 @@ span{
 }
 
 .baseNavWords{
-    font-family: Bangala MN;
+    font-family: 'Crimson Text', serif;
     font-size: 18px;
 }
 
@@ -211,7 +211,7 @@ span{
     }
 
     .baseNavWords {
-        font-family: Bangala MN;
+        font-family: 'Crimson Text', serif;
         font-size: 18px;
         padding-top: 15px;
     }

@@ -36,7 +36,7 @@
 
 .foot{
     padding-top: 10px;
-    font: 15px Bangala MN;
+    font: 16px 'Crimson Text', serif;
     color: #fff;
 }
 
@@ -44,9 +44,9 @@
     padding: 10px;
 }
 
-.foot > i{
+.foot i{
     color: #42ab9e;
-    padding: 10px;
+    padding-right: 30px;
 }
 
 .foot > span{
