@@ -10,6 +10,19 @@
         </div>
         <input type="hidden" name="next" value="{{ next }}" />
     </form>
-
-    <div class="text-xs-center"><small>Don't have an account? <a href="{% url 'register' %}{% if next %}?next={{ next }}{% endif %}">Sign up</a></small></div>
+    {% if next %}
+    <div class="text-xs-center">
+        <small>
+            Don't have an account? <a href="{% url 'register' %}{% if next %}?next={{ next }}{% endif %}">Sign up</a>
+        </small>
+    </div>
+    {% endif %}
+     <div class="text-xs-center">
+        <small>
+            Forgotten your password?
+            <a href="{% url 'password_reset' %}{% if next %}?next={{ next }}{% endif %}">
+                Reset password
+            </a>
+        </small>
+    </div>
 {% endblock %}

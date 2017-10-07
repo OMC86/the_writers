@@ -9,7 +9,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'h@&*d!6ch$2!ll9pb=ip6_yh6!w497ij59zeqg*vvh5c+2-bbq'
 
-ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'thewriters.herokuapp.com']
+ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'thewriters.herokuapp.com']
 
 SITE_ID = 2
 
@@ -118,3 +118,13 @@ LOGIN_URL = '/accounts/login/'
 # house images
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
+
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'thewriters86@gmail.com'
+EMAIL_HOST_PASSWORD = 'hzx111561'
+DEFAULT_FROM_EMAIL = 'EMAIL_HOST_USER'
+
