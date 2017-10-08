@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_forms_bootstrap',
     'django.contrib.sites',
+    'storages',
     'accounts',
     'comments',
     'search',
@@ -55,6 +56,7 @@ TEMPLATES = [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
+                'django.template.context_processors.media',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -115,9 +117,6 @@ AUTHENTICATION_BACKENDS = (
 
 LOGIN_URL = '/accounts/login/'
 
-# house images
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
 EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 
@@ -127,4 +126,26 @@ EMAIL_PORT = 465
 EMAIL_HOST_USER = 'thewriters86@gmail.com'
 EMAIL_HOST_PASSWORD = 'hzx111561'
 DEFAULT_FROM_EMAIL = 'EMAIL_HOST_USER'
+
+
+AWS_S3_OBJECT_PARAMETERS = {
+    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
+    'CacheControl': 'max-age=94608000',
+}
+# Host images
+AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
+AWS_S3_REGION_NAME = 'eu-west-2'
+AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
+AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+
+# Tell django-storages the domain to use to refer to static files.
+S3_URL = 'http://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
+
+# Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
+# you run `collectstatic`).
+DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
+MEDIA_ROOT = '/'
+
+MEDIA_URL = S3_URL + MEDIA_ROOT
+#MEDIAFILES_STORAGE = 'custom_storages.MediaStorage'
 

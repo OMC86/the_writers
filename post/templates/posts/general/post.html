@@ -48,7 +48,7 @@
 <div class="row">
     <div class="col-xs-12 col-lg-12">
         {% if post.image %}
-            <img class="centreImg" src="/media/{{ post.image }}">
+            <img class="centreImg" src="{{ MEDIA_URL }}{{ post.image }}">
         {% endif %}
     </div>
 </div>

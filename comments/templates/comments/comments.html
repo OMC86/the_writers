@@ -1,11 +1,8 @@
 {% block head_js %}
   <script type="text/javascript">
       function deleteCheck() {
-          if (confirm('Are you sure you want to delete this comment?')) {
-              return true;
+          return (confirm('Are you sure you want to delete this comment?'))
           }
-          return false;
-      }
   </script>
 {% endblock %}
 {% load bootstrap_tags %}
@@ -14,7 +11,7 @@
         <div class="col-md-2">
             <div class="avatarContainer">
                 {% if comment.author.avatar %}
-                    <img class="avatar" src="/media/{{ comment.author.avatar }}">
+                    <img class="avatar" src="{{ MEDIA_URL }}{{ comment.author.avatar }}">
                 {% endif %}
             </div>
         </div>
@@ -45,7 +42,7 @@
         <div class="col-md-2">
             <div class="avatarContainer commentForm">
                 {% if request.user.avatar %}
-                    <img class="avatar" src="/media/{{ request.user.avatar }}">
+                    <img class="avatar" src="{{ MEDIA_URL }}{{ request.user.avatar }}">
                 {% endif %}
             </div>
         </div>

@@ -44,6 +44,7 @@
                     </div>
                 </div>
             </div>
+
     <!-- Nav for small screen less that 767px -->
             <nav id='navCollapseBase' class="borders">
                 <div class="container">
@@ -114,6 +115,7 @@
                 </div>
             </nav>
 
+    <!-- Nav for bigger screen-->
             <div class="row">
                 <div class="col-md-12">
                     <div id='baseNav' class="borders">
@@ -127,7 +129,7 @@
             </div>
         <div id="userPhotoSmall">
             {% if user.avatar %}
-                <img class="avatar" src="/media/{{ user.avatar }}">
+                <img class="avatar" src="{{ MEDIA_URL }}{{ user.avatar }}">
             {% endif %}
         </div>
             <div class="row">
@@ -135,7 +137,7 @@
                     <div id="profile" class="borders">
                         <div id="userPhoto">
                             {% if user.avatar %}
-                                <img class="avatar" src="/media/{{ user.avatar }}">
+                                <img class="avatar" src="{{ MEDIA_URL }}{{ user.avatar }}">
                             {% endif %}
                         </div>
                         <div id="username">

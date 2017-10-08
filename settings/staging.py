@@ -18,6 +18,7 @@ STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'sk_test_blRbu4P14RH0LjZMT2jDpwxy')
 SITE_URL = 'https://thewriters.herokuapp.com'
 ALLOWED_HOSTS.append('thewriters.herokuapp.com')
 
+
 # Log DEBUG information to the console
 LOGGING = {
     'version': 1,
