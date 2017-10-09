@@ -7,3 +7,19 @@
 .sub{
     margin-bottom: 5px;
 }
+
+@media screen and (min-width: 422px){
+
+    .sub{
+        margin-top: -5px;
+    }
+
+}
+
+@media screen and (min-width: 767px) and (max-width: 991px){
+
+    .sub{
+        margin-top: 5px;
+    }
+
+}
