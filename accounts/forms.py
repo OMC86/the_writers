@@ -1,9 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
-from accounts.models import User
 from django.core.exceptions import ValidationError
 from .models import User
-from django.contrib import auth
+from cloudinary.forms import CloudinaryFileField
 
 class UserRegistrationForm(UserCreationForm):
     password1 = forms.CharField(
@@ -56,9 +55,7 @@ class UserSubscriptionForm(forms.Form):
         exclude = ['username']
 
 
-class UserUploadPhoto(forms.ModelForm):
-
-    avatar = forms.ImageField(label='Profile photo')
+class UserPhotoForm(forms.ModelForm):
 
     class Meta:
         model = User

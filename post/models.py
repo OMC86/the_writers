@@ -4,9 +4,7 @@ from django.utils import timezone
 from django.conf import settings
 from accounts.models import User
 from django.core.exceptions import ValidationError
-from smartfields import fields
-from smartfields.dependencies import FileDependency
-from smartfields.processors import ImageProcessor
+from cloudinary.models import CloudinaryField
 # Create your models here.
 
 
@@ -83,10 +81,7 @@ class Post(models.Model):
     is_winner = models.BooleanField(default=False)
     views = models.IntegerField(default=0)
     tags = models.CharField(max_length=30, blank=True, null=True)
-    image = fields.ImageField(dependencies=[
-        FileDependency(processor=ImageProcessor(
-            format='JPEG', scale={'max_width': 300, 'max_height': 300}))
-    ], upload_to="images", blank=True, null=True, validators=[validate_image])
+    image = CloudinaryField("image", blank=True, null=True)
     comp = models.ForeignKey('Competition', blank=True, null=True, related_name='post')
 
     def publish(self):

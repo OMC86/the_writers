@@ -4,23 +4,22 @@
     {% if entries %}
         <h1>{{ comp.title }}</h1>
         <h3>{{ comp.brief }}</h3>
-        {% if x > comp.entry_period_fin %}
+        {% if vote_period %}
         <h4>Voting ends in {{ comp.vote_period_end|timeuntil }}</h4>
+        {% elif entry_period %}
+            <p>Entry period is now open and ends in {{ comp.entry_period_fin|timeuntil }}.
+                <button class="btn btn-default floatRight" onclick="location.href='{% url 'new_post' %}'">
+                    Enter Now
+                </button>
+            </p>
         {% endif %}
-        {% if x < comp.entry_period_fin and user.subscription_end > x %}
-                <p>Entry period is now open and ends in {{ comp.entry_period_fin|timeuntil }}.
-                    <button class="btn btn-default floatRight" onclick="location.href='{% url 'new_post' %}'">
-                        Enter Now
-                    </button>
-                </p>
-            {% endif %}
-            {% if not user.stripe_id %}
-                <div>
-                    <button id="subscribeBtn" class="btn btn-default floatRight"
-                            onclick="location.href='{% url 'subscribe' %}'">Upgrade account
-                    </button>
-                </div>
-            {% endif %}
+        {% if not user.stripe_id %}
+            <div>
+                <button id="subscribeBtn" class="btn btn-default floatRight"
+                        onclick="location.href='{% url 'subscribe' %}'">Upgrade account
+                </button>
+            </div>
+        {% endif %}
 
         {% for entry in entries|shuffle %}
             <div>

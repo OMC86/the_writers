@@ -9,7 +9,7 @@
         <h3><span class="compT">Brief:</span></h3>
         <p>{{ comp.brief }}</p>
 
-        {% if x < comp.entry_period_fin and user.subscription_end > x %}
+        {% if entry_period and subscriber %}
             <p>Entry period is now open and ends in {{ comp.entry_period_fin|timeuntil }}.
                 <button class="btn btn-default floatRight" onclick="location.href='{% url 'new_post' %}'">
                     Enter Now
@@ -17,7 +17,8 @@
             </p>
             <hr>
             {% endif %}
-            {% if not user.stripe_id and x < comp.entry_period_fin %}
+
+            {% if not user.stripe_id and entry_period %}
                 <p>Entry period is now open and ends in {{ comp.entry_period_fin|timeuntil }}.
                     <button id="subscribeBtn" class="btn btn-default floatRight"
                             onclick="location.href='{% url 'subscribe' %}'">Upgrade account
@@ -25,7 +26,7 @@
                 </p>
                 <hr>
             {% endif %}
-            {% if x > comp.entry_period_fin %}
+            {% if vote_period %}
                 <p>Voting is now open and ends in {{ comp.vote_period_end|timeuntil }}
                     <button class="btn btn-default floatRight" onclick="location.href='{% url 'view_entries' %}'">
                         Vote Now

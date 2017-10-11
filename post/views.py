@@ -4,11 +4,10 @@ from __future__ import unicode_literals
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
+from django.template.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from django.utils import timezone
-from django.views.generic.edit import DeleteView
-from django.urls import reverse_lazy
 from .models import Post, Competition
 from vote.models import Vote
 from accounts.models import User
@@ -16,7 +15,7 @@ from .forms import PostForm
 from comments.forms import CommentForm
 
 
-# renders a list of posts descending order
+# renders a users posts in descending order
 @login_required
 def post_list(request):
     postlist = Post.objects.filter(author=request.user).order_by('-date_created')
@@ -33,11 +32,12 @@ def post_list(request):
     return render(request, 'posts/postlist.html', {'posts': posts})
 
 
+# Renders a specific post and comment form
 def post_detail(request, id):
-    x = timezone.now()
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
+
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -49,14 +49,17 @@ def post_detail(request, id):
             return redirect(featured_detail, post.id)
     else:
         form = CommentForm()
-    args = {'post': post, 'form': form, 'x': x}
+    args = {'post': post, 'form': form}
     return render(request, "posts/postdetail.html", args)
 
 
 @login_required 
 def new_post(request):
+    context = dict(backend_form=PostForm())
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
+
+        context['posted'] = form.instance
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -97,9 +100,8 @@ def new_post(request):
             else:
                 post.save()
                 return redirect(post_detail, post.pk)
-    else:
-        form = PostForm()
-    return render(request, 'posts/postform.html', {'form': form})
+
+    return render(request, 'posts/postform.html', context)
 
 
 @login_required
@@ -152,7 +154,6 @@ def delete_post(request, id):
 
 
 def show_competition(request):
-    x = timezone.now()
     competition = Competition.objects.all()
     subscribers = User.objects.filter(subscription_end__gte=timezone.now())
     prize = subscribers.count()
@@ -161,31 +162,37 @@ def show_competition(request):
         get the currently active competition
         """
         if comp.is_active():
-            args = {'comp': comp, 'x': x, 'prize': prize}
+            subscriber = request.user.check_subscription()
+            entry_period = comp.can_enter()
+            vote_period = comp.can_vote()
+            args = {'comp': comp, 'entry_period': entry_period, 'vote_period': vote_period, 'subscriber': subscriber,
+                    'prize': prize}
             return render(request, 'competition/comp.html', args)
     else:
         return render(request, 'competition/comp.html')
 
 
+# Show the list of competition entries in the currently active competition
 def comp_entries(request):
-    x = timezone.now()
     entries = Post.objects.filter(is_entry=True)
     competition = Competition.objects.all()
     for comp in competition:
         if comp.is_active():
-            if x > comp.entry_period_fin and not comp.check_posts():
+            entry_period = comp.can_enter()
+            vote_period = comp.can_vote()
+            if not entry_period and not comp.check_posts():
                 comp.delete()
                 return render(request, 'competition/entrylist.html')
             else:
-                args = {'entries': entries, 'comp': comp, 'x': x}
+                args = {'entries': entries, 'comp': comp, 'entry_period': entry_period, 'vote_period': vote_period}
                 return render(request, 'competition/entrylist.html', args)
     else:
         return render(request, 'competition/entrylist.html')
 
 
+# detailed view of competition entry
 @login_required
 def entry_detail(request, id):
-    x = timezone.now()
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
@@ -204,15 +211,15 @@ def entry_detail(request, id):
         form = CommentForm()
         for vote in voteobjects:
             if vote.voter == request.user:
-                args = {'post': post, 'votes': votes, 'vote': vote, 'form': form, 'x': x}
+                args = {'post': post, 'votes': votes, 'vote': vote, 'form': form}
                 return render(request, "competition/entrydetail.html", args)
         else:
             form = CommentForm()
-        args = {'post': post, 'votes': votes, 'form': form, 'x': x}
+        args = {'post': post, 'votes': votes, 'form': form}
         return render(request, "competition/entrydetail.html", args)
 
 
-
+# Vote for entry
 @login_required
 def cast_vote(request, id):
     post = get_object_or_404(Post, pk=id)
@@ -255,11 +262,11 @@ def winners(request):
             comp.delete()
     # check if anyone has voted. If no one voted delete the competition and save the posts as not entered in a comp
         elif not comp.check_votes():
-            p = comp.post.all()
-            for x in p:
-                x.is_entry = 0
-                x.comp = None
-                x.save()
+            entries = comp.post.all()
+            for entry in entries:
+                entry.is_entry = 0
+                entry.comp = None
+                entry.save()
             comp.delete()
         else:
             get_winners()
@@ -267,18 +274,17 @@ def winners(request):
     # find the winner or winners of the most recent competition
     def get_winners():
         # Get all vote objects associated with comp and count how often the same post occurs in the votes
-        x = Vote.objects.filter(comp=comp)
-        entries = x.values_list('post_id').annotate(
+        votes = Vote.objects.filter(comp=comp)
+        entries = votes.values_list('post_id').annotate(
             vote_count=Count('post_id'))
         # Find max votes. Add all posts with max votes to tied list
         #  (index[0] = post_id, index[1] = votes)
-        max_val = max(x[1] for x in entries)
+        max_val = max(votes[1] for votes in entries)
         tied = []
-        for v in entries:
-            if v[1] == max_val:
-                tied.append(v[0])
-            # check if there's more than one winner. If so save the winners and divide the prize between them,
-            # then render the winners page
+        for entry in entries:
+            if entry[1] == max_val:
+                tied.append(entry[0])
+            # save the winners, calculate the prize and render the winners page
         if len(tied) > 1:
             champs = Post.objects.filter(id__in=tied)
             for c in champs:
@@ -312,9 +318,9 @@ def winners(request):
         return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
 
 
+# Renders the winning post
 @login_required
 def winner_detail(request, id):
-    x = timezone.now()
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
@@ -330,10 +336,11 @@ def winner_detail(request, id):
             return redirect(winner_detail, post.id)
     else:
         form = CommentForm()
-    args = {'post': post, 'votes': votes, 'form': form, 'x': x}
+    args = {'post': post, 'votes': votes, 'form': form}
     return render(request, 'competition/winnerdetail.html', args)
 
 
+# renders a list of featured posts
 def featured(request):
     postlist = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()
                                 ).order_by('-date_published')
@@ -349,9 +356,9 @@ def featured(request):
     return render(request, 'featured/featuredlist.html', {'posts': posts})
 
 
+
 @login_required
 def featured_detail(request, id):
-    x = timezone.now()
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
@@ -366,5 +373,5 @@ def featured_detail(request, id):
             return redirect(featured_detail, post.id)
     else:
         form = CommentForm()
-    args = {'post': post, 'form': form, 'x': x}
+    args = {'post': post, 'form': form}
     return render(request, "featured/featureddetail.html", args)

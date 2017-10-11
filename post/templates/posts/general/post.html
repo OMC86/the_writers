@@ -1,4 +1,4 @@
-
+{% load cloudinary %}
 <div class="row">
     <div class="col-md-12">
         <div class="detailInfo">
@@ -48,7 +48,9 @@
 <div class="row">
     <div class="col-xs-12 col-lg-12">
         {% if post.image %}
-            <img class="centreImg" src="{{ MEDIA_URL }}{{ post.image }}">
+            <div class="centreImg">
+                {% cloudinary post.image format='jpeg' height='300' crop="limit" angle='360' %}
+            </div>
         {% endif %}
     </div>
 </div>

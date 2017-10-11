@@ -49,11 +49,11 @@
                         <div id="credit-card-errors" style="display:none">
                             <div class="alert-message block-message error" id="stripe-error-message"></div>
                         </div>
-                        <legend>Subscribe for competition access</legend>
+                        <h1>Subscribe for competition access</h1>
                         {% csrf_token %}
                         {{ form|as_bootstrap }}
                         <div class="form-group">
-                            <input class="btn btn-primary" id="validate_card_btn" name="commit" type="submit"
+                            <input class="btn btn-default" id="validate_card_btn" name="commit" type="submit"
                                    value="Validate Credit Card">
                         </div>
                     </form>
