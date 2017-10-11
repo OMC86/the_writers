@@ -25,7 +25,6 @@ INSTALLED_APPS = [
     'django_forms_bootstrap',
     'django.contrib.sites',
     'cloudinary',
-    'storages',
     'accounts',
     'comments',
     'search',
@@ -134,4 +133,5 @@ MEDIA_ROOT = ''
 
 # cloudinary image hosting
 cloudinary.config(secure=True)
+
 CLOUDINARY_URL = 'CLOUDINARY_URL'
