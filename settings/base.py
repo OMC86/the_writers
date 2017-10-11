@@ -1,5 +1,5 @@
 import os
-
+import cloudinary.api
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_forms_bootstrap',
     'django.contrib.sites',
+    'cloudinary',
     'storages',
     'accounts',
     'comments',
@@ -128,24 +129,9 @@ EMAIL_HOST_PASSWORD = 'hzx111561'
 DEFAULT_FROM_EMAIL = 'EMAIL_HOST_USER'
 
 
-AWS_S3_OBJECT_PARAMETERS = {
-    'Expires': 'Thu, 31 Dec 2099 20:00:00 GMT',
-    'CacheControl': 'max-age=94608000',
-}
-# Host images
-AWS_STORAGE_BUCKET_NAME = os.environ['AWS_STORAGE_BUCKET_NAME']
-AWS_S3_REGION_NAME = 'eu-west-2'
-AWS_ACCESS_KEY_ID = os.environ['AWS_ACCESS_KEY_ID']
-AWS_SECRET_ACCESS_KEY = os.environ['AWS_SECRET_ACCESS_KEY']
+MEDIA_ROOT = ''
 
-# Tell django-storages the domain to use to refer to static files.
-S3_URL = 'https://%s.s3.amazonaws.com' % AWS_STORAGE_BUCKET_NAME
 
-# Tell the staticfiles app to use S3Boto3 storage when writing the collected static files (when
-# you run `collectstatic`).
-DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-MEDIA_ROOT = '/'
-
-MEDIA_URL = S3_URL + MEDIA_ROOT
-#MEDIAFILES_STORAGE = 'custom_storages.MediaStorage'
-
+# cloudinary image hosting
+cloudinary.config(secure=True)
+CLOUDINARY_URL = 'CLOUDINARY_URL'
