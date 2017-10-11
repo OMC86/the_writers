@@ -23,7 +23,7 @@
     {% block head_js %}{% endblock %}
 </head>
 <body>
-{% load post_extras %}
+{% load post_extras cloudinary %}
     <!--Navigation-->
     <div class="container">
         <div class="masthead">
@@ -129,15 +129,20 @@
             </div>
         <div id="userPhotoSmall">
             {% if user.avatar %}
-                <img class="avatar" src="{{ MEDIA_URL }}{{ user.avatar }}">
+                <div class="avatar">
+                    {% cloudinary user.avatar format='jpeg' width='80' height='80' gravity='auto' quality='auto' crop="lfill" angle='360' %}
+                </div>
             {% endif %}
         </div>
             <div class="row">
                 <div class="col-xs-3 col-md-3">
                     <div id="profile" class="borders">
-                        <div id="userPhoto">
+                        <div class="userPhoto">
                             {% if user.avatar %}
-                                <img class="avatar" src="{{ MEDIA_URL }}{{ user.avatar }}">
+                                <div class="avatar">
+                                    {% cloudinary user.avatar format='jpeg' width='80' height='80' gravity='auto' quality='auto' crop="lfill" angle='360' %}
+                                </div>
+
                             {% endif %}
                         </div>
                         <div id="username">
