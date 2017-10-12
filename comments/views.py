@@ -5,7 +5,6 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required
 from .models import Comment
 from django.contrib import messages
-from django.core.urlresolvers import reverse
 from post.views import featured_detail
 from forms import CommentForm
 # Create your views here.

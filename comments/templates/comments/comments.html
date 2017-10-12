@@ -5,13 +5,15 @@
           }
   </script>
 {% endblock %}
-{% load bootstrap_tags %}
+{% load bootstrap_tags cloudinary %}
     {% for comment in post.comment.all %}
 
         <div class="col-md-2">
-            <div class="avatarContainer">
+            <div class="commentPhoto">
                 {% if comment.author.avatar %}
-                    <img class="avatar" src="{{ MEDIA_URL }}{{ comment.author.avatar }}">
+                    <div class="avatar">
+                        {% cloudinary comment.author.avatar format='jpeg' width='80' height='80' gravity='auto' quality='auto' crop="lfill" angle='360' %}
+                    </div>
                 {% endif %}
             </div>
         </div>
@@ -23,6 +25,7 @@
         </div>
         <div class="col-md-10">
             <div class="commentContent">
+                <p>{{ comment.content|linebreaks }}</p>
                 {% if comment.author == request.user %}
                     <a href="{% url 'delete_comment' post.id comment.id %}" onclick="return deleteCheck();">
                         <i class="fa fa-trash-o floatRight"></i>
@@ -31,25 +34,37 @@
                         <i class="fa fa-pencil floatRight"></i>
                     </a>
                 {% endif %}
-                <p>{{ comment.content|linebreaks }}</p>
+                <hr>
             </div>
         </div>
+
+
 
         {% empty %}
             <p class="space">Be the first to leave a comment</p>
         {% endfor %}
 
-        <div class="col-md-2">
-            <div class="avatarContainer commentForm">
-                {% if request.user.avatar %}
-                    <img class="avatar" src="{{ MEDIA_URL }}{{ request.user.avatar }}">
-                {% endif %}
+<div class="row">
+    <div class="col-md-12">
+        <div class="commentForm">
+            <div class="col-md-2">
+                <div class="commentPhoto">
+                    {% if request.user.avatar %}
+                        <div class="avatar">
+                            {% cloudinary user.avatar format='jpeg' width='80' height='80' gravity='auto' quality='auto' crop="lfill" angle='360' %}
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="col-md-10">
+                <form method="POST" class="commentForm">
+                    {% csrf_token %}
+                    {{ form | as_bootstrap }}
+                    <button type="submit" class="btn btn-default floatRight">Post</button>
+                </form>
             </div>
         </div>
-        <div class="col-md-10">
-            <form method="POST" class="commentForm">
-                {% csrf_token %}
-                {{ form | as_bootstrap }}
-                <button type="submit" class="btn btn-default floatRight">Post</button>
-            </form>
-        </div>
+    </div>
+</div>
+
+
