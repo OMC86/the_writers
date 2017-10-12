@@ -11,7 +11,7 @@ from django.utils import timezone
 from .models import Post, Competition
 from vote.models import Vote
 from accounts.models import User
-from .forms import PostForm, PostEditForm
+from .forms import PostForm
 from comments.forms import CommentForm
 
 
@@ -37,7 +37,6 @@ def post_detail(request, id):
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
-
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
@@ -107,9 +106,10 @@ def new_post(request):
 @login_required
 def edit_post(request, id):
     post = get_object_or_404(Post, pk=id)
-
+    context = dict(backend_form=PostForm())
     if request.method == "POST":
-        form = PostEditForm(request.POST, request.FILES, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)
+        context['posted'] = form.instance
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -142,8 +142,8 @@ def edit_post(request, id):
                 post.save()
                 return redirect(post_detail, post.pk)
     else:
-        form = PostForm(instance=post)
-    return render(request, 'posts/editform.html', {'form': form})
+        context = PostForm(instance=post)
+    return render(request, 'posts/postform.html', context)
 
 
 @login_required
