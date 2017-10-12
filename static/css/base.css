@@ -142,22 +142,16 @@ span{
     padding: 15px;
 }
 
-#userPhoto{
+.userPhoto{
     position: relative;
     display: block;
     top: -65px;
     margin: 0 auto;
     height: 80px;
     width: 80px;
-    border: 1px solid #979797;
-    -moz-border-radius: 50%;
-    -webkit-border-radius: 50%;
-    border-radius: 50%;
 }
 
-.avatar{
-    width: 100%;
-    height: 100%;
+.avatar > img{
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;
     border-radius: 50%;
@@ -228,5 +222,6 @@ span{
     #userPhotoSmall{
         display: none;
     }
+
 
 }
