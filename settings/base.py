@@ -7,7 +7,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'h@&*d!6ch$2!ll9pb=ip6_yh6!w497ij59zeqg*vvh5c+2-bbq'
+SECRET_KEY = 'SECRET_KEY'
 
 ALLOWED_HOSTS = ['127.0.0.1', '0.0.0.0', 'localhost', 'thewriters.herokuapp.com']
 
@@ -124,7 +124,7 @@ EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'thewriters86@gmail.com'
-EMAIL_HOST_PASSWORD = 'hzx111561'
+EMAIL_HOST_PASSWORD = 'EMAIL_HOST_PASSWORD'
 DEFAULT_FROM_EMAIL = 'EMAIL_HOST_USER'
 
 
@@ -134,4 +134,4 @@ MEDIA_ROOT = ''
 # cloudinary image hosting
 cloudinary.config(secure=True)
 
-CLOUDINARY_URL = 'CLOUDINARY_URL'
+

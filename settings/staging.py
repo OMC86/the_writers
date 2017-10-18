@@ -11,8 +11,8 @@ DATABASES = {
 
 
 # Stripe environment test variables
-STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE', 'pk_test_mNb1dKaAFoLSHyj2BAcDMl99')
-STRIPE_SECRET = os.getenv('STRIPE_SECRET', 'sk_test_blRbu4P14RH0LjZMT2jDpwxy')
+STRIPE_PUBLISHABLE = os.getenv('STRIPE_PUBLISHABLE')
+STRIPE_SECRET = os.getenv('STRIPE_SECRET')
 
 
 SITE_URL = 'https://thewriters.herokuapp.com'
@@ -35,3 +35,5 @@ LOGGING = {
         },
     },
 }
+
+CLOUDINARY_URL = 'CLOUDINARY_URL'
