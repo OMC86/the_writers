@@ -13,3 +13,11 @@
     display: block;
     margin: 0 auto;
 }
+
+#image-clear_id{
+    display: none;
+}
+
+label[for=image-clear_id]{
+    display: none;
+}

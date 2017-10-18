@@ -11,6 +11,7 @@ from django.utils import timezone
 from .models import Post, Competition
 from vote.models import Vote
 from accounts.models import User
+from accounts.views import subscribe
 from .forms import PostForm
 from comments.forms import CommentForm
 
@@ -57,8 +58,6 @@ def new_post(request):
     context = dict(backend_form=PostForm())
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES)
-
-        context['posted'] = form.instance
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
@@ -70,11 +69,10 @@ def new_post(request):
             """
             if post.is_entry:
                 post.date_published = timezone.now()
-                user = request.user
-                end = user.subscription_end
-                now = timezone.now()
-                if now < end:
+                # Check if user is subscribed
+                if post.author.check_subscription():
                     competition = Competition.objects.all()
+                    # Check if the competition is active and save post as entry
                     for comp in competition:
                         if comp.can_enter():
                             post.comp = comp
@@ -85,17 +83,20 @@ def new_post(request):
                                                    " entry will be re-assigned as not entered in a competition. Good"
                                                    " luck!")
                             return redirect(post_detail, post.pk)
+                    # if the entry period has finished
                     else:
                         messages.error(request, "The entry period has ended for the current competition")
                         return redirect(new_post)
+                # if user is not subscribed send them to subscription form
                 else:
                     messages.error(request, "Please subscribe to enter competition")
-                    return redirect(new_post)
+                    return redirect(subscribe)
+            # if featured post save published date
             elif post.is_featured:
                 post.date_published = timezone.now()
                 post.save()
                 return redirect(post_detail, post.pk)
-
+            # if not featured and not a competition entry entry
             else:
                 post.save()
                 return redirect(post_detail, post.pk)
@@ -106,20 +107,18 @@ def new_post(request):
 @login_required
 def edit_post(request, id):
     post = get_object_or_404(Post, pk=id)
-    context = dict(backend_form=PostForm())
+
     if request.method == "POST":
         form = PostForm(request.POST, request.FILES, instance=post)
-        context['posted'] = form.instance
+
         if form.is_valid():
             post = form.save(commit=False)
-            post.author = request.user
 
+            # if competition entry and user is subscribed
             if post.is_entry:
                 post.date_published = timezone.now()
                 user = request.user
-                end = user.subscription_end
-                now = timezone.now()
-                if now < end:
+                if user.check_subscription:
                     competition = Competition.objects.all()
                     for comp in competition:
                         if comp.can_enter():
@@ -132,17 +131,21 @@ def edit_post(request, id):
 
                 else:
                     messages.error(request, "Please subscribe to enter competition")
-                    return redirect(new_post)
+                    return redirect(new_post) # send to upgrade account
+            # save date published if post is featured
             elif post.is_featured:
                 post.date_published = timezone.now()
                 post.save()
                 return redirect(post_detail, post.pk)
-
+            # if post is not featured or not entry
             else:
                 post.save()
                 return redirect(post_detail, post.pk)
+        else:
+
+            context = dict(backend_form=form.instance)
     else:
-        context = PostForm(instance=post)
+        context = dict(backend_form=PostForm(instance=post))
     return render(request, 'posts/postform.html', context)
 
 
@@ -155,18 +158,19 @@ def delete_post(request, id):
 
 
 def show_competition(request):
-    competition = Competition.objects.all()
+    # Calculate the prize as number of subscribers
     subscribers = User.objects.filter(subscription_end__gte=timezone.now())
     prize = subscribers.count()
+
+    competition = Competition.objects.all()
     for comp in competition:
-        """
-        get the currently active competition
-        """
+
+        # get the currently active competition
         if comp.is_active():
-            subscriber = request.user.check_subscription()
+            subscribed = request.user.check_subscription()
             entry_period = comp.can_enter()
             vote_period = comp.can_vote()
-            args = {'comp': comp, 'entry_period': entry_period, 'vote_period': vote_period, 'subscriber': subscriber,
+            args = {'comp': comp, 'entry_period': entry_period, 'vote_period': vote_period, 'subscribed': subscribed,
                     'prize': prize}
             return render(request, 'competition/comp.html', args)
     else:
@@ -176,15 +180,17 @@ def show_competition(request):
 # Show the list of competition entries in the currently active competition
 def comp_entries(request):
     entries = Post.objects.filter(is_entry=True)
+
     competition = Competition.objects.all()
     for comp in competition:
         if comp.is_active():
             entry_period = comp.can_enter()
-            vote_period = comp.can_vote()
+            # If there were no entries during the entry period delete the competition
             if not entry_period and not comp.check_posts():
                 comp.delete()
                 return render(request, 'competition/entrylist.html')
             else:
+                vote_period = comp.can_vote()
                 args = {'entries': entries, 'comp': comp, 'entry_period': entry_period, 'vote_period': vote_period}
                 return render(request, 'competition/entrylist.html', args)
     else:
@@ -197,9 +203,9 @@ def entry_detail(request, id):
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
-    voteobjects = Vote.objects.filter(post_id=post)
-    votes = voteobjects.all().count()
-
+    vote_objects = Vote.objects.filter(post_id=post)
+    votes = vote_objects.all().count()
+    # comment form
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():
@@ -210,7 +216,8 @@ def entry_detail(request, id):
             return redirect(entry_detail, post.id)
     else:
         form = CommentForm()
-        for vote in voteobjects:
+        # check if user has voted for this entry already
+        for vote in vote_objects:
             if vote.voter == request.user:
                 args = {'post': post, 'votes': votes, 'vote': vote, 'form': form}
                 return render(request, "competition/entrydetail.html", args)
@@ -226,6 +233,7 @@ def cast_vote(request, id):
     post = get_object_or_404(Post, pk=id)
     competition = Competition.objects.all()
     for comp in competition:
+        # if the voting period is open get the vote or create a new vote if one hasn't already been created
         if comp.can_vote():
             new_vote, created = Vote.objects.get_or_create(voter=request.user,
                                                            post_id=post, comp=comp)
@@ -255,7 +263,7 @@ def winners(request):
 
     # Get all past winning entries
     posts = Post.objects.filter(is_winner=True)
-    # get the most recent competition. If no one entered delete the competition
+    # get the most recent competition
     comp = competitions[0]
 
     def comp_del():
@@ -285,7 +293,7 @@ def winners(request):
         for entry in entries:
             if entry[1] == max_val:
                 tied.append(entry[0])
-            # save the winners, calculate the prize and render the winners page
+        # save the winners, calculate the prize and render the winners page
         if len(tied) > 1:
             champs = Post.objects.filter(id__in=tied)
             for c in champs:
@@ -325,8 +333,8 @@ def winner_detail(request, id):
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
-    voteobjects = Vote.objects.filter(post_id=post)
-    votes = voteobjects.all().count()
+    vote_objects = Vote.objects.filter(post_id=post)
+    votes = vote_objects.all().count()
     if request.method == 'POST':
         form = CommentForm(request.POST)
         if form.is_valid():

@@ -3,17 +3,8 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from accounts.models import User
-from django.core.exceptions import ValidationError
 from cloudinary.models import CloudinaryField
 # Create your models here.
-
-
-# https://stackoverflow.com/questions/6195478/max-image-size-on-file-upload
-def validate_image(fieldfile_obj):
-    filesize = fieldfile_obj.file.size
-    megabyte_limit = 5.0
-    if filesize > megabyte_limit * 1024 * 1024:
-        raise ValidationError("Maximum file size is %sMB" % str(megabyte_limit))
 
 
 class Post(models.Model):
