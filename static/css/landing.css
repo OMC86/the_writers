@@ -74,18 +74,25 @@ ul.nav a:focus{
 }
 
 .title{
-    font-family: Consolas;
+    font-family: Consolas, serif;
     font-size: 36px;
     text-align: center;
     color: #ffffff;
 }
 
 .link{
-    padding-top: 75px;
+    padding-top: 10px;
+}
+
+li > a.land-link:hover, li > a.land-link:focus{
+    text-align: center;
+    border: none;
+    background-color: #007f76;
+
 }
 
 .land-link{
-    font-family: Bangla MN;
+    font-family: 'Crimson Text', serif;
     font-size: 24px;
     color: #000;
 }
@@ -117,7 +124,7 @@ ul.nav a:focus{
 
 .mainHeading{
     position: relative;
-    font-family: Bangla MN;
+    font-family: 'Crimson Text', serif;
     font-size: 36px;
 }
 
@@ -128,7 +135,7 @@ ul.nav a:focus{
 
 .landing-list li{
     padding-top: 10px;
-    font-family: Bangala MN;
+    font-family: 'Crimson Text', serif;
     font-size: 20px;
 }
 
@@ -138,9 +145,11 @@ ul.nav a:focus{
 }
 
 #form-box{
+
     border: 1px solid #42ab9e;
     padding: 20px;
     margin-top: 40px;
+    height: auto;
 }
 
 @media screen and (min-width: 768px) {
@@ -158,12 +167,17 @@ ul.nav a:focus{
     }
 
     .link a{
-        font-size: 21px;
+        font-size: 25px;
     }
 
      #hideButtons button{
-        margin-top: -10px;
+        margin-top: -5px;
     }
+
+     .link{
+         padding-top: 75px;
+     }
+
 
 }
 
