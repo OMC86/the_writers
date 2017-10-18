@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from django.contrib.auth.models import AbstractUser, UserManager
 from django.db import models
 from django.utils import timezone
-from django.core.exceptions import ValidationError
 from cloudinary.models import CloudinaryField
 
 

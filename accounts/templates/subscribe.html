@@ -13,7 +13,8 @@
 {% endblock %}
 
 {% block content %}
-    {% if user.stripe_id%}
+    {% include 'messages.html' %}
+    {% if subscribed %}
         <div class="row">
             <div class="col-xs-12">
                 <div id="infoContainer">
