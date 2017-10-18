@@ -6,25 +6,28 @@ from post.models import Post, Competition
 from accounts.models import User
 from django.utils import timezone
 
+
 # Create your views here.
-# This view renders the base template after login which is the profile home page
-
-
 def about(request):
     return render(request, 'about.html')
 
 
+# renders the home page
 def profile(request):
-    x = timezone.now()
+    # count the subscribers to get the prize
     subscribers = User.objects.filter(subscription_end__gte=timezone.now())
     prize = subscribers.count()
+    # Get two featured posts
     posts = Post.objects.filter(is_featured=True).order_by('-date_published')[:2]
+    # Get the active competition
     competition = Competition.objects.all()
     for comp in competition:
         if comp.is_active():
-            return render(request, 'home.html', {'posts': posts, 'comp': comp, 'prize': prize, 'users': subscribers,
-                                                 'x': x})
+            subscribed = request.user.check_subscription()
+            entry_period = comp.can_enter()
+            vote_period = comp.can_vote()
+
+            return render(request, 'home.html', {'posts': posts, 'comp': comp, 'prize': prize, 'subscribed': subscribed,
+                                                 'entry_period': entry_period, 'vote_period': vote_period})
     else:
-        return render(request, 'home.html', {'posts': posts, 'prize': prize, 'users': subscribers, 'x': x})
-
-
+        return render(request, 'home.html', {'posts': posts, 'prize': prize, 'users': subscribers})
