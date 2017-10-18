@@ -3,14 +3,13 @@ from __future__ import unicode_literals
 
 from post.models import Post
 from django.shortcuts import render, get_object_or_404, redirect
-from django.utils import timezone
 from filters import PostFilter
 from comments.forms import CommentForm
 from post.models import Competition
 from django.contrib.auth.decorators import login_required
-# Create your views here.
-# https://simpleisbetterthancomplex.com/tutorial/2016/11/28/how-to-filter-querysets-dynamically.html
 
+
+# Check the README for a link to the tutorial I used to implement django.filter
 def search(request):
     post_list = Post.objects.all()
     post_filter = PostFilter(request.GET, queryset=post_list)
@@ -19,7 +18,6 @@ def search(request):
 
 @login_required
 def search_detail(request, id):
-    x = timezone.now()
     post = get_object_or_404(Post, pk=id)
     post.views += 1
     post.save()
@@ -40,6 +38,6 @@ def search_detail(request, id):
                 args = {'post': post, 'form': form, 'c': c}
                 return render(request, 'search_detail.html', args)
         else:
-            args = {'post': post, 'form': form, 'x': x}
+            args = {'post': post, 'form': form}
             return render(request, 'search_detail.html', args)
 
