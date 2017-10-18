@@ -16,7 +16,7 @@
             {% if user == post.author %}
                 <div class="floatRight">
                 {% if not post.is_entry %}
-                    <a href="{% url 'edit' post.id %}"><i class="fa fa-pencil-square-o fa-2x"></i></a>
+                    <a href="{% url 'edit' post.id %}"><i class="fa fa-pencil fa-2x"></i></a>
                     <a href="{% url 'delete' post.id %}" onclick="return deleteCheck();"><i class="fa fa-trash-o fa-2x"></i></a>
                 {% endif %}
                 </div>

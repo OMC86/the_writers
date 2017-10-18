@@ -63,7 +63,11 @@
 </div>
 <div class="row">
     <div class="col-md-12">
+        {% if post.date_published %}
         <p class="floatRight">{{ post.date_published }}</p>
+        {% else %}
+        <p class="floatRight">Created on {{ post.date_created }}</p>
+        {% endif %}
     </div>
 </div>
 {% if user.is_superuser %}
