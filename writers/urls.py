@@ -21,7 +21,7 @@ from settings.base import MEDIA_ROOT
 
 urlpatterns = [
     # accounts
-    url(r'^admin/', admin.site.urls),
+    url(r'^admin/', admin.site.urls, name='admin'),
     url(r'', include('accounts.urls')),
     
     # pages
@@ -36,6 +36,4 @@ urlpatterns = [
     # comment
     url(r'', include('comments.urls')),
 
-    # images
-    url(r'^media/(?P<path>.*)$', serve, {'document_root': MEDIA_ROOT}),
 ]
