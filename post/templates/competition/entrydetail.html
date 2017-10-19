@@ -13,9 +13,11 @@
                         <p>Clicking this button will cast a vote for this entry</p>
                     </div>
                     <div id="voteBtnContainer">
+                    <p>
                         <button id='voteButton' class="btn" onclick="location.href='{% url 'cast_vote' post.id %}'">
                             Vote
                         </button>
+                    </p>
                     </div>
                 {% endif %}
 
@@ -23,9 +25,10 @@
 
                 <div class="row">
                     <div class="col-md-12">
-                        <button class="btn btn-default floatRight voteBack" onclick="location.href='/competition/entries/'">
-                            Back to Entries
-                        </button>
+                        <p>
+                            <a class="btn btn-default floatRight voteBack" href="{% url 'view_entries' %}">
+                                Back to Entries</a>
+                        </p>
                     </div>
                 </div>
                 {% include 'comments/comments.html' %}

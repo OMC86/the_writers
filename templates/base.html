@@ -31,13 +31,11 @@
                 <div class="col-md-12">
                     <div class=" nav navbar-header baseTitle">
                         <p>The <br>Writers
-                            <a href="{%  url 'logout' %}"><button class="btn btn-default floatRight">Log Out
-                            </button>
-                            </a>
+                            <a class="btn btn-default floatRight" href="{%  url 'logout' %}">Log Out</a>
                             {% if user.avatar %}
                             {% else %}
-                                <a href="{% url 'upload' %}"><button class="btn btn-default floatRight">
-                                    Upload Photo</button>
+                                <a class="btn btn-default floatRight" href="{% url 'upload' %}">
+                                    Upload Photo
                                 </a>
                             {% endif %}
                         </p>
@@ -151,8 +149,7 @@
                         {% if user.avatar %}
                         {% else %}
                             <div id="upBtnContainer">
-                                <a href="{% url 'upload' %}"><button id="uploadPhotoBtn" class="btn btn-default">
-                                    Upload Photo</button>
+                                <a id="uploadPhotoBtn" class="btn btn-default" href="{% url 'upload' %}">Upload Photo
                                 </a>
                             </div>
 
@@ -190,14 +187,21 @@
                                     <a href="{% url 'upload' %}"><p>Change Profile pic</p>
                                     </a>
                                 {% endif %}
-                                    <a href="{% url 'subscribe' %}"><p>Upgrade account</p></a>
+                                   {% if not user.stripe_id %}
+
+                                       <a href="{% url 'subscribe' %}"><p>Upgrade account</p></a>
+                                   {% else %}
+                                       <a href="{% url 'subscribe' %}"><p>Subscription details</p></a>
+
+
+        {% endif %}
                             </div>
                         </div>
                     <hr>
                         <div class="row">
                             <div class="col-xs-10 col-md-10">
-                                <a id='logoutBtn' href="{%  url 'logout' %}"><button class="btn btn-default">Log Out
-                                </button></a>
+                                <a id='logoutBtn' class="btn btn-default" href="{%  url 'logout' %}">Log Out
+                                </a>
                             </div>
                         </div>
                     </div>

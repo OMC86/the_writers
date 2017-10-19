@@ -28,8 +28,10 @@
                             </div>
                             <div>
                                 <h3 class="winner">with the post: <span>{{ p.title|title }}</span></h3>
-                                <p><button class="btn btn-default floatRight" onclick="location.href={{ p.id }}">Read More
-                                </button></p>
+                                <p>
+                                    <button class="btn btn-default floatRight" onclick="location.href={{ p.id }}">Read More
+                                    </button>
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -42,16 +44,18 @@
         <div class="pagination">
             <span class="step-links">
                 {% if comps.has_previous %}
-                    <a href="?page={{ comps.previous_page_number }}">previous</a>
+                    <p>
+                        <a href="?page={{ comps.previous_page_number }}">previous</a>
+                    </p>
                 {% endif %}
 
 
                 <span class="current">
-                    Page {{ comps.number }} of {{ comps.paginator.num_pages }}.
+                    <p>Page {{ comps.number }} of {{ comps.paginator.num_pages }}.</p>
                 </span>
 
                 {% if comps.has_next %}
-                    <a href="?page={{ comps.next_page_number }}">next</a>
+                    <p><a href="?page={{ comps.next_page_number }}">next</a></p>
                 {% endif %}
             </span>
         </div>

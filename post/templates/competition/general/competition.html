@@ -11,26 +11,25 @@
 
         {% if entry_period and subscribed %}
             <p>Entry period is now open and ends in {{ comp.entry_period_fin|timeuntil }}.
-                <button class="btn btn-default floatRight" onclick="location.href='{% url 'new_post' %}'">
+                <a class="btn btn-default floatRight" href="{% url 'new_post' %}">
                     Enter Now
-                </button>
+                </a>
             </p>
             <hr>
             {% endif %}
 
             {% if not subscribed and entry_period %}
                 <p>Entry period is now open and ends in {{ comp.entry_period_fin|timeuntil }}.
-                    <button id="subscribeBtn" class="btn btn-default floatRight"
-                            onclick="location.href='{% url 'subscribe' %}'">Upgrade account
-                    </button>
+                    <a id="subscribeBtn" class="btn btn-default floatRight" href="{% url 'subscribe' %}">Upgrade account
+                    </a>
                 </p>
                 <hr>
             {% endif %}
             {% if vote_period %}
                 <p>Voting is now open and ends in {{ comp.vote_period_end|timeuntil }}
-                    <button class="btn btn-default floatRight" onclick="location.href='{% url 'view_entries' %}'">
+                    <a class="btn btn-default floatRight" href="{% url 'view_entries' %}">
                         Vote Now
-                    </button>
+                    </a>
                 </p>
                 <hr>
             {% endif %}
