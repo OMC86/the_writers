@@ -21,3 +21,23 @@
 label[for=image-clear_id]{
     display: none;
 }
+
+.shareButtons{
+    margin-bottom: 15px;
+}
+
+#twitter i{
+    color: #1997f0;
+}
+
+#facebook i{
+    color: #395ca9;
+}
+
+#reddit i{
+    color: #ff3c01;
+}
+
+#gplus i{
+ color: #d74031;
+}

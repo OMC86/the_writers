@@ -1,4 +1,4 @@
-{% load cloudinary %}
+{% load cloudinary social_share %}
 <div class="row">
     <div class="col-md-12">
         <div class="detailInfo">
@@ -77,5 +77,29 @@
 
 <hr>
 
-<div data-network="twitter" class="btn share-button facebook-share-button">share</div>
-
+<div class="row">
+    <div class="col-xs-12">
+        <div class="shareButtons">
+            <div class="col-xs-1 col-md-1">
+                <div id="facebook">
+                    {% post_to_facebook get_absolute_url ' <i class="fa fa-facebook fa-2x"></i>' %}
+                </div>
+            </div>
+            <div class="col-xs-1 col-md-1">
+                <div id="reddit">
+                    {% post_to_reddit "Check out this post on The Writers: {{ post.title }}." get_absolute_url '<i class="fa fa-reddit fa-2x"></i>' %}
+                </div>
+            </div>
+            <div class="col-xs-1 col-md-1">
+                <div id="twitter">
+                    {% post_to_twitter "Check out this post on The Writers: {{ post.title }}." get_absolute_url ' <i class="fa fa-twitter fa-2x"></i>' %}
+                </div>
+            </div>
+            <div class="col-xs-1 col-md-1">
+                <div id="gplus">
+                    {% post_to_gplus get_absolute_url '<i class="fa fa-google-plus fa-2x"></i>' %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
