@@ -7,6 +7,7 @@
       }
   </script>
 {% endblock %}
+
     {% include 'posts/general/post.html' %}
 
     <div class="row">
@@ -22,7 +23,7 @@
                 </div>
             {% endif %}
             <p>
-                <button class="btn btn-default floatRight btpBtn" onclick="location.href='/posts'">Back to Posts</button>
+                <a id="postListLink" class="btn btn-default floatRight btpBtn" href="{% url 'post_list' %}">Back to Posts</a>
             </p>
         </div>
     </div>
