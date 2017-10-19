@@ -13,24 +13,24 @@
                                 </ul>
                                 <ul class="foot"> Writers can discuss what they have written with those who read it.
                                 </ul>
-                                <a href="{% url 'about'%}"><ul class="foot">Read more<i class="fa fa-arrow-circle-o-right">
+                                <a href="{% url 'about'%}"><ul class="foot">Read more<i id='arrow' class="fa fa-arrow-circle-o-right">
                                 </i></ul></a>
                             </div>
 
                              <div class="flex-item">
                                  <ul class="title">Stats</ul>
-                                 <ul class="foot">There are <span>{% count_users %}</span> people using The Writers</ul>
-                                 <ul class="foot">who have posted a total of <span>{% get_total_posts %}</span> posts</ul>
-                                 <ul class="foot">and commented on posts <span>{% count_comments %}</span> times.</ul>
-                                 <ul class="foot">So far there have been <span>{% get_total_comps %}</span> competitions</ul>
-                                 <ul class="foot">And we have given away <span>£{% total_prize %}.00</span> to our winners</ul>
+                                 <ul class="foot"><span>{% count_users %}</span> people using The Writers</ul>
+                                 <ul class="foot">Posted <span>{% get_total_posts %}</span> times</ul>
+                                 <ul class="foot">Commented <span>{% count_comments %}</span> times</ul>
+                                 <ul class="foot"><span>{% get_total_comps %}</span> competitions to date</ul>
+                                 <ul class="foot"><span>£{% total_prize %}.00</span> given away to our winners</ul>
 
                             </div>
 
                             <div class="flex-item">
                                 <ul class="title">Contact Info</ul>
                                 <ul class="foot"><i class="fa fa-envelope-o">
-                                </i> Christoal@outlook.com</ul>
+                                </i> TheWriters86@gmail.com</ul>
                                 <ul class="foot"><i class="fa fa-phone">
                                 </i> 3333 222 1111</ul>
                                 <ul class="foot"><i class="fa fa-map-marker">
