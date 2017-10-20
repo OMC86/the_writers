@@ -1,78 +1,80 @@
 {% load cloudinary social_share %}
-<div class="row">
-    <div class="col-md-12">
-        <div class="detailInfo">
-            <div class="col-md-3">
-                <p>Written by: {{ post.author|title }}</p>
-            </div>
-            {% if post.category is not None %}
+<article>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="detailInfo">
                 <div class="col-md-3">
-                    <p>Category: {{ post.category }}</p>
+                    <p>Written by: {{ post.author|title }}</p>
                 </div>
-            {% endif %}
-            {% if post.genre is not None %}
-                <div class="col-md-3">
-                    <p>Genre: {{ post.genre }}</p>
-                </div>
-            {% endif %}
-            {% if post.tags is not None %}
-                <div class="col-md-3">
-                    <p>Tags: {{ post.tags|title }}</p>
-                </div>
-            {% endif %}
-            {% if post.comp %}
-                {% if post.is_winner %}
+                {% if post.category is not None %}
                     <div class="col-md-3">
-                    <p>Won First place in {{ post.comp }} competition</p>
-                </div>
-                    {% else %}
-                <div class="col-md-3">
-                    <p>Entered in: {{ post.comp }} competition</p>
-                </div>
+                        <p>Category: {{ post.category }}</p>
+                    </div>
                 {% endif %}
+                {% if post.genre is not None %}
+                    <div class="col-md-3">
+                        <p>Genre: {{ post.genre }}</p>
+                    </div>
+                {% endif %}
+                {% if post.tags is not None %}
+                    <div class="col-md-3">
+                        <p>Tags: {{ post.tags|title }}</p>
+                    </div>
+                {% endif %}
+                {% if post.comp %}
+                    {% if post.is_winner %}
+                        <div class="col-md-3">
+                        <p>Won First place in {{ post.comp }} competition</p>
+                    </div>
+                        {% else %}
+                    <div class="col-md-3">
+                        <p>Entered in: {{ post.comp }} competition</p>
+                    </div>
+                    {% endif %}
+                {% endif %}
+                <div class="col-md-3">
+                    <p>Views: {{ post.views }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <hr>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>{{ post.title|title }}</h2>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12 col-lg-12">
+            {% if post.image %}
+                <div class="centreImg">
+                    {% cloudinary post.image format='jpeg' height='300' crop="limit" angle='360' %}
+                </div>
             {% endif %}
-            <div class="col-md-3">
-                <p>Views: {{ post.views }}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="postContent">
+                <p>{{ post.content|linebreaks }}</p>
             </div>
         </div>
     </div>
-</div>
-
-    <hr>
-
-<div class="row">
-    <div class="col-md-12">
-        <h2>{{ post.title|title }}</h2>
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12 col-lg-12">
-        {% if post.image %}
-            <div class="centreImg">
-                {% cloudinary post.image format='jpeg' height='300' crop="limit" angle='360' %}
-            </div>
-        {% endif %}
-    </div>
-</div>
-<div class="row">
-    <div class="col-xs-12">
-        <div class="postContent">
-            <p>{{ post.content|linebreaks }}</p>
+    <div class="row">
+        <div class="col-md-12">
+            {% if post.date_published %}
+            <p class="floatRight">{{ post.date_published }}</p>
+            {% else %}
+            <p class="floatRight">Created on {{ post.date_created }}</p>
+            {% endif %}
         </div>
     </div>
-</div>
-<div class="row">
-    <div class="col-md-12">
-        {% if post.date_published %}
-        <p class="floatRight">{{ post.date_published }}</p>
-        {% else %}
-        <p class="floatRight">Created on {{ post.date_created }}</p>
-        {% endif %}
-    </div>
-</div>
+</article>
 {% if user.is_superuser %}
-    <a href="{% url 'edit' post.id %}"><i class="fa fa-pencil fa-2x"></i></a>
-    <a href="{% url 'delete' post.id %}" onclick="return deleteCheck();"><i class="fa fa-trash-o fa-2x"></i></a>
+    <a aria-label="admin edit" href="{% url 'edit' post.id %}"><i class="fa fa-pencil fa-2x"></i></a>
+    <a aria-label='admin delete' href="{% url 'delete' post.id %}" onclick="return deleteCheck();"><i class="fa fa-trash-o fa-2x"></i></a>
 {% endif %}
 
 <hr>

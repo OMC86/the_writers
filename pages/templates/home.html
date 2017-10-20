@@ -4,25 +4,17 @@
     {% block head_js %}
         <script type="text/javascript" src="{% static "js/home.js" %}"></script>
     {% endblock %}
-    <div class="row">
-        <div class="com-md-12">
-            {% if messages %}
-                <ul class="messages">
-                    {% for message in messages %}
-                        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}
-        </div>
-    </div>
+
+    {% include 'messages.html' %}
+
     <div class="row">
         <div class="col-md-12">
             <h1>Welcome to The Writers</h1>
 
             <h2 class="centreTxt">The online space that allows you to showcase your creative writing talents.</h2>
             <h3 class="centreTxt">Things you can do on The Writers!
-                <a href="javascript:void(0);"><i id="hideList" class="fa fa-angle-up"></i></a>
-                <a href="javascript:void(0);"><i id="showList" class="fa fa-angle-down"></i></a>
+                <button aria-label='hide list' id="hideList"><i class="fa fa-angle-up"></i></button>
+                <button aria-label='show list' id="showList"><i class="fa fa-angle-down"></i></button>
             </h3>
 
             <ul class="homeList">
@@ -43,8 +35,8 @@
                     <p>{{ p.content|truncatewords:5 }}</p>
                     <p>Category: {{ p.category }} | Genre: {{ p.genre }}</p>
                     <p>Posted by {{ p.author }} on {{ p.date_published }} | Views {{ p.views }}
-                        <button class="btn btn-default floatRight" onclick="location.href='/featured/'">More
-                        </button>
+                        <a class="btn btn-default floatRight" href="{% url 'featured' %}">Read More
+                        </a>
                     </p>
                     <hr>
                 </div>

@@ -1,12 +1,13 @@
-{% load staticfiles %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>The Writers Landing Page</title>
+    <title>The Writers profile</title>
+    {% load staticfiles %}
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Publish your articles, blog posts, poems, stories with the images images that inspire you.
+    Discuss your posts with readers. Enter writing competitions, win money">
+    <meta name="author" content="Chris Toal">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{% static 'css/base.css' %}">
@@ -47,7 +48,7 @@
             <nav id='navCollapseBase' class="borders">
                 <div class="container">
                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        <button type="button" aria-label="Toggle navigation menu" class="navbar-toggle collapsed" data-toggle="collapse"
                                 data-target="#collapseListBase">
                                 <span class="icon-bar"></span>
                                 <span class="icon-bar"></span>
@@ -63,7 +64,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="link">
                                 <a href="#" id="bOne" data-toggle="collapse" data-target="#getWriting"
-                                   aria-expanded="false">Post
+                                   aria-expanded="false"><h4>Post</h4>
                                 </a>
 
                                 <ul class="nav collapse" id="getWriting" role="menu" aria-labelledby="bOne">
@@ -73,7 +74,7 @@
                             </li>
                             <li class="link">
                                 <a href="#" id="bTwo" data-toggle="collapse"
-                                   data-target="#navComp" aria-expanded="false">Competitions
+                                   data-target="#navComp" aria-expanded="false"><h4>Competitions</h4>
                                 </a>
 
                                 <ul class="nav collapse" id="navComp" role="menu" aria-labelledby="bTwo">
@@ -88,7 +89,7 @@
                             </li>
                             <li class="link">
                                 <a href="#" id="bThree" data-toggle="collapse"
-                                   data-target="#navFeatured" aria-expanded="false">Featured Posts
+                                   data-target="#navFeatured" aria-expanded="false"><h4>Featured Posts</h4>
                                 </a>
                                 <ul class="nav collapse" id="navFeatured" role="menu" aria-labelledby="bThree">
                                     <li><a href="{% url 'featured' %}"><p>View Featured Posts</p></a></li>
@@ -96,7 +97,7 @@
                             </li>
                             <li class="link">
                                 <a href="#" id="bFour" data-toggle="collapse"
-                                   data-target="#navAccount" aria-expanded="false">Account
+                                   data-target="#navAccount" aria-expanded="false"><h4>Account</h4>
                                 </a>
                                 <ul class="nav collapse" id="navAccount" role="menu" aria-labelledby="bFour">
                                     {% if user.avatar %}
@@ -114,7 +115,7 @@
             </nav>
 
     <!-- Nav for bigger screen-->
-            <div class="row">
+            <nav class="row">
                 <div class="col-md-12">
                     <div id='baseNav' class="borders">
                         <ul class="nav nav-pills pull-right baseNavWords">
@@ -124,7 +125,7 @@
                         </ul>
                     </div>
                 </div>
-            </div>
+            </nav>
         <div id="userPhotoSmall">
             {% if user.avatar %}
                 <div class="avatar">
@@ -134,7 +135,7 @@
         </div>
             <div class="row">
                 <div class="col-xs-3 col-md-3">
-                    <div id="profile" class="borders">
+                    <nav id="profile" class="borders">
                         <div class="userPhoto">
                             {% if user.avatar %}
                                 <div class="avatar">
@@ -156,7 +157,7 @@
                         {% endif %}
                         <div class="row">
                             <div class="col-xs-12 col-md-12">
-                                <p class="profile-title">Post</p>
+                                <h4 class="profile-title">Post</h4>
                                 <a href="{% url 'new_post' %}"><p>Create a post</p></a>
                                 <a href="{% url 'post_list' %}"><p>View your work</p></a>
                             </div>
@@ -164,7 +165,7 @@
                     <hr>
                         <div class="row">
                             <div class="col-xs-12 col-md-12">
-                                <p class="profile-title">Competitions</p>
+                                <h4 class="profile-title">Competitions</h4>
                                 <a href="{% url 'view_comp' %}"><p>Competition details</p></a>
                                 <a href="{% url 'winners' %}"><p>Competition Winners</p></a>
                                 {% if can_vote_comp %}
@@ -175,14 +176,14 @@
                     <hr>
                          <div class="row">
                             <div class="col-xs-12 col-md-12">
-                                <p class="profile-title">Featured Works</p>
+                                <h4 class="profile-title">Featured Works</h4>
                                 <a href="{% url 'featured' %}"><p>View Featured Posts</p></a>
                             </div>
                         </div>
                     <hr>
                         <div class="row">
                             <div class="col-xs-12 col-md-12">
-                                <p class="profile-title">Account</p>
+                                <h4 class="profile-title">Account</h4>
                                 {% if user.avatar %}
                                     <a href="{% url 'upload' %}"><p>Change Profile pic</p>
                                     </a>
@@ -204,7 +205,7 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
+                    </nav>
                 </div>
                 <div class="col-xs-12 col-sm-9">
                     {% block content %}

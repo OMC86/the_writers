@@ -11,20 +11,20 @@
     {% include 'posts/general/listposts.html' %}
 
 {% if posts.has_other_pages %}
-        <div class="pagination">
-    <span class="step-links">
-        {% if posts.has_previous %}
-            <p><a href="?page={{ posts.previous_page_number }}">previous</a></p>
-        {% endif %}
+        <div class="pagination floatRight">
+            <span class="stepLinks">
+                {% if posts.has_previous %}
+                    <p><a href="?page={{ posts.previous_page_number }}">Previous</a></p>
+                {% endif %}
 
-        <span class="current">
-            <p>Page {{ posts.number }} of {{ posts.paginator.num_pages }}.</p>
-        </span>
+                <span class="current">
+                    <p>Page {{ posts.number }} of {{ posts.paginator.num_pages }}.</p>
+                </span>
 
-        {% if posts.has_next %}
-            <p><a href="?page={{ posts.next_page_number }}">next</a></p>
-        {% endif %}
-    {% endif %}
-    </span>
-</div>
+                {% if posts.has_next %}
+                    <p><a href="?page={{ posts.next_page_number }}">Next</a></p>
+                {% endif %}
+            {% endif %}
+            </span>
+        </div>
 {% endblock %}

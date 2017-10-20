@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    {% load staticfiles %}
     <meta charset="UTF-8">
-    <title>The Writers Landing Page</title>
+    {% load staticfiles %}
+    <title>The Writers log in or sign up</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="description" content="Publish your articles, blog posts, poems, stories with the images images that inspire you.
+    Discuss your posts with readers. Enter writing competitions, win money">
+    <meta name="author" content="Chris Toal">
+    <script src="https://use.fontawesome.com/7dc7b1b8bc.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js">
+    </script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/landing.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/accounts.css' %}">
@@ -45,7 +50,7 @@
                 </div>
             </div>
         </nav>
-        <div id="landing-nav">
+        <nav id="landing-nav">
             <div class="container">
                 <div class="row">
                     <div class="com-xs-12 col-md-12">
@@ -87,7 +92,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </nav>
     </div>
 
     <div class="container">
@@ -132,9 +137,4 @@
     </div>
 
 </body>
-<script src="https://use.fontawesome.com/7dc7b1b8bc.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js">
-</script>
-
 </html>

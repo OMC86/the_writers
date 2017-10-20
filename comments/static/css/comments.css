@@ -10,3 +10,8 @@
 .commentContent i{
     margin: 5px;
 }
+
+#emptyPhoto{
+    width: 80px;
+    height: 80px;
+}

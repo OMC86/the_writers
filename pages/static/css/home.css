@@ -15,3 +15,14 @@
 .centreTxt{
     text-align: center;
 }
+
+.flex-item ul{
+    list-style-type: none;
+}
+
+.centreTxt button{
+    color: #007f76;
+    background: none;
+    border: none;
+
+}

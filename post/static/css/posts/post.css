@@ -41,3 +41,7 @@ label[for=image-clear_id]{
 #gplus i{
  color: #d74031;
 }
+
+.stepLinks p{
+    display: inline-block;
+}
