@@ -7,14 +7,14 @@ $(document).ready(function() {
 
     $('#hideList').click(function(){
         $('.homeList').slideUp('slow');
-        $('#hideList').hide(500);
-        $('#showList').show(500);
+        $('#hideList').hide();
+        $('#showList').show();
     });
 
     $('#showList').click(function() {
         $('.homeList').slideDown('slow');
-        $('#hideList').show(500);
-        $('#showList').hide(500);
+        $('#hideList').show();
+        $('#showList').hide();
     });
 
 });
