@@ -166,7 +166,7 @@ def show_competition(request):
     for comp in competition:
 
         # get the currently active competition
-        if comp.is_active():
+        if comp.is_active() and request.user.is_authenticated():
             subscribed = request.user.check_subscription()
             entry_period = comp.can_enter()
             vote_period = comp.can_vote()
