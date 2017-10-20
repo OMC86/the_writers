@@ -41,7 +41,7 @@ def post_detail(request, id):
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.user.is_authenticated():
             comment = form.save(commit=False)
             comment.author = request.user
             comment.post = post
@@ -198,7 +198,6 @@ def comp_entries(request):
 
 
 # detailed view of competition entry
-@login_required
 def entry_detail(request, id):
     post = get_object_or_404(Post, pk=id)
     post.views += 1
@@ -208,7 +207,7 @@ def entry_detail(request, id):
     # comment form
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.user.is_authenticated():
             comment = form.save(commit=False)
             comment.author = request.user
             comment.post = post
@@ -365,8 +364,6 @@ def featured(request):
     return render(request, 'featured/featuredlist.html', {'posts': posts})
 
 
-
-@login_required
 def featured_detail(request, id):
     post = get_object_or_404(Post, pk=id)
     post.views += 1
@@ -374,7 +371,7 @@ def featured_detail(request, id):
 
     if request.method == 'POST':
         form = CommentForm(request.POST)
-        if form.is_valid():
+        if form.is_valid() and request.user.is_authenticated():
             comment = form.save(commit=False)
             comment.author = request.user
             comment.post = post
