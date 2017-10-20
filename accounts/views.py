@@ -151,8 +151,9 @@ def upload(request):
         form = UserPhotoForm(request.POST, request.FILES)
         context['posted'] = form.instance
         if form.is_valid():
+            pic = request.FILES.get('avatar', False)
             user = request.user
-            user.avatar = request.FILES['avatar']
+            user.avatar = pic
             user.save()
             return redirect(reverse('home'))
 
