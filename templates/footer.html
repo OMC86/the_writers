@@ -7,36 +7,45 @@
                         <div class="flex-container">
 
                             <div class="flex-item">
-                                <ul class="title">About us</ul>
-                                <ul class="foot">The Writers is a space for people who like to share what they
-                                    write with the world.
+                                <ul>
+                                    <li class="title">About us</li>
+                                    <li class="foot">The Writers is a space for people who like to share what they
+                                        write with the world.
+                                    </li>
+                                    <li class="foot"> Writers can discuss what they have written with those who read it.
+                                        <a href="{% url 'about'%}" class="foot">Read more<i id='arrow' class="fa fa-arrow-circle-o-right"></i></a>
+                                    </li>
                                 </ul>
-                                <ul class="foot"> Writers can discuss what they have written with those who read it.
-                                </ul>
-                                <a href="{% url 'about'%}"><ul class="foot">Read more<i id='arrow' class="fa fa-arrow-circle-o-right">
-                                </i></ul></a>
                             </div>
 
                              <div class="flex-item">
-                                 <ul class="title">Stats</ul>
-                                 <ul class="foot"><span>{% count_users %}</span> people using The Writers</ul>
-                                 <ul class="foot">Posted <span>{% get_total_posts %}</span> times</ul>
-                                 <ul class="foot">Commented <span>{% count_comments %}</span> times</ul>
-                                 <ul class="foot"><span>{% get_total_comps %}</span> competitions to date</ul>
-                                 <ul class="foot"><span>£{% total_prize %}.00</span> given away to our winners</ul>
+                                 <ul>
+                                     <li class="title">Stats</li>
+                                     <li class="foot"><span>{% count_users %}</span> people using The Writers</li>
+                                     <li class="foot">Posted <span>{% get_total_posts %}</span> times</li>
+                                     <li class="foot">Commented <span>{% count_comments %}</span> times</li>
+                                     <li class="foot"><span>{% get_total_comps %}</span> competitions to date</li>
+                                     <li class="foot"><span>£{% total_prize %}.00</span> given away to our winners</li>
+                                 </ul>
 
                             </div>
 
                             <div class="flex-item">
-                                <ul class="title">Contact Info</ul>
-                                <ul class="foot"><i class="fa fa-envelope-o">
-                                </i> TheWriters86@gmail.com</ul>
-                                <ul class="foot"><i class="fa fa-phone">
-                                </i> 3333 222 1111</ul>
-                                <ul class="foot"><i class="fa fa-map-marker">
-                                </i> 423 windmill drive London</ul>
+                                <ul>
+                                    <li class="title">Contact Info</li>
+                                    <li class="foot">
+                                        <i class="fa fa-envelope-o"></i>TheWriters86@gmail.com
+                                    </li>
+                                    <li class="foot">
+                                        <i class="fa fa-phone"></i> 3333 222 1111
+                                    </li>
+                                    <li class="foot">
+                                        <i class="fa fa-map-marker"></i>
+                                        <address>423 windmill drive<br>Camberwell<br>London SE5 0XJ</address>
+                                    </li>
+                                </ul>
 
-                                <div class="flex-container">
+                                <div id='socialLinks' class="flex-container">
                                     <div class="foot">
                                         <a href="https://github.com/OMC86"><i class="fa fa-github"></i></a>
                                     </div>

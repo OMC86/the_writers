@@ -58,6 +58,15 @@
     padding: 10px;
 }
 
+address{
+    display: inline-block;
+    position: absolute;
+}
+
+#socialLinks{
+    margin-top: 45px;
+}
+
 
 
 /*MEDIA QUERIES*/
