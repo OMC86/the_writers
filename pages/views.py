@@ -22,7 +22,7 @@ def profile(request):
     # Get the active competition
     competition = Competition.objects.all()
     for comp in competition:
-        if comp.is_active():
+        if comp.is_active() and request.user.is_authenticated():
             subscribed = request.user.check_subscription()
             entry_period = comp.can_enter()
             vote_period = comp.can_vote()
