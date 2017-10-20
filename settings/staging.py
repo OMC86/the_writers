@@ -45,4 +45,4 @@ EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
 EMAIL_HOST_USER = 'thewriters86@gmail.com'
 EMAIL_HOST_PASSWORD = 'EMAIL_HOST_PASSWORD'
-DEFAULT_FROM_EMAIL = 'EMAIL_HOST_USER'
+DEFAULT_FROM_EMAIL = 'thewriters86@thewriters.herokuapp.com'
