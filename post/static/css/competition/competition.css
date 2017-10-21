@@ -28,7 +28,7 @@
 
 }
 
-#voteBtnContainer > .btn {
+#voteBtnContainer button {
     background-color: #42ab9e;
 }
 

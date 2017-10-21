@@ -35,12 +35,12 @@
                     <p>{{ p.content|truncatewords:5 }}</p>
                     <p>Category: {{ p.category }} | Genre: {{ p.genre }}</p>
                     <p>Posted by {{ p.author }} on {{ p.date_published }} | Views {{ p.views }}
-                        <a class="btn btn-default floatRight" href="{% url 'featured' %}">Read More
-                        </a>
                     </p>
                     <hr>
                 </div>
             {% endfor %}
+            <p><a class="btn btn-default floatRight" href="{% url 'featured' %}">Read More
+            </a></p>
         </div>
     </div>
 
