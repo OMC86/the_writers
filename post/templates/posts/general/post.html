@@ -50,7 +50,7 @@
         <div class="col-xs-12 col-lg-12">
             {% if post.image %}
                 <div class="centreImg">
-                    {% cloudinary post.image format='jpeg' height='300' crop="limit" angle='360' %}
+                    {% cloudinary post.image alt='post image' format='jpeg' height='300' crop="limit" angle='360' %}
                 </div>
             {% endif %}
         </div>

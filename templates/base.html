@@ -129,7 +129,7 @@
         <div id="userPhotoSmall">
             {% if user.avatar %}
                 <div class="avatar">
-                    {% cloudinary user.avatar format='jpeg' width='80' height='80' gravity='auto' quality='auto' crop="lfill" angle='360' %}
+                    {% cloudinary user.avatar alt='avatar' format='jpeg' width='80' height='80' gravity='auto' quality='auto' crop="lfill" angle='360' %}
                 </div>
             {% endif %}
         </div>
@@ -139,7 +139,7 @@
                         <div class="userPhoto">
                             {% if user.avatar %}
                                 <div class="avatar">
-                                    {% cloudinary user.avatar format='jpeg' width='80' height='80' gravity='auto' quality='auto' crop="lfill" angle='360' %}
+                                    {% cloudinary user.avatar alt='avatar' format='jpeg' width='80' height='80' gravity='auto' quality='auto' crop="lfill" angle='360' %}
                                 </div>
 
                             {% endif %}
