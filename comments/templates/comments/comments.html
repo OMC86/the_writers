@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-10">
             <div class="commentContent">
-                <p>{{ comment.content|linebreaks }}</p>
+                {{ comment.content|linebreaks }}
                 {% if comment.author == request.user %}
                     <a href="{% url 'delete_comment' post.id comment.id %}" onclick="return deleteCheck();">
                         <i class="fa fa-trash-o floatRight"></i>
