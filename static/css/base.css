@@ -26,6 +26,11 @@ h1{
     text-align: center;
 }
 
+ol > li > p{
+    font-family: 'Crimson Text', serif;
+    font-size: 23px;
+}
+
 
 .btn-default {
     border: 1px solid #42ab9e;

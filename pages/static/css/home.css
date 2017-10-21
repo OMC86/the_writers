@@ -30,3 +30,8 @@
 ol ul li p{
     color: #000;
 }
+
+#aboutInfo li {
+    font-family: 'Crimson Text', serif;
+    font-size: 23px;
+}
