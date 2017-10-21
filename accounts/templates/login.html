@@ -1,7 +1,7 @@
 {% extends "landing.html" %}
 {% load bootstrap_tags %}
 {% block content %}
-    <form role="form" method="post" action="{% url 'login' %}">
+    <form method="post" action="{% url 'login' %}">
         <legend>Login</legend>
         {% csrf_token %}
         {{ form| as_bootstrap }}
