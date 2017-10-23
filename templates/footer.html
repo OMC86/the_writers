@@ -1,60 +1,55 @@
 {% load post_extras account_extras comment_extras %}
 <footer id="footer">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="cos-sm-12 col-lg-12">
-                    <div class="row">
-                        <div class="flex-container">
-
-                            <div class="flex-item">
-                                <ul>
-                                    <li class="title">About us</li>
-                                    <li class="foot">The Writers is a space for people who like to share what they
-                                        write with the world.
-                                    </li>
-                                    <li class="foot"> Writers can discuss what they have written with those who read it.
-                                        <a href="{% url 'about'%}" class="foot">Read more<i id='arrow' class="fa fa-arrow-circle-o-right"></i></a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                             <div class="flex-item">
-                                 <ul>
-                                     <li class="title">Stats</li>
-                                     <li class="foot"><span>{% count_users %}</span> people using The Writers</li>
-                                     <li class="foot">Posted <span>{% get_total_posts %}</span> times</li>
-                                     <li class="foot">Commented <span>{% count_comments %}</span> times</li>
-                                     <li class="foot"><span>{% get_total_comps %}</span> competitions to date</li>
-                                     <li class="foot"><span>£{% total_prize %}.00</span> given away to our winners</li>
-                                 </ul>
-
-                            </div>
-
-                            <div class="flex-item">
-                                <ul>
-                                    <li class="title">Contact Info</li>
-                                    <li class="foot">
-                                        <i class="fa fa-envelope-o"></i>TheWriters86@gmail.com
-                                    </li>
-                                    <li class="foot">
-                                        <i class="fa fa-phone"></i> 3333 222 1111
-                                    </li>
-                                    <li class="foot">
-                                        <i class="fa fa-map-marker"></i>
-                                        <address>423 windmill drive<br>Camberwell<br>London SE5 0XJ</address>
-                                    </li>
-                                </ul>
-
-                                <div id='socialLinks' class="flex-container">
-                                    <div class="foot">
-                                        <a href="https://github.com/OMC86"><i class="fa fa-github"  aria-label="git profile"></i></a>
-                                    </div>
-                                    <div class="foot">
-                                        <a href="https://twitter.com/"><i class="fa fa-twitter" aria-label="twitter profile"></i></a></div>
-                                    <div class="foot">
-                                        <a href="https://www.linkedin.com/in/chris-toal-583aa8134/">
-                                            <i class="fa fa-linkedin" aria-label="linkedin profile"></i></a>
-                                    </div>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="cos-sm-12 col-lg-12">
+                <div class="row">
+                    <div class="flex-container">
+                        <div class="flex-item">
+                            <ul>
+                                <li class="title">About us</li>
+                                <li class="foot">The Writers is a space for people who like to share what they
+                                    write with the world.
+                                </li>
+                                <li class="foot"> Writers can discuss what they have written with those who read it.
+                                    <a href="{% url 'about'%}" class="foot">Read more<i id='arrow' class="fa fa-arrow-circle-o-right"></i></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="flex-item">
+                            <ul>
+                                <li class="title">Stats</li>
+                                <li class="foot"><span>{% count_users %}</span> people using The Writers</li>
+                                <li class="foot">Posted <span>{% get_total_posts %}</span> times</li>
+                                <li class="foot">Commented <span>{% count_comments %}</span> times</li>
+                                <li class="foot"><span>{% get_total_comps %}</span> competitions to date</li>
+                                <li class="foot"><span>£{% total_prize %}.00</span> given away to our winners</li>
+                            </ul>
+                        </div>
+                        <div class="flex-item">
+                            <ul>
+                                <li class="title">Contact Info</li>
+                                <li class="foot">
+                                    <i class="fa fa-envelope-o"></i>TheWriters86@gmail.com
+                                </li>
+                                <li class="foot">
+                                    <i class="fa fa-phone"></i> 3333 222 1111
+                                </li>
+                                <li class="foot">
+                                    <i class="fa fa-map-marker"></i>
+                                    <address>423 windmill drive<br>Camberwell<br>London SE5 0XJ</address>
+                                </li>
+                            </ul>
+                            <div id='socialLinks' class="flex-container">
+                                <div class="foot">
+                                    <a href="https://github.com/OMC86"><i class="fa fa-github"  aria-label="git profile"></i></a>
+                                </div>
+                                <div class="foot">
+                                    <a href="https://twitter.com/"><i class="fa fa-twitter" aria-label="twitter profile"></i></a>
+                                </div>
+                                <div class="foot">
+                                    <a href="https://www.linkedin.com/in/chris-toal-583aa8134/">
+                                        <i class="fa fa-linkedin" aria-label="linkedin profile"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -62,4 +57,5 @@
                 </div>
             </div>
         </div>
-    </footer>
+    </div>
+</footer>
