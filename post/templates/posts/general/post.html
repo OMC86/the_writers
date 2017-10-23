@@ -24,7 +24,7 @@
                 {% if post.comp %}
                     {% if post.is_winner %}
                         <div class="col-md-3">
-                        <p>Won First place in {{ post.comp }} competition</p>
+                        <p>Won First place in {{ post.comp|title }} competition</p>
                     </div>
                         {% else %}
                     <div class="col-md-3">

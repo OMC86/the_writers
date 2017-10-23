@@ -69,6 +69,7 @@ def new_post(request):
             """
             if post.is_entry:
                 post.date_published = timezone.now()
+                post.is_featured = 1
                 # Check if user is subscribed
                 if post.author.check_subscription():
                     competition = Competition.objects.all()
@@ -117,6 +118,7 @@ def edit_post(request, id):
             # if competition entry and user is subscribed
             if post.is_entry:
                 post.date_published = timezone.now()
+                post.is_featured = 1
                 user = request.user
                 if user.check_subscription:
                     competition = Competition.objects.all()

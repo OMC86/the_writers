@@ -1,28 +1,22 @@
 {% extends "base.html" %}
 {% block content %}
-
     {% include 'posts/general/post.html' %}
-
         <div class="row">
             <div class="com-md-12">
                 <p class="space">This entry has {{ votes }} votes</p>
                 {% if vote %}
-                    <div>
-                        <p class="space">{{ user }}: You have voted for this entry</p>
-                        {% else %}
-                        <p>Clicking this button will cast a vote for this entry</p>
-                    </div>
+                    <p class="space">{{ user }}: You have voted for this entry</p>
+                {% else %}
+                    <p>Clicking this button will cast a vote for this entry</p>
                     <div id="voteBtnContainer">
-                    <p>
-                        <button id='voteButton' class="btn" onclick="location.href='{% url 'cast_vote' post.id %}'">
-                            Vote
-                        </button>
-                    </p>
+                        <p>
+                            <button id='voteButton' class="btn" onclick="location.href='{% url 'cast_vote' post.id %}'">
+                                Vote
+                            </button>
+                        </p>
                     </div>
                 {% endif %}
-
                 {% include 'messages.html' %}
-
                 <div class="row">
                     <div class="col-md-12">
                         <p>

@@ -3,6 +3,7 @@ from django.contrib import admin
 from .models import Post, Competition
 from django import forms
 
+
 # Set validation errors for non consecutive dates and multiple competitions
 class NewCompetitionForm(forms.ModelForm):
     class Meta:
