@@ -52,7 +52,10 @@
                 <div class="centreImg">
                     {% cloudinary post.image alt='post image' format='jpeg' height='300' crop="limit" angle='360' %}
                 </div>
-            {% endif %}
+                <div class="postContent">
+                {{ post.content|linebreaks }}
+                </div>
+            {% else %}
         </div>
     </div>
     <div class="row">
@@ -62,6 +65,7 @@
             </div>
         </div>
     </div>
+            {% endif %}
     <div class="row">
         <div class="col-md-12">
             {% if post.date_published %}
