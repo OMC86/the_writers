@@ -1,5 +1,6 @@
 from models import User
 
+
 class EmailAuth(object):
     def authenticate(self, email=None, password=None):
         try:
@@ -9,7 +10,6 @@ class EmailAuth(object):
 
         except User.DoesNotExist:
             return None
-
 
     def get_user(self, user_id):
         try:

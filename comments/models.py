@@ -5,7 +5,6 @@ from django.db import models
 from django.utils import timezone
 from django.conf import settings
 from post.models import Post
-# Create your models here.
 
 
 class Comment(models.Model):

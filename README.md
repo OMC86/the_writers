@@ -12,7 +12,7 @@ with those who read their posts and possibly win some money entering writing com
 #### General users
 The site allows users to register and log in. Once users are logged in they can create posts, choosing whether
 or not to make their posts public. Once a post is published, other authenticated users are able to post comments on it.
-Users are also allowed to vote for competition entries they think deserve to win.
+Users are also allowed to vote for competition entries they think deserve to win a competition.
 
 #### Subscribed users
 While subscribers enjoy the same privileges as general users, they also get the added benefit of entering their posts
@@ -20,7 +20,7 @@ in to competitions in which they can win a cash prize.
 
 
 ### Admin
-The administrator has permissions to delete and edit posts and is also in charge of creating competitions.
+The administrator can delete and edit posts at his/her discretion and is also in charge of creating competitions.
 
 #### Competitions
 Competitions are held on the site at the discretion of the admin. They consist of two time periods; An entry period in
@@ -31,19 +31,14 @@ on the winners page.
 #### Creating a competition
 - In order to create a competition object the [django admin interface](https://thewriters.herokuapp.com/admin/post/competition/)
  must be used.
-- There can only be one competition at any time. Due to the validation, once a competition is active it can not be edited.
-If a mistake has been made there are two options.
-    - Delete the competition and create a new one.
-    - In order to edit with out deleting go to post/admin.py comment out **lines 25 and 26** and push to git. Once the
-    amendment has been made, save the competition, then simply remove the comments and push to git once more.
-    ```python
-        elif comp.is_active():
-            raise forms.ValidationError('Only one active competition is permitted at a time')
-
+- Validation on the competition form ensures competitions won't be created in a way that breaks code in the views.
+ - The rules are;
+    1. The start date can not be set in the future.
+    2. The date fields must follow a consecutive order.
+    3. There can only be one active competition at any time.
 - Admin should also be aware that in the event of there being no entries when the entry period finishes, or no votes once
 the vote period has finished, the competition will be automatically deleted from the database.
-- The date fields in the competition form must follow a consecutive order from the begining of the entry period to
- the end of the voting period in order for the competition to be saved.
+
 
 ## Features
 
@@ -83,8 +78,6 @@ the vote period has finished, the competition will be automatically deleted from
     - **Django-filter** enables users to filter the database easily.
 - [Django-forms-bootstrap](https://pypi.python.org/pypi/django-forms-bootstrap/)
     - **Django-forms-bootstrap** is used to render forms with bootstrap styles.
-- [Django-smartfields](https://github.com/lehins/django-smartfields)
-    - **Django-smartfields** is used to resize images.
 - [Django-smtp-ssl](https://github.com/lehins/django-smartfields)
     - **Django-smtp-ssl** the email backend that allows a user to reset a lost password.
 - [Bootstrap](http://getbootstrap.com/)
@@ -127,9 +120,8 @@ Each app houses it's respective templates, js, css and urls
     - Serve competition winner list
     - Serve competition detail pages
     - Determine competition time periods
-    - Cast vote
+    - Create a vote object
     
-- Create a vote object
     
 ### Search
 - Filter database
@@ -163,22 +155,15 @@ Each app houses it's respective templates, js, css and urls
 
 ## Tests
 Some of the validation tests I used include
-- [Nibbler](http://nibbler.silktide.com/)
-    - **Nibbler** gives you a report scoring a website out of 10 for various criteria.
 - [W3C](http://validator.w3.org/)
     - **W3C** validates html.
-- [Wave Accessibility Tool](http://wave.webaim.org/)
-    - **Wave accessibility tool**  highlights areas of a page which can be made more accessible.
-
+- [jigsaw](https://jigsaw.w3.org)
+    - **Jigsaw** validates css
+- [pep8](http://pep8online.com/)
+    - **pep8** validates python code
+    
 ## Acknowledgments 
 - I found the following tutorials to be very helpful when creating some of the features on the site. 
 - [How to create a password reset view](https://simpleisbetterthancomplex.com/tutorial/2016/09/19/how-to-create-password-reset-view.html)
 - [How to Filter QuerySets Dynamically](https://simpleisbetterthancomplex.com/tutorial/2016/11/28/how-to-filter-querysets-dynamically.html)
 - [Redirecting to a passed in URL using next](http://andrearobertson.com/blog/2016/10/05/django-example-redirecting-to-a-passed-in-url/)
-
-
-
-
-
-    
-

@@ -7,7 +7,6 @@ from .models import Comment
 from django.contrib import messages
 from post.views import featured_detail
 from forms import CommentForm
-# Create your views here.
 
 
 @login_required
@@ -29,4 +28,3 @@ def edit_comment(request, id, com):
     else:
         form = CommentForm(instance=comment)
         return render(request, 'comments/editcomment.html', {'form': form})
-

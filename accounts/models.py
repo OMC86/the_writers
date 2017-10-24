@@ -37,5 +37,3 @@ class User(AbstractUser):
     def check_subscription(self):
         now = timezone.now()
         return self.subscription_end > now
-
-# Create your models here.

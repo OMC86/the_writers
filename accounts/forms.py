@@ -2,7 +2,7 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
 from .models import User
-from cloudinary.forms import CloudinaryFileField
+
 
 class UserRegistrationForm(UserCreationForm):
     password1 = forms.CharField(
@@ -60,5 +60,3 @@ class UserPhotoForm(forms.ModelForm):
     class Meta:
         model = User
         fields = ['avatar']
-
-

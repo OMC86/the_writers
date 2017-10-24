@@ -5,7 +5,7 @@ from django.test import TestCase
 from pages.views import about
 from django.core.urlresolvers import resolve
 from django.shortcuts import render_to_response
-# Create your tests here.
+
 
 class AboutPageTest(TestCase):
     # this test will fail
@@ -26,4 +26,3 @@ class AboutPageTest(TestCase):
         self.assertTemplateUsed(about_page, "about.html")
         about_page_template_output = render_to_response("about.html").content
         self.assertEqual(about_page.content, about_page_template_output)
-

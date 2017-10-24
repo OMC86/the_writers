@@ -29,7 +29,6 @@ def profile(request):
             entry_period = comp.can_enter()
             vote_period = comp.can_vote()
 
-            return render(request, 'home.html', {'posts': posts, 'comp': comp, 'prize': prize, 'subscribed': subscribed,
-                                                 'entry_period': entry_period, 'vote_period': vote_period})
+            return render(request, 'home.html', {'posts': posts, 'comp': comp, 'prize': prize, 'subscribed': subscribed, 'entry_period': entry_period, 'vote_period': vote_period})
     else:
         return render(request, 'home.html', {'posts': posts, 'prize': prize, 'users': subscribers})

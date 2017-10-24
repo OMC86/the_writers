@@ -161,7 +161,6 @@ def upload(request):
     return render(request, 'uploadavatar.html', context)
 
 
-
 @csrf_exempt
 def subscriptions_webhook(request):
     event_json = json.loads(request.body)
@@ -178,7 +177,7 @@ def subscriptions_webhook(request):
         paid = event_json['paid']
         user = User.objects.get(stripe_id=cust)
         if event and paid:
-            user.subscription_end = arrow.now().replace(weeks=+4).datetime  # 4 weeks from now
+            user.subscription_end = arrow.now().replace(weeks=+4).datetime
             user.save()
 
     except stripe.InvalidRequestError, e:
