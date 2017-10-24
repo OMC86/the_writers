@@ -32,12 +32,11 @@ def search_detail(request, id):
             return redirect(search_detail, post.id)
     else:
         form = CommentForm()
-        comp = Competition.objects.all()
-        for c in comp:
-            if c.can_vote():
-                args = {'post': post, 'form': form, 'c': c}
+        comps = Competition.objects.all()
+        for comp in comps:
+            if comp.can_vote():
+                args = {'post': post, 'form': form, 'comp': comp}
                 return render(request, 'search_detail.html', args)
         else:
             args = {'post': post, 'form': form}
             return render(request, 'search_detail.html', args)
-

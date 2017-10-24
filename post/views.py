@@ -4,7 +4,6 @@ from __future__ import unicode_literals
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect, get_object_or_404
-from django.template.context_processors import csrf
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from django.db.models import Count
 from django.utils import timezone
@@ -133,7 +132,7 @@ def edit_post(request, id):
 
                 else:
                     messages.error(request, "Please subscribe to enter competition")
-                    return redirect(new_post) # send to upgrade account
+                    return redirect(new_post)  # send to upgrade account
             # save date published if post is featured
             elif post.is_featured:
                 post.date_published = timezone.now()
@@ -338,8 +337,7 @@ def winner_detail(request, id):
 
 # renders a list of featured posts
 def featured(request):
-    postlist = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()
-                                ).order_by('-date_published')
+    postlist = Post.objects.filter(is_featured=True, date_published__lte=timezone.now()).order_by('-date_published')
     page = request.GET.get('page')
 
     paginator = Paginator(postlist, 6)
