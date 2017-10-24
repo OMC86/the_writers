@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from django.contrib import admin
+from django.utils import timezone
 from .models import Post, Competition
 from django import forms
 
@@ -13,6 +14,7 @@ class NewCompetitionForm(forms.ModelForm):
         )
 
     def clean(self):
+        now = timezone.now()
         comp_list = Competition.objects.order_by('-vote_period_end')
         comp = comp_list[0]
 
@@ -21,6 +23,8 @@ class NewCompetitionForm(forms.ModelForm):
         vote_start = self.cleaned_data.get('vote_period_start')
         vote_end = self.cleaned_data.get('vote_period_end')
 
+        if now < entry_start:
+            raise forms.ValidationError('Start date must be before now')
         if entry_fin < entry_start or vote_end < vote_start or vote_start < entry_fin:
             raise forms.ValidationError('Invalid dates')
         elif comp.is_active():
