@@ -120,5 +120,17 @@ class Competition(models.Model):
         prize = subscribers.count()
         return prize
 
+    def invalid_comp_check(self):
+        now = timezone.now()
+        if now > self.entry_period_fin and not self.check_posts():
+                self.delete()
+        elif now > self.vote_period_end and not self.check_votes():
+            entries = self.post.all()
+            for entry in entries:
+                entry.is_entry = 0
+                entry.comp = None
+                entry.save()
+            self.delete()
+
     def __unicode__(self):
         return self.title

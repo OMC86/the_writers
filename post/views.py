@@ -187,14 +187,9 @@ def comp_entries(request):
     for comp in competition:
         if comp.is_active():
             entry_period = comp.can_enter()
-            # If there were no entries during the entry period delete the competition
-            if not entry_period and not comp.check_posts():
-                comp.delete()
-                return render(request, 'competition/entrylist.html')
-            else:
-                vote_period = comp.can_vote()
-                args = {'entries': entries, 'comp': comp, 'entry_period': entry_period, 'vote_period': vote_period}
-                return render(request, 'competition/entrylist.html', args)
+            vote_period = comp.can_vote()
+            args = {'entries': entries, 'comp': comp, 'entry_period': entry_period, 'vote_period': vote_period}
+            return render(request, 'competition/entrylist.html', args)
     else:
         return render(request, 'competition/entrylist.html')
 
@@ -252,6 +247,11 @@ def cast_vote(request, id):
 def winners(request):
     # get all competitions and order them by most recent
     competitions = Competition.objects.all().order_by('-vote_period_end')
+
+    # Check comp has entries and votes, if not delete the comp
+    for comp in competitions:
+        comp.invalid_comp_check()
+
     page = request.GET.get('page')
 
     paginator = Paginator(competitions, 2)
@@ -266,20 +266,6 @@ def winners(request):
     posts = Post.objects.filter(is_winner=True)
     # get the most recent competition
     comp = competitions[0]
-
-    def comp_del():
-        if not comp.check_posts():
-            comp.delete()
-    # check if anyone has voted. If no one voted delete the competition and save the posts as not entered in a comp
-        elif not comp.check_votes():
-            entries = comp.post.all()
-            for entry in entries:
-                entry.is_entry = 0
-                entry.comp = None
-                entry.save()
-            comp.delete()
-        else:
-            get_winners()
 
     # find the winner or winners of the most recent competition
     def get_winners():
@@ -321,7 +307,7 @@ def winners(request):
         return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
     # If most recent comp has finished, check if anyone has entered. If they have get the winners
     elif not comp.winner:
-        comp_del()
+        get_winners()
         return render(request, 'competition/winnerlist.html', {'comps': comps, 'posts': posts})
     # or if there were no entries or no comps without winners render the winners page
     else:

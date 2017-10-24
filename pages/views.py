@@ -19,9 +19,11 @@ def profile(request):
     prize = subscribers.count()
     # Get two featured posts
     posts = Post.objects.filter(is_featured=True).order_by('-date_published')[:2]
-    # Get the active competition
+    # Check if the competition has entries and votes by the end of respective periods and if not delete the comp.
     competition = Competition.objects.all()
     for comp in competition:
+        comp.invalid_comp_check()
+    # Check if the comp is active
         if comp.is_active() and request.user.is_authenticated():
             subscribed = request.user.check_subscription()
             entry_period = comp.can_enter()
