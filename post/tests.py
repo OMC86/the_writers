@@ -1,5 +1,5 @@
 from django.test import TestCase
-from .models import Post, Vote, Competition
+from .models import Post, Competition
 from post.views import post_list
 from django.core.urlresolvers import resolve
 from django.shortcuts import render_to_response
@@ -25,8 +25,6 @@ class PostTests(TestCase):
         test_title = Competition(title='Testing the title')
         self.assertEqual(str(test_title),
                          'Testing the title')
-
-
 
 
 class PostListTests(TestCase):
