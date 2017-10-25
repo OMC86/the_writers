@@ -36,10 +36,11 @@ LOGGING = {
     },
 }
 
+
 CLOUDINARY_URL = 'CLOUDINARY_URL'
 
-EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 
+EMAIL_BACKEND = 'django_smtp_ssl.SSLEmailBackend'
 EMAIL_USE_TLS = True
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 465
