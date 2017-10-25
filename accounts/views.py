@@ -169,14 +169,8 @@ def subscriptions_webhook(request):
     event_json = json.loads(request.body)
     try:
         event = stripe.Event.retrieve(event_json['id'])
-
-        if isinstance(event_json['data'], dict):
-            event_json = event_json['data']['object']
-        else:
-            event_json = event_json['object']
-
-        cust = event_json['customer']
-        paid = event_json['paid']
+        cust = event_json['data']['object']['customer']
+        paid = event_json['data']['object']['paid']
         user = User.objects.get(stripe_id=cust)
         if event and paid:
             user.subscription_end = arrow.now().replace(weeks=+4).datetime
