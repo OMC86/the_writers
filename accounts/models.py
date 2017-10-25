@@ -29,7 +29,7 @@ class AccountUserManager(UserManager):
 
 class User(AbstractUser):
 
-    stripe_id = models.CharField(max_length=40, default='')
+    stripe_id = models.CharField(max_length=40, default='', blank=True, null=True)
     subscription_end = models.DateTimeField(default=timezone.now)
     avatar = CloudinaryField("avatar", blank=True, null=True)
     objects = AccountUserManager()
