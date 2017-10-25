@@ -11,7 +11,7 @@
     {% include 'posts/general/listposts.html' %}
 
     {% if posts.has_other_pages %}
-        <div class="stepLinks floatRight">
+        <div class="stepLinks centreTxt">
             {% if posts.has_previous %}
                 <p><a href="?page={{ posts.previous_page_number }}">previous</a></p>
             {% endif %}
