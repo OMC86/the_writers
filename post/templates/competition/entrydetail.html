@@ -3,7 +3,12 @@
     {% include 'posts/general/post.html' %}
         <div class="row">
             <div class="com-md-12">
-                <p class="floatRight">This entry has {{ votes }} votes</p>
+                <p class="floatRight">This entry has {{ votes }}
+                    {% if votes <= 1 %}
+                        vote
+                    {% else %}
+                        votes</p>
+                    {% endif %}
                 {% if vote %}
                     <p class="space">{{ user }}: You have voted for this entry</p>
                 {% else %}
