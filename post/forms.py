@@ -1,5 +1,4 @@
 from django.forms import ModelForm
-from cloudinary.forms import CloudinaryFileField
 from .models import Post
 from django.utils.translation import ugettext_lazy as _
 

@@ -1,6 +1,7 @@
 from models import User
 
 
+# The code here comes from the code institute's Changing authentication lesson
 class EmailAuth(object):
     def authenticate(self, email=None, password=None):
         try:

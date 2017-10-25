@@ -1,4 +1,5 @@
-
+// This code is taken from 'Taking Credit Card Details With Stripe and Generating a Stripe Token'
+// lesson on code institute website
 $(function() {
     $("#subscription-form").submit(function() {
         var form = this;

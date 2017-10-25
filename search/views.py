@@ -9,7 +9,7 @@ from post.models import Competition
 from django.contrib.auth.decorators import login_required
 
 
-# Check the README for a link to the tutorial I used to implement django.filter
+# There is a link in the readme to the tutorial I used to implement django.filter logic
 def search(request):
     post_list = Post.objects.all()
     post_filter = PostFilter(request.GET, queryset=post_list)

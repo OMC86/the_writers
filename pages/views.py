@@ -14,7 +14,15 @@ def about(request):
 
 # renders the home page
 def profile(request):
-    # count the subscribers to get the prize
+    """
+    Here we get the number of subscribers to calculate the competition prize.
+    Then retrieve the two most recent featured posts to be rendered.
+    Check if there are any finished competitions which didn't receive any entries or votes
+    and delete them if that is the case, handled by the invalid_comp_check.
+    Check if there is an active competition at this time. If there is, check the
+    users subscription status, check what stage of the competition we are in and
+    render these checks to the home page template.
+    """
     subscribers = User.objects.filter(subscription_end__gte=timezone.now())
     prize = subscribers.count()
     # Get two featured posts

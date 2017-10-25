@@ -4,6 +4,7 @@ from django.core.exceptions import ValidationError
 from .models import User
 
 
+# Code Institute's registering new users lesson was used to write the registration form
 class UserRegistrationForm(UserCreationForm):
     password1 = forms.CharField(
         label='Password',
@@ -35,6 +36,9 @@ class UserLoginForm(forms.Form):
     password = forms.CharField(widget=forms.PasswordInput)
 
 
+# I used 'Taking Credit Card Details With Stripe and Generating a Stripe Token' lesson on code institute website
+# to write the subscription form however I decided to remove the password check as users must already be authenticated
+# in order to access the subscription form
 class UserSubscriptionForm(forms.Form):
     MONTHS = [
         'Jan', 'Feb', 'Mar', 'Apr', 'May', 'June',
@@ -43,7 +47,7 @@ class UserSubscriptionForm(forms.Form):
     CHOOSE_MONTH = list(enumerate(MONTHS, 1))
     CHOOSE_YEAR = [(i, i) for i in xrange(2017, 2038)]
 
-    credit_card_number = forms.CharField(label='Credit card numer')
+    credit_card_number = forms.CharField(label='Credit card number')
     cvv = forms.CharField(label='Security code (CVV)')
     expiry_month = forms.ChoiceField(label='Exp Month', choices=CHOOSE_MONTH)
     expiry_year = forms.ChoiceField(label='Exp Year', choices=CHOOSE_YEAR)
