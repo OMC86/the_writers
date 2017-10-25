@@ -20,7 +20,7 @@ def post_list(request):
     postlist = Post.objects.filter(author=request.user).order_by('-date_created')
     page = request.GET.get('page')
 
-    paginator = Paginator(postlist, 6)
+    paginator = Paginator(postlist, 4)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
@@ -368,7 +368,7 @@ def featured(request):
         is_featured=True, date_published__lte=timezone.now()).order_by('-date_published')
     page = request.GET.get('page')
 
-    paginator = Paginator(postlist, 6)
+    paginator = Paginator(postlist, 4)
     try:
         posts = paginator.page(page)
     except PageNotAnInteger:
