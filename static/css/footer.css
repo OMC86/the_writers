@@ -28,8 +28,8 @@
     border-bottom: 1px solid #fff;
 }
 
-.title{
-    padding-top: 15px;
+.header{
+    padding-top: 25px;
     font-size: 21px;
     color: #fff;
 }
@@ -66,7 +66,6 @@ address{
 #socialLinks{
     margin-top: 45px;
 }
-
 
 
 /*MEDIA QUERIES*/

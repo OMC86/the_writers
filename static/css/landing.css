@@ -133,6 +133,10 @@ li > a.land-link:hover, li > a.land-link:focus{
     margin-left: -20px;
 }
 
+.landing-list{
+    margin-bottom: 200px;
+}
+
 .landing-list li{
     padding-top: 10px;
     font-family: 'Crimson Text', serif;
